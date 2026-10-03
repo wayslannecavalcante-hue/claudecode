@@ -1,0 +1,271 @@
+<title>Jarvis AEG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: control-room brief. Priorities first, then KPI strip, then journey, team book and drill-down lists. */
+:root {
+  --bg: #f4f6f7;
+  --panel: #ffffff;
+  --ink: #12191f;
+  --ink-2: #4a5661;
+  --ink-3: #7a8691;
+  --line: #dde3e7;
+  --accent: #0e6e74;
+  --accent-soft: #e2f0f0;
+  --s1: #86b6ef; --s2: #5598e7; --s3: #2a78d6; --s4: #1c5cab;
+  --good: #0ca30c; --warning: #b77800; --serious: #c4561f; --critical: #d03b3b; --info: #4a5661;
+  --good-bg: #e6f5e6; --warning-bg: #fbf1dc; --serious-bg: #fbe9e0; --critical-bg: #fbe5e5; --info-bg: #eef1f3;
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1418; --panel: #172026; --ink: #eef2f4; --ink-2: #b4c0c8; --ink-3: #85929c; --line: #26323a;
+    --accent: #4fb8bd; --accent-soft: #163236;
+    --s1: #184f95; --s2: #256abf; --s3: #3987e5; --s4: #6da7ec;
+    --warning: #fab219; --serious: #ec835a; --critical: #ef6a6a; --info: #b4c0c8;
+    --good-bg: #13301a; --warning-bg: #33290f; --serious-bg: #3a2216; --critical-bg: #3b1a1a; --info-bg: #1f2a31;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1418; --panel: #172026; --ink: #eef2f4; --ink-2: #b4c0c8; --ink-3: #85929c; --line: #26323a;
+  --accent: #4fb8bd; --accent-soft: #163236;
+  --s1: #184f95; --s2: #256abf; --s3: #3987e5; --s4: #6da7ec;
+  --warning: #fab219; --serious: #ec835a; --critical: #ef6a6a; --info: #b4c0c8;
+  --good-bg: #13301a; --warning-bg: #33290f; --serious-bg: #3a2216; --critical-bg: #3b1a1a; --info-bg: #1f2a31;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 400 15px/1.5 var(--f-body); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 56px; display: grid; gap: 28px; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+h1, h2 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(28px, 4.2vw, 42px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+h2 { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
+.eyebrow { font: 500 12px/1 var(--f-mono); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); }
+.num { font-variant-numeric: tabular-nums; }
+.muted { color: var(--ink-2); }
+
+header.top { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 24px; }
+header.top .greet { margin-top: 8px; color: var(--ink-2); max-width: 62ch; }
+.stamp { font: 400 12px/1.5 var(--f-mono); color: var(--ink-3); text-align: right; }
+
+section { display: grid; gap: 14px; min-width: 0; }
+.sec-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; }
+.panel { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 18px; min-width: 0; }
+
+/* Priorities */
+.prio { display: grid; gap: 8px; list-style: none; padding: 0; margin: 0; }
+.prio li { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; align-items: start; padding: 12px 14px; border-radius: 8px; background: var(--panel); border: 1px solid var(--line); }
+.prio .t { font-weight: 600; }
+.prio .d { grid-column: 2; color: var(--ink-2); font-size: 14px; }
+.pill { font: 500 11px/1 var(--f-mono); text-transform: uppercase; letter-spacing: 0.06em; padding: 5px 8px; border-radius: 999px; white-space: nowrap; }
+.pill.critical { background: var(--critical-bg); color: var(--critical); }
+.pill.serious { background: var(--serious-bg); color: var(--serious); }
+.pill.warning { background: var(--warning-bg); color: var(--warning); }
+.pill.info { background: var(--info-bg); color: var(--info); }
+.pill.good { background: var(--good-bg); color: var(--good); }
+
+/* KPIs */
+.kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 4px; align-content: start; }
+.kpi .v { font: 700 32px/1.05 var(--f-display); font-variant-numeric: tabular-nums; }
+.kpi .l { color: var(--ink-2); font-size: 13px; }
+.kpi .s { font: 400 12px/1.4 var(--f-mono); color: var(--ink-3); }
+.kpi.alert .v { color: var(--critical); }
+.kpi.warn .v { color: var(--serious); }
+.delta.up { color: var(--ink-2); } .delta.bad { color: var(--critical); } .delta.ok { color: var(--good); }
+
+/* Journey */
+.stack { display: flex; gap: 2px; height: 34px; border-radius: 6px; overflow: hidden; }
+.stack div { display: flex; align-items: center; justify-content: center; color: #fff; font: 500 13px/1 var(--f-mono); min-width: 28px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--ink-2); }
+.legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; background: var(--c); vertical-align: -1px; }
+.bars { display: grid; gap: 6px; }
+.bar { display: grid; grid-template-columns: minmax(130px, 220px) 1fr 40px; gap: 10px; align-items: center; font-size: 13px; }
+.bar .track { height: 12px; background: var(--info-bg); border-radius: 0 4px 4px 0; }
+.bar .fill { height: 100%; border-radius: 0 4px 4px 0; background: var(--c, var(--s3)); }
+.bar .n { text-align: right; font-family: var(--f-mono); }
+.bar .lbl { color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.two { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; }
+
+/* Table */
+.tbl-wrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { padding: 9px 10px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { font: 500 11px/1.2 var(--f-mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); }
+td { font-variant-numeric: tabular-nums; }
+td.hot { color: var(--critical); font-weight: 600; }
+td.zero { color: var(--ink-3); }
+
+/* Lists */
+.list { list-style: none; margin: 0; padding: 0; display: grid; }
+.list li { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
+.list li:last-child { border-bottom: 0; }
+.list .meta { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); }
+details summary { cursor: pointer; color: var(--accent); font-size: 14px; margin-top: 6px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; }
+.tabs button { font: 500 13px var(--f-body); padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--ink-2); cursor: pointer; }
+.tabs button[aria-selected="true"] { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+footer { color: var(--ink-3); font-size: 13px; display: grid; gap: 4px; }
+@media (max-width: 560px) {
+  .bar { grid-template-columns: 110px 1fr 32px; }
+  .stamp { text-align: left; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .fill { transition: width .4s ease; }
+}
+</style>
+
+<div class="wrap" id="app">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Jarvis · Operação AEG</div>
+      <h1 id="h-date">Bom dia</h1>
+      <p class="greet" id="h-greet"></p>
+    </div>
+    <div class="stamp" id="h-stamp"></div>
+  </header>
+
+  <section aria-labelledby="s-prio">
+    <div class="sec-head"><h2 id="s-prio">Prioridades de hoje</h2><span class="eyebrow">ordenadas por gravidade</span></div>
+    <ul class="prio" id="prio"></ul>
+  </section>
+
+  <section aria-labelledby="s-kpi">
+    <h2 id="s-kpi" hidden>Indicadores</h2>
+    <div class="kpis" id="kpis"></div>
+  </section>
+
+  <section aria-labelledby="s-jornada">
+    <div class="sec-head"><h2 id="s-jornada">Jornada da carteira ativa</h2><span class="eyebrow" id="j-total"></span></div>
+    <div class="panel" style="display:grid;gap:14px">
+      <div class="stack" id="stack" role="img"></div>
+      <div class="legend" id="legend"></div>
+      <div class="bars" id="statuses"></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="s-cs">
+    <div class="sec-head"><h2 id="s-cs">Carteira por CS</h2><span class="eyebrow">clientes ativos e pendências</span></div>
+    <div class="panel tbl-wrap">
+      <table id="cs-table">
+        <thead><tr><th>CS</th><th>Ativos</th><th>Onboarding</th><th>Mês 2–6</th><th>Ongoing</th><th>Renovação</th><th>Em churn</th><th>Sem reunião 15d+</th><th>Tarefas atrasadas</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="s-drill">
+    <div class="sec-head"><h2 id="s-drill">Onde agir</h2></div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="panel" id="tab-body"></div>
+  </section>
+
+  <section aria-labelledby="s-ops">
+    <div class="two">
+      <div class="panel" style="display:grid;gap:12px">
+        <div class="sec-head"><h2 id="s-ops">Tarefas atrasadas por pessoa</h2><span class="eyebrow" id="od-total"></span></div>
+        <div class="bars" id="overdue"></div>
+      </div>
+      <div class="panel" style="display:grid;gap:12px">
+        <div class="sec-head"><h2>CRM Retenção</h2><span class="eyebrow">cards abertos</span></div>
+        <div class="bars" id="retention"></div>
+        <p class="muted" id="ret-note" style="margin:0;font-size:13px"></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div id="f-src"></div>
+    <div>Atualizado automaticamente toda manhã de segunda a sexta. Fonte: espaço "Operacional AEG" no ClickUp.</div>
+  </footer>
+</div>
+
+<script>
+const D = /*__JARVIS_DATA__*/null;
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const SEV = { critical: "Crítico", serious: "Alto", warning: "Atenção", info: "Info", good: "OK" };
+const GROUP_COLOR = { onboarding: "var(--s1)", maturacao: "var(--s2)", ongoing: "var(--s3)", renovacao: "var(--s4)" };
+
+function render() {
+  if (!D) return;
+  const k = D.kpis, dk = (D.delta && D.delta.kpis) || {};
+  $("#h-date").textContent = D.date_long.charAt(0).toUpperCase() + D.date_long.slice(1);
+  $("#h-greet").textContent = `Bom dia, Wayslanne. ${k.ativos} clientes ativos, ${k.em_churn} em churn e ${k.sem_reuniao} sem reunião há mais de 15 dias.`;
+  $("#h-stamp").innerHTML = `Gerado ${esc(D.generated_at)}<br>${D.delta && D.delta.vs ? "Comparado a " + esc(D.delta.vs) : "Primeira leitura, sem comparação"}`;
+
+  $("#prio").innerHTML = D.priorities.map((p) => `<li><span class="pill ${p.sev}">${SEV[p.sev]}</span><span class="t">${esc(p.title)}</span>${p.detail ? `<span class="d">${esc(p.detail)}</span>` : ""}</li>`).join("");
+
+  const delta = (key, badWhenUp) => {
+    const v = dk[key];
+    if (v === undefined || v === 0) return "";
+    const cls = badWhenUp === null ? "up" : (v > 0) === badWhenUp ? "bad" : "ok";
+    return ` <span class="delta ${cls}">${v > 0 ? "▲" : "▼"} ${Math.abs(v)}</span>`;
+  };
+  const od = k.atrasadas_truncado ? `${k.atrasadas}+` : k.atrasadas;
+  const tiles = [
+    { v: k.ativos, l: "Clientes ativos", s: `${k.mrr} MRR · ${k.arr} ARR · ${Math.round((k.venda_ia / Math.max(k.ativos, 1)) * 100)}% Venda.IA` + delta("ativos", false) },
+    { v: k.novos_mes, l: `Entradas em ${D.month}`, s: `${k.novos_mes_anterior} em ${D.prev_month}` },
+    { v: k.onboarding, l: "Em onboarding", s: "S1 a S4" + delta("onboarding", null) },
+    { v: k.em_churn, l: "Status churn", s: `${k.churn_mes} previstos p/ ${D.month}` + delta("em_churn", true), cls: k.em_churn ? "alert" : "" },
+    { v: k.sem_reuniao, l: "Sem reunião 15d+", s: "clientes ativos" + delta("sem_reuniao", true), cls: k.sem_reuniao ? "warn" : "" },
+    { v: od, l: "Tarefas atrasadas", s: "squads e obrigações" + delta("atrasadas", true), cls: k.atrasadas > 50 ? "warn" : "" },
+  ];
+  $("#kpis").innerHTML = tiles.map((t) => `<div class="kpi ${t.cls || ""}"><div class="v">${esc(t.v)}</div><div class="l">${esc(t.l)}</div><div class="s">${t.s}</div></div>`).join("");
+
+  const tot = D.groups.reduce((a, g) => a + g.n, 0) || 1;
+  $("#j-total").textContent = `${tot} clientes`;
+  $("#stack").setAttribute("aria-label", D.groups.map((g) => `${g.label}: ${g.n}`).join(", "));
+  $("#stack").innerHTML = D.groups.filter((g) => g.n).map((g) => `<div style="flex:${g.n};background:${GROUP_COLOR[g.key]}" title="${esc(g.label)}: ${g.n}">${g.n}</div>`).join("");
+  $("#legend").innerHTML = D.groups.map((g) => `<span style="--c:${GROUP_COLOR[g.key]}">${esc(g.label)} · ${g.n} (${Math.round((g.n / tot) * 100)}%)</span>`).join("");
+  const maxS = Math.max(...D.status_rows.map((r) => r.n), 1);
+  $("#statuses").innerHTML = D.status_rows.map((r) => `<div class="bar" title="${esc(r.status)}: ${r.n}"><span class="lbl">${esc(r.status)}</span><span class="track"><span class="fill" style="display:block;width:${(r.n / maxS) * 100}%;--c:${GROUP_COLOR[r.group] || "var(--s3)"}"></span></span><span class="n num">${r.n}</span></div>`).join("");
+
+  const cell = (v, hotAt) => `<td class="${v === 0 ? "zero" : hotAt && v >= hotAt ? "hot" : ""}">${v}</td>`;
+  $("#cs-table tbody").innerHTML = D.cs_rows.map((r) => `<tr><td>${esc(r.cs)}</td>${cell(r.ativos)}${cell(r.onboarding)}${cell(r.maturacao)}${cell(r.ongoing)}${cell(r.renovacao)}${cell(r.churn, 3)}${cell(r.sem_reuniao, 4)}${cell(r.atrasadas, 15)}</tr>`).join("");
+
+  const item = (c, extra) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a><span class="meta">${esc(c.cs)} · ${esc(extra ?? c.status)}</span></li>`;
+  const churnIds = new Set(D.churn_month_ids);
+  const tabs = [
+    { id: "churn", label: `Em churn (${D.in_churn.length})`, html: () => `<p class="muted" style="margin:0 0 6px;font-size:13px">Primeiro os previstos para ${esc(D.month)}.</p><ul class="list">${D.in_churn.map((c) => item(c, churnIds.has(c.id) ? `churn ${D.month}` : "status churn")).join("")}</ul>` },
+    { id: "reuniao", label: `Sem reunião 15d+ (${D.no_meeting.length})`, html: () => `<ul class="list">${D.no_meeting.map((c) => item(c)).join("")}</ul>` },
+    { id: "renov", label: `Renovações (${D.renewals.length})`, html: () => `<ul class="list">${D.renewals.map((c) => item(c, (c.tags.find((t) => t.startsWith("renovação/")) || c.status))).join("")}</ul>` },
+    { id: "novos", label: `Entradas de ${D.month} (${D.new_month.length})`, html: () => D.new_month.length ? `<ul class="list">${D.new_month.map((c) => item(c)).join("")}</ul>` : `<p class="muted" style="margin:0">Nenhum cliente com a tag de onboarding de ${esc(D.month)} ainda. As entradas do mês aparecem aqui assim que a tag for aplicada no ClickUp.</p>` },
+  ];
+  let current = "churn";
+  try { current = localStorage.getItem("jarvis-tab") || current; } catch (e) {}
+  if (!tabs.some((t) => t.id === current)) current = "churn";
+  const drawTabs = () => {
+    $("#tabs").innerHTML = tabs.map((t) => `<button role="tab" id="tab-${t.id}" aria-selected="${t.id === current}" data-id="${t.id}">${esc(t.label)}</button>`).join("");
+    $("#tab-body").innerHTML = tabs.find((t) => t.id === current).html();
+  };
+  $("#tabs").addEventListener("click", (e) => {
+    const b = e.target.closest("button[data-id]");
+    if (!b) return;
+    current = b.dataset.id;
+    try { localStorage.setItem("jarvis-tab", current); } catch (err) {}
+    drawTabs();
+  });
+  drawTabs();
+
+  $("#od-total").textContent = `${od} no total`;
+  const maxO = Math.max(...D.overdue_rows.map((r) => r.n), 1);
+  $("#overdue").innerHTML = D.overdue_rows.map((r) => `<div class="bar" title="${esc(r.who)}: ${r.n} atrasadas, ${r.urgent} urgentes, mais antiga de ${r.oldest} (${r.days} dias)"><span class="lbl">${esc(r.who)}</span><span class="track"><span class="fill" style="display:block;width:${(r.n / maxO) * 100}%;--c:${r.n >= 15 ? "var(--serious)" : "var(--s3)"}"></span></span><span class="n num">${r.n}</span></div>`).join("");
+
+  const ret = D.retention || {}, open = ret.open || {};
+  const maxR = Math.max(...Object.values(open), 1);
+  $("#retention").innerHTML = Object.entries(open).map(([s, n]) => `<div class="bar"><span class="lbl">${esc(s)}</span><span class="track"><span class="fill" style="display:block;width:${(n / maxR) * 100}%;--c:var(--s2)"></span></span><span class="n num">${n}${ret.open_truncated && s === "requisitou cancelamento" ? "+" : ""}</span></div>`).join("");
+  const cl = ret.closed_total || {};
+  $("#ret-note").textContent = `Fechados no total: ${cl.retido || 0} retidos, ${cl.perdido || 0} perdidos.`;
+
+  $("#f-src").textContent = `Leitura de ${D.date} · ${D.source}`;
+}
+render();
+</script>

@@ -1,0 +1,111 @@
+# Jarvis AEG — roteiro da leitura matinal
+
+Este é o roteiro que a rotina diária executa (seg–sex, 7h de Brasília). Ele lê o
+ClickUp pelo conector MCP, grava um snapshot compacto, gera o painel e republica
+o artifact **Jarvis AEG** no mesmo link.
+
+- Painel: https://claude.ai/artifact/5fEvikzqzx13Qx2yXLTLQS
+- Branch: `claude/jarvis-aeg-operational-dashboard-f76c5x`
+- IDs de listas, campos e status: `jarvis/config.json`
+
+O acesso direto à API do ClickUp (`api.clickup.com`) é bloqueado neste ambiente,
+por isso toda a coleta é feita pelas ferramentas `mcp__ClickUp__*`.
+
+## 0. Preparar os arquivos
+
+O código e o histórico ficam publicados junto com o próprio artifact (assim a
+rotina funciona mesmo sem acesso ao GitHub). Numa sessão nova:
+
+1. `Artifact` `action: "list"`, `scope: "files"`, `url` = painel. Isso lista
+   `jarvis/build.py`, `jarvis/template.html`, `jarvis/config.json`,
+   `jarvis/JARVIS.md` e `jarvis/data/snapshots/*.json`.
+2. `Artifact` `action: "read"` com `paths` = todos esses arquivos e
+   `out_dir` = o diretório de trabalho atual, para que caiam em `./jarvis/...`.
+   Se o repositório já tiver a pasta `jarvis/`, prefira os snapshots mais
+   recentes entre os dois.
+
+## Passo a passo
+
+`HOJE` = data de hoje em America/Sao_Paulo (AAAA-MM-DD). Todas as chamadas de
+`clickup_filter_tasks` devem ser paginadas até `has_more = false`.
+
+### 1. Carteira de clientes (lista GESTÃO DE CLIENTES `901408581641`)
+
+`clickup_filter_tasks` com `list_ids=["901408581641"]`, `subtasks=false` e
+`statuses` = todos os itens de `status_order` do config **mais** `"churn"`.
+
+Para cada tarefa grave uma linha em `clients`:
+
+```
+[id, nome, status, nome completo do 1º responsável (ou ""), "tag1|tag2|..."]
+```
+
+Inclua todas as tags exatamente como vêm (o script usa `mrr`, `arr`, `venda.ia`,
+`crm.ia`, `onboarding <mês>/26`, `churn <mês>/26`, `renovação/<mês>`). Linhas
+com nome começando em "MODELO" podem ficar; o script ignora.
+
+### 2. Clientes sem reunião há 15+ dias
+
+`clickup_filter_tasks` na mesma lista, mesmos `statuses` do passo 1 **sem**
+`"churn"`, com
+`custom_fields=[{"field_id":"f4213d4c-13a5-4878-958a-9f84b1fafc69","operator":"<","value":"<HOJE − 15 dias>"}]`.
+Grave só os IDs em `no_meeting_15d`.
+
+### 3. CRM Retenção (lista `901413635330`)
+
+- Abertos: filtre cada status `requisitou cancelamento`, `tentativa de contato`,
+  `reunião marcada`, `reunião realizada` e conte (todas as páginas) →
+  `retention.open`. Se não conseguir paginar tudo, marque `open_truncated: true`.
+- Fechados: conte os status `retido` e `perdido` (com `include_closed=true`) →
+  `retention.closed_total`.
+
+### 4. Tarefas atrasadas
+
+`clickup_filter_tasks` com `list_ids` = `tarefas_athena`, `tarefas_cronos`,
+`obrigacoes_supervisao`, `obrigacoes_lideranca`; `statuses=["pendente","priorizada/urgente"]`;
+`due_date_to` = ontem; `subtasks=true`. Para cada tarefa:
+
+```
+[nome completo do 1º responsável (ou ""), vencimento AAAA-MM-DD em America/Sao_Paulo, 1 se status "priorizada/urgente" ou prioridade urgent/high, senão 0]
+```
+
+O `due_date` vem em milissegundos UTC; converta com fuso −03:00. Se precisar
+parar antes da última página, grave `overdue_truncated: true`.
+
+### 5. Snapshot, painel e publicação
+
+1. Grave `jarvis/data/snapshots/HOJE.json`:
+
+   ```json
+   {
+     "date": "HOJE",
+     "source": "ClickUp MCP (Operacional AEG)",
+     "clients": [...],
+     "no_meeting_15d": [...],
+     "retention": {"open": {...}, "open_truncated": false, "closed_total": {"retido": 0, "perdido": 0}},
+     "overdue_truncated": false,
+     "overdue": [...],
+     "notes": []
+   }
+   ```
+
+   `notes` é opcional: frases curtas com algo fora do padrão que você notou
+   (ex.: "3 clientes novos entraram ontem sem CS"). Viram itens "Info" no topo.
+2. Rode `python3 jarvis/build.py`. Ele compara com o snapshot anterior e gera
+   `jarvis/out/jarvis.html`.
+3. Leia o artifact (`Artifact` com `action: "read"` e a URL acima) e publique
+   `jarvis/out/jarvis.html` com `url` = a URL acima e
+   `files` = `{"jarvis/data/snapshots/HOJE.json": "jarvis/data/snapshots/HOJE.json"}`
+   (mais qualquer arquivo de código que tenha mudado). Não crie um artifact novo.
+4. Se o repositório estiver disponível, também faça `git add jarvis/data/snapshots/HOJE.json`,
+   commit e `git push -u origin claude/jarvis-aeg-operational-dashboard-f76c5x`.
+   Se o push falhar, siga em frente: o histórico já está salvo no artifact.
+5. Responda com um resumo de 4 a 6 linhas em português: os números do dia,
+   o que mudou desde a última leitura e as 3 prioridades. Termine com o link do painel.
+
+## Se algo falhar
+
+- Conector ClickUp indisponível: não invente dados. Responda dizendo que a
+  leitura de hoje não rodou e por quê; o painel continua com a última leitura.
+- Um passo isolado falhou (ex.: retenção): grave o snapshot sem aquela chave e
+  registre o motivo em `notes`.

@@ -1,0 +1,55 @@
+{
+  "workspace_id": "31113012",
+  "space": {"id": "90142477365", "name": "Operacional AEG"},
+  "lists": {
+    "gestao_clientes": "901408581641",
+    "crm_retencao": "901413635330",
+    "nps": "901413937613",
+    "csat": "901418373031",
+    "obrigacoes_supervisao": "901416785482",
+    "obrigacoes_lideranca": "901413984640",
+    "tarefas_athena": "901413566558",
+    "tarefas_cronos": "901413566902"
+  },
+  "fields": {
+    "ultima_reuniao": "f4213d4c-13a5-4878-958a-9f84b1fafc69",
+    "acompanhamento": "382502b5-b2a4-43b4-91f3-8a75754eef3a",
+    "fee_oficial": "a59accea-9e7d-4132-8417-ba1c1323953e",
+    "squad": "c69a4d17-e368-4be5-ac68-b237532231f7"
+  },
+  "stage_groups": [
+    {"key": "onboarding", "label": "Onboarding (S1–S4)", "prefixes": ["s1 -", "s2 -", "s4 -"]},
+    {"key": "maturacao", "label": "Mês 2 a 6", "prefixes": ["mês "]},
+    {"key": "ongoing", "label": "Ongoing", "prefixes": ["ongoing"]},
+    {"key": "renovacao", "label": "Renovação", "prefixes": ["renovação"]}
+  ],
+  "status_order": [
+    "s1 - pré briefing", "s1 - call raio x", "s1 - setup ads", "s1 - 1ª campanha",
+    "s2 - call papo vendedores", "s2 - call diagnóstico", "s4 - call ativação",
+    "mês 2 - página de destino", "mês 2 - follow up", "mês 3 - rotina resgate", "mês 3 - follow day",
+    "mês 4 - plan trimestre", "mês 4 - sábado previsível", "mês 5 - google meu negócio", "mês 6 - redes sociais",
+    "renovação oportunidade", "renovação proposta feita", "renovação fechada", "ongoing"
+  ],
+  "churn_status": "churn",
+  "ignore_name_prefixes": ["MODELO"],
+  "overdue_alert_per_person": 15,
+  "people": {
+    "Robson Constantino de Souza Ferreira": "Robson",
+    "Pedro Guilherme de Andrade Silva": "Pedro Guilherme",
+    "Adriel Queiroz Do Nascimento": "Adriel",
+    "Gabriel Elias da Silva Oliveira Nascimento": "Gabriel Elias",
+    "Vinicius Araújo da Silva": "Vinicius",
+    "Arthur Araújo": "Arthur",
+    "Jhony Vidal": "Jhony",
+    "Luan Sulivan": "Luan",
+    "Isaac Maxwell": "Isaac",
+    "Camila Bianca de Aguiar Braz": "Camila",
+    "Amábily Almeida - AEG": "Amábily",
+    "Geovanna Cavalcante AEG": "Geovanna",
+    "Wayslanne Cavalcante": "Wayslanne",
+    "Alison Serafim": "Alison",
+    "Pedro Henrique": "Pedro Henrique",
+    "Jonas": "Jonas",
+    "": "Sem responsável"
+  }
+}
