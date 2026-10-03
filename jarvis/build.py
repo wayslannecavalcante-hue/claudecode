@@ -163,6 +163,8 @@ def metrics(snap, cfg):
         "overdue_rows": overdue_rows,
         "retention": snap.get("retention", {}),
         "notes": snap.get("notes", []),
+        "news": snap.get("news", []),
+        "cobertura": round(100 * (len(active) - len(no_meet)) / max(len(active), 1)),
     }
 
 

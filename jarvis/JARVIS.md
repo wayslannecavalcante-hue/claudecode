@@ -72,7 +72,35 @@ Grave só os IDs em `no_meeting_15d`.
 O `due_date` vem em milissegundos UTC; converta com fuso −03:00. Se precisar
 parar antes da última página, grave `overdue_truncated: true`.
 
-### 5. Snapshot, painel e publicação
+### 5. Radar de mercado (notícias do dia)
+
+Use `WebSearch` (modo `extended`) com buscas em português sobre os últimos 7 dias, por exemplo:
+- `seminovos usados vendas Fenauto <mês atual> <ano>`
+- `emplacamentos Fenabrave <mês atual> <ano>`
+- `Tabela Fipe <mês atual> <ano> carros usados preço`
+- `financiamento de veículos usados B3 <ano>`
+- `revenda de carros seminovos lojistas notícias`
+- `carros chineses elétricos revenda desvalorização`
+
+Escolha de 6 a 10 notícias relevantes para lojas de carros seminovos e para o mercado
+automotivo no Brasil. Prefira as mais recentes e fontes conhecidas (Fenauto, Fenabrave,
+B3, InfoMoney, Autoesporte, Valor, Estadão, O Tempo, Garagem360). Não repita notícias que
+já estavam no snapshot anterior, a não ser que tragam dado novo. Para cada uma, grave em `news`:
+
+```json
+{"cat": "Seminovos | Mercado 0km | Preços & Fipe | Crédito | Tecnologia & Varejo",
+ "date": "AAAA-MM-DD ou null se não souber",
+ "source": "Veículo / fonte do dado",
+ "url": "link da matéria",
+ "title": "título fiel à matéria",
+ "summary": "1–2 frases com os números principais, sem inventar",
+ "impact": "1 frase: o que isso muda para os lojistas clientes da AEG (anúncios, estoque, Venda.IA, crédito)"}
+```
+
+Nunca invente número, data ou link: use só o que veio da busca. Se a busca falhar,
+grave `"news": []` e registre em `notes`.
+
+### 6. Snapshot, painel e publicação
 
 1. Grave `jarvis/data/snapshots/HOJE.json`:
 
@@ -85,6 +113,7 @@ parar antes da última página, grave `overdue_truncated: true`.
      "retention": {"open": {...}, "open_truncated": false, "closed_total": {"retido": 0, "perdido": 0}},
      "overdue_truncated": false,
      "overdue": [...],
+     "news": [...],
      "notes": []
    }
    ```
