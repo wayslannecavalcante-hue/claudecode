@@ -1,0 +1,2484 @@
+{
+ "date": "2026-10-04",
+ "source": "ClickUp MCP (Operacional AEG) · leitura de domingo",
+ "clients": [
+  [
+   "86bcb9k25",
+   "RENOVA VEICULOS",
+   "mês 2 - página de destino",
+   "Pedro Henrique",
+   "onboarding setembro/26|mrr"
+  ],
+  [
+   "86bcafxqd",
+   "MP SELETC",
+   "s1 - call raio x",
+   "Arthur Araújo",
+   "mrr|onboarding setembro/26|crm.ia|venda.ia"
+  ],
+  [
+   "86bcafnek",
+   "TRAÇÃO MOTORS",
+   "s1 - pré briefing",
+   "Robson Constantino de Souza Ferreira",
+   "crm.ia|onboarding setembro/26|venda.ia"
+  ],
+  [
+   "86bcafjpc",
+   "Scheibel Automoveis",
+   "s1 - pré briefing",
+   "Pedro Guilherme de Andrade Silva",
+   "onboarding setembro/26"
+  ],
+  [
+   "86bc8kf4a",
+   "CREDCARROS",
+   "s2 - call papo vendedores",
+   "Pedro Henrique",
+   "venda.ia|onboarding setembro/26|arr"
+  ],
+  [
+   "86bc32q17",
+   "ROTA 408",
+   "mês 2 - página de destino",
+   "Adriel Queiroz Do Nascimento",
+   "mrr|venda.ia|onboarding setembro/26"
+  ],
+  [
+   "86bc32nq2",
+   "GARAGE V12",
+   "s4 - call ativação",
+   "Jonas",
+   "arr|onboarding setembro/26|crm.ia"
+  ],
+  [
+   "86bc0za13",
+   "JL VEICULOS",
+   "s4 - call ativação",
+   "Robson Constantino de Souza Ferreira",
+   "onboarding setembro/26|mrr|crm.ia|venda.ia"
+  ],
+  [
+   "86bc056rd",
+   "DACAR VEICULOS",
+   "s1 - 1ª campanha",
+   "Arthur Araújo",
+   "crm.ia|venda.ia|onboarding setembro/26|arr"
+  ],
+  [
+   "86bc048k1",
+   "BR VEICULOS",
+   "s1 - pré briefing",
+   "Pedro Guilherme de Andrade Silva",
+   "onboarding setembro/26|mrr"
+  ],
+  [
+   "86bbyuff4",
+   "P&A VEICULOS",
+   "s4 - call ativação",
+   "Arthur Araújo",
+   "venda.ia|onboarding setembro/26|arr"
+  ],
+  [
+   "86bbv01eu",
+   "FM VEICULOS",
+   "mês 2 - página de destino",
+   "Pedro Henrique",
+   "arr|venda.ia|onboarding agosto/26|crm.ia"
+  ],
+  [
+   "86bbuzwm5",
+   "ALEXANDRE VEICULOS",
+   "s1 - setup ads",
+   "Jhony Vidal",
+   "onboarding agosto/26|arr|venda.ia"
+  ],
+  [
+   "86bbuzuvp",
+   "STOPCAR",
+   "s4 - call ativação",
+   "Jonas",
+   "venda.ia|onboarding agosto/26|arr"
+  ],
+  [
+   "86bbuzk08",
+   "MAURO MULTIMARCAS",
+   "mês 2 - página de destino",
+   "Robson Constantino de Souza Ferreira",
+   "onboarding agosto/26|arr|venda.ia"
+  ],
+  [
+   "86bbuzjkx",
+   "FL VEICULOS",
+   "s4 - call ativação",
+   "Jonas",
+   "onboarding setembro/26|arr|venda.ia"
+  ],
+  [
+   "86bbu8g5c",
+   "VCAR AUTOMÓVEIS",
+   "mês 2 - página de destino",
+   "Jonas",
+   "venda.ia|arr|onboarding setembro/26"
+  ],
+  [
+   "86bbp85z3",
+   "SANTA MARIA VEICULOS",
+   "mês 2 - página de destino",
+   "Adriel Queiroz Do Nascimento",
+   "venda.ia|onboarding agosto/26|arr"
+  ],
+  [
+   "86bbn7u8u",
+   "COOPER MULTIMARCAS",
+   "s4 - call ativação",
+   "Jhony Vidal",
+   "onboarding agosto/26|arr|venda.ia|crm.ia"
+  ],
+  [
+   "86bbm6k4d",
+   "VIP MOTORS",
+   "mês 2 - página de destino",
+   "Pedro Guilherme de Andrade Silva",
+   "arr|onboarding agosto/26|crm.ia"
+  ],
+  [
+   "86bbm6gp6",
+   "PERON VEICULOS",
+   "s4 - call ativação",
+   "Jhony Vidal",
+   "onboarding agosto/26|arr|venda.ia"
+  ],
+  [
+   "86bbkz1pk",
+   "CF MOTORS",
+   "s4 - call ativação",
+   "Robson Constantino de Souza Ferreira",
+   "arr|onboarding agosto/26"
+  ],
+  [
+   "86bbkf097",
+   "PLACAR",
+   "s4 - call ativação",
+   "Jhony Vidal",
+   "arr|onboarding agosto/26"
+  ],
+  [
+   "86bbjdvc3",
+   "GOMES AUTOMOVEIS",
+   "s4 - call ativação",
+   "Jonas",
+   "venda.ia|onboarding agosto/26|arr"
+  ],
+  [
+   "86bbj4w3x",
+   "FCARBH",
+   "s4 - call ativação",
+   "Robson Constantino de Souza Ferreira",
+   "venda.ia|onboarding agosto/26|arr"
+  ],
+  [
+   "86bbj3ea1",
+   "RA AUTOMOVEIS",
+   "mês 2 - página de destino",
+   "Pedro Henrique",
+   "arr|onboarding agosto/26"
+  ],
+  [
+   "86bbhrntm",
+   "LIDERANÇA VEICULOS",
+   "mês 2 - página de destino",
+   "Adriel Queiroz Do Nascimento",
+   "mrr|venda.ia|onboarding agosto/26"
+  ],
+  [
+   "86bbhr10y",
+   "AUTO GUARD",
+   "s1 - 1ª campanha",
+   "Jhony Vidal",
+   "onboarding julho/26|mrr"
+  ],
+  [
+   "86bbh6mad",
+   "MT PRIME",
+   "mês 2 - página de destino",
+   "Adriel Queiroz Do Nascimento",
+   "venda.ia|arr|onboarding agosto/26"
+  ],
+  [
+   "86bbga234",
+   "ALL IN MOTORS",
+   "s1 - 1ª campanha",
+   "Jhony Vidal",
+   "venda.ia|arr|onboarding agosto/26"
+  ],
+  [
+   "86bbg4pf0",
+   "WALMIR MOTO E CARRO",
+   "mês 2 - página de destino",
+   "Adriel Queiroz Do Nascimento",
+   "venda.ia|onboarding agosto/26|mrr"
+  ],
+  [
+   "86bbdufex",
+   "R3 MULTIMARCAS",
+   "ongoing",
+   "Adriel Queiroz Do Nascimento",
+   "venda.ia|crm.ia|onboarding agosto/26|arr"
+  ],
+  [
+   "86bbbe1b8",
+   "LEGACY",
+   "ongoing",
+   "Adriel Queiroz Do Nascimento",
+   "venda.ia|mrr|onboarding agosto/26"
+  ],
+  [
+   "86bbbdyj1",
+   "EVVOCAR",
+   "mês 2 - página de destino",
+   "Robson Constantino de Souza Ferreira",
+   "arr|onboarding agosto/26|venda.ia"
+  ],
+  [
+   "86bbbdjk0",
+   "AUTOVIA",
+   "mês 2 - página de destino",
+   "Jonas",
+   "venda.ia|onboarding agosto/26|arr"
+  ],
+  [
+   "86bbba3n3",
+   "VENANCIO VEICULOS",
+   "ongoing",
+   "Adriel Queiroz Do Nascimento",
+   "arr|venda.ia|onboarding agosto/26"
+  ],
+  [
+   "86bbafwe7",
+   "R8",
+   "ongoing",
+   "Jonas",
+   "venda.ia|arr|onboarding agosto/26"
+  ],
+  [
+   "86bbaf470",
+   "X10 MOTORS",
+   "mês 2 - página de destino",
+   "Jhony Vidal",
+   "arr|onboarding agosto/26|venda.ia"
+  ],
+  [
+   "86bb9eww7",
+   "RS VEICULOS",
+   "s4 - call ativação",
+   "Vinicius Araújo da Silva",
+   "arr|onboarding agosto/26|venda.ia"
+  ],
+  [
+   "86bb83a5z",
+   "KINGVEL",
+   "ongoing",
+   "Jonas",
+   "arr|onboarding julho/26"
+  ],
+  [
+   "86bb5ybp0",
+   "HS VEICULOS",
+   "s4 - call ativação",
+   "Pedro Henrique",
+   "venda.ia|arr|onboarding julho/26"
+  ],
+  [
+   "86bb5y98z",
+   "OPÇÕES VEICULOS",
+   "mês 2 - página de destino",
+   "Pedro Henrique",
+   "onboarding julho/26|arr|venda.ia"
+  ],
+  [
+   "86bb5wgbf",
+   "NATIVA VEICULOS",
+   "mês 2 - página de destino",
+   "Robson Constantino de Souza Ferreira",
+   "arr|onboarding julho/26"
+  ],
+  [
+   "86bb5h2wm",
+   "GURGEL VEICULOS",
+   "s4 - call ativação",
+   "Pedro Henrique",
+   "onboarding julho/26|arr|venda.ia"
+  ],
+  [
+   "86bb5ewtg",
+   "VILLA CAR",
+   "mês 2 - página de destino",
+   "Vinicius Araújo da Silva",
+   "venda.ia|arr|crm.ia|onboarding julho/26"
+  ],
+  [
+   "86bb4n8cw",
+   "ALFA MOTORS",
+   "mês 2 - página de destino",
+   "Jhony Vidal",
+   "onboarding julho/26|arr|venda.ia"
+  ],
+  [
+   "86bb44m1k",
+   "VASSOURA VEICULOS",
+   "ongoing",
+   "Pedro Henrique",
+   "venda.ia|arr|onboarding julho/26"
+  ],
+  [
+   "86bb30b5x",
+   "NEWCAR",
+   "mês 2 - página de destino",
+   "Pedro Henrique",
+   "arr|onboarding julho/26"
+  ],
+  [
+   "86bb21mmz",
+   "SUIÇA VEICULOS",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "venda.ia|mrr|onboarding julho/26"
+  ],
+  [
+   "86bb1vp7t",
+   "FABIANO MULTIMARCAS",
+   "s4 - call ativação",
+   "Jhony Vidal",
+   "crm.ia|venda.ia|onboarding julho/26|arr"
+  ],
+  [
+   "86baxmevu",
+   "CAPRIO MOTORS",
+   "ongoing",
+   "Arthur Araújo",
+   "venda.ia|onboarding julho/26|vaga rh|mrr"
+  ],
+  [
+   "86baxec65",
+   "AUTO NORTE",
+   "ongoing",
+   "Jonas",
+   "venda.ia|arr|onboarding julho/26"
+  ],
+  [
+   "86baxebp7",
+   "FEOLA",
+   "ongoing",
+   "Gabriel Elias da Silva Oliveira Nascimento",
+   "venda.ia|vaga rh|mrr|onboarding julho/26"
+  ],
+  [
+   "86bawtycu",
+   "AVELLOZ MOTORS",
+   "mês 2 - página de destino",
+   "Arthur Araújo",
+   "mrr|venda.ia|crm.ia|onboarding julho/26"
+  ],
+  [
+   "86bavv344",
+   "LV MULTIMARCAS",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "onboarding julho/26|arr|crm.ia|venda.ia"
+  ],
+  [
+   "86bavv28v",
+   "MTCAR",
+   "mês 2 - página de destino",
+   "Pedro Henrique",
+   "venda.ia|arr|onboarding julho/26"
+  ],
+  [
+   "86bav3fpr",
+   "AMERICAN VEICULOS",
+   "ongoing",
+   "Adriel Queiroz Do Nascimento",
+   "venda.ia|onboarding junho/26|arr"
+  ],
+  [
+   "86bav1ucq",
+   "TRADECAR",
+   "ongoing",
+   "Arthur Araújo",
+   "crm.ia|onboarding julho/26|venda.ia|mrr"
+  ],
+  [
+   "86bav1g26",
+   "BRACAR",
+   "ongoing",
+   "Adriel Queiroz Do Nascimento",
+   "venda.ia|onboarding julho/26|arr"
+  ],
+  [
+   "86bame93x",
+   "DAVI VEICULOS",
+   "ongoing",
+   "Jonas",
+   "onboarding junho/26|arr|venda.ia"
+  ],
+  [
+   "86bame31p",
+   "NM MULTIMARCAS",
+   "ongoing",
+   "Adriel Queiroz Do Nascimento",
+   "onboarding junho/26|arr|venda.ia"
+  ],
+  [
+   "86bambznq",
+   "CR CAR",
+   "ongoing",
+   "Arthur Araújo",
+   "arr|venda.ia|onboarding junho/26"
+  ],
+  [
+   "86bambv9c",
+   "ACESSO CAR",
+   "ongoing",
+   "Pedro Henrique",
+   "onboarding junho/26|arr|venda.ia"
+  ],
+  [
+   "86bambrd6",
+   "FINAN AUTO",
+   "mês 2 - página de destino",
+   "Jhony Vidal",
+   "arr|onboarding junho/26|venda.ia"
+  ],
+  [
+   "86bajcy2w",
+   "ROMA CAR",
+   "mês 2 - página de destino",
+   "Arthur Araújo",
+   "mrr|venda.ia|onboarding junho/26"
+  ],
+  [
+   "86bajcy1f",
+   "MM VEICULOS",
+   "renovação oportunidade",
+   "Adriel Queiroz Do Nascimento",
+   "onboarding junho/26|arr|venda.ia"
+  ],
+  [
+   "86bahxpwu",
+   "FALCON",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "arr|onboarding junho/26"
+  ],
+  [
+   "86bah4hp9",
+   "JCAR",
+   "mês 2 - página de destino",
+   "Vinicius Araújo da Silva",
+   "onboarding junho/26|arr|venda.ia"
+  ],
+  [
+   "86bagawkc",
+   "ALTERNATIVA VEICULOS",
+   "mês 2 - página de destino",
+   "Arthur Araújo",
+   "onboarding junho/26|arr|venda.ia"
+  ],
+  [
+   "86bacj45p",
+   "CRISTHIAN VEICULOS",
+   "renovação oportunidade",
+   "Pedro Henrique",
+   "onboarding maio/26|venda.ia|arr"
+  ],
+  [
+   "86ba927de",
+   "CONCEPT MOTORS",
+   "ongoing",
+   "Vinicius Araújo da Silva",
+   "arr|onboarding junho/26|venda.ia"
+  ],
+  [
+   "86ba80q5d",
+   "3A MULTIMARCAS",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "onboarding maio/26|mrr|venda.ia|crm.ia"
+  ],
+  [
+   "86ba6pera",
+   "GSA MULTIMARCAS",
+   "ongoing",
+   "Jhony Vidal",
+   "venda.ia|onboarding maio/26|arr"
+  ],
+  [
+   "86ba5tfrx",
+   "BONFIM VEICULOS",
+   "ongoing",
+   "Adriel Queiroz Do Nascimento",
+   "mrr|onboarding maio/26|venda.ia"
+  ],
+  [
+   "86ba5r20g",
+   "DEU NEGÓCIO",
+   "ongoing",
+   "Jonas",
+   "arr|onboarding maio/26|venda.ia"
+  ],
+  [
+   "86ba5r1xf",
+   "CARRO & CIA",
+   "ongoing",
+   "Pedro Henrique",
+   "arr|onboarding maio/26|venda.ia"
+  ],
+  [
+   "86ba1j2eu",
+   "BARÃO VEÍCULOS",
+   "ongoing",
+   "Vinicius Araújo da Silva",
+   "arr|onboarding maio/26|venda.ia"
+  ],
+  [
+   "86ba1hmkg",
+   "MAX MOTORS",
+   "ongoing",
+   "Pedro Guilherme de Andrade Silva",
+   "onboarding maio/26|mrr|venda.ia"
+  ],
+  [
+   "86b9xbzau",
+   "AUTO SALON",
+   "ongoing",
+   "Arthur Araújo",
+   "arr|onboarding maio/26|venda.ia|crm.ia"
+  ],
+  [
+   "86b9xby4c",
+   "GILCAR",
+   "ongoing",
+   "Jonas",
+   "onboarding maio/26|arr|venda.ia"
+  ],
+  [
+   "86b9xbtmw",
+   "TS MULTIMARCAS",
+   "mês 2 - página de destino",
+   "Jhony Vidal",
+   "onboarding maio/26|arr|venda.ia"
+  ],
+  [
+   "86b9ux6zt",
+   "SELETA",
+   "ongoing",
+   "Pedro Guilherme de Andrade Silva",
+   "onboarding maio/26|arr|venda.ia"
+  ],
+  [
+   "86b9tphuu",
+   "APRONOVA",
+   "ongoing",
+   "Jhony Vidal",
+   "mrr|onboarding abril"
+  ],
+  [
+   "86b9tpe8z",
+   "BMS VEICULOS",
+   "ongoing",
+   "Pedro Henrique",
+   "arr|onboarding abril|venda.ia"
+  ],
+  [
+   "86b9tp9bq",
+   "RHS Veiculos",
+   "ongoing",
+   "Jonas",
+   "venda.ia|arr|onboarding abril"
+  ],
+  [
+   "86b9tg0d1",
+   "VIMARA AUTOMOVEIS",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "arr|venda.ia|crm.ia|onboarding abril"
+  ],
+  [
+   "86b9rdqbr",
+   "LEANDRO MULTIMARCAS",
+   "ongoing",
+   "Jhony Vidal",
+   "onboarding abril|mrr|venda.ia"
+  ],
+  [
+   "86b9p1kwn",
+   "AKI AUTOMÓVEIS",
+   "ongoing",
+   "Jonas",
+   "onboarding abril|arr|venda.ia"
+  ],
+  [
+   "86b9p1e93",
+   "P3 AUTOMÓVEIS",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "onboarding abril|mrr|venda.ia"
+  ],
+  [
+   "86b9n953z",
+   "MANAUS AUTOCAR",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "arr|onboarding abril|venda.ia"
+  ],
+  [
+   "86b9n94q5",
+   "BRANDS MOTORS",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "arr|venda.ia|onboarding abril"
+  ],
+  [
+   "86b9envdf",
+   "PINGUIM MOTORS",
+   "ongoing",
+   "Pedro Henrique",
+   "venda.ia|arr|onboarding abril"
+  ],
+  [
+   "86b9enquc",
+   "AVENIDA VEICULOS",
+   "mês 2 - página de destino",
+   "Jhony Vidal",
+   "onboarding abril|arr|venda.ia"
+  ],
+  [
+   "86b9endan",
+   "VIACAR",
+   "ongoing",
+   "Arthur Araújo",
+   "onboarding abril|arr|venda.ia"
+  ],
+  [
+   "86b95zegr",
+   "AUTO REQUINTTE",
+   "ongoing",
+   "Arthur Araújo",
+   "onboarding março|venda.ia|mrr"
+  ],
+  [
+   "86b95zbfy",
+   "ATALAIA",
+   "renovação oportunidade",
+   "Pedro Henrique",
+   "onboarding março|arr|venda.ia|renovação/setembro"
+  ],
+  [
+   "86b95zaj3",
+   "MR. CAR SEMINOVOS",
+   "renovação oportunidade",
+   "Adriel Queiroz Do Nascimento",
+   "onboarding março|arr|venda.ia|renovação/setembro"
+  ],
+  [
+   "86b95z9zd",
+   "CITYCAR",
+   "renovação oportunidade",
+   "Arthur Araújo",
+   "onboarding março|arr|renovação/setembro|crm.ia|venda.ia"
+  ],
+  [
+   "86b94j2n3",
+   "LUCK CAR",
+   "renovação oportunidade",
+   "Jhony Vidal",
+   "onboarding março|arr|renovação/setembro|venda.ia|crm.ia"
+  ],
+  [
+   "86b93ft3v",
+   "GAMALLO",
+   "renovação oportunidade",
+   "Robson Constantino de Souza Ferreira",
+   "venda.ia|onboarding março|arr"
+  ],
+  [
+   "86b93ft0b",
+   "LMOTORS",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "venda.ia|onboarding março|mrr"
+  ],
+  [
+   "86b8utn67",
+   "GOIÁS MOTORS",
+   "ongoing",
+   "Arthur Araújo",
+   "venda.ia|onboarding março|mrr|crm.ia"
+  ],
+  [
+   "86b8tu0ga",
+   "CANELAS CAR",
+   "renovação oportunidade",
+   "Arthur Araújo",
+   "venda.ia|arr|renovação/agosto|onboarding março"
+  ],
+  [
+   "86b8ttyvv",
+   "ALEXANDRA VEÍCULOS",
+   "renovação oportunidade",
+   "Vinicius Araújo da Silva",
+   "venda.ia|arr|onboarding março|renovação/setembro"
+  ],
+  [
+   "86b8n8370",
+   "GRUPO AUTOMIX",
+   "ongoing",
+   "Gabriel Elias da Silva Oliveira Nascimento",
+   "onboarding fevereiro|venda.ia|mrr|churn junho/26"
+  ],
+  [
+   "86b8ga4aw",
+   "R15 MULTIMARCAS",
+   "ongoing",
+   "Gabriel Elias da Silva Oliveira Nascimento",
+   "arr|onboarding fevereiro|venda.ia|renovação/agosto"
+  ],
+  [
+   "86b8emzbn",
+   "CCN VEÍCULOS",
+   "ongoing",
+   "Gabriel Elias da Silva Oliveira Nascimento",
+   "venda.ia|onboarding janeiro|arr|renovação/julho"
+  ],
+  [
+   "86b82v7w6",
+   "DIAMOND MOTORS",
+   "ongoing",
+   "Pedro Henrique",
+   "onboarding janeiro|venda.ia|renovação/abril|mrr"
+  ],
+  [
+   "86b7v7y1q",
+   "TIPO VEÍCULOS",
+   "ongoing",
+   "Jonas",
+   "venda.ia|mrr"
+  ],
+  [
+   "86b7mucx5",
+   "MIRASSOL",
+   "ongoing",
+   "Pedro Henrique",
+   "venda.ia|mrr"
+  ],
+  [
+   "86b7m4p4z",
+   "BRAVO MOTORS",
+   "ongoing",
+   "Adriel Queiroz Do Nascimento",
+   "venda.ia|mrr|crm.ia"
+  ],
+  [
+   "86b7m0gww",
+   "ROTA VEÍCULOS",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "mrr|venda.ia"
+  ],
+  [
+   "86b7m0868",
+   "MAVVI",
+   "renovação oportunidade",
+   "Jonas",
+   "arr|renovação/setembro|venda.ia"
+  ],
+  [
+   "86b7jnur4",
+   "NEXT CAR",
+   "ongoing",
+   "Arthur Araújo",
+   "venda.ia|mrr"
+  ],
+  [
+   "86b7jb90a",
+   "ARTHUR VEÍCULOS",
+   "ongoing",
+   "Pedro Guilherme de Andrade Silva",
+   "renovação/novembro|mrr|venda.ia"
+  ],
+  [
+   "86b7jb2aq",
+   "BCAR",
+   "renovação oportunidade",
+   "Vinicius Araújo da Silva",
+   "arr|renovação/setembro|venda.ia"
+  ],
+  [
+   "86b7hw6w1",
+   "DUQUE VEÍCULOS",
+   "ongoing",
+   "Jhony Vidal",
+   "arr|renovação/abril|venda.ia"
+  ],
+  [
+   "86b7gyh9q",
+   "BRASIL MULTIMARCAS",
+   "ongoing",
+   "Jhony Vidal",
+   "mrr|venda.ia"
+  ],
+  [
+   "86b7c9gqp",
+   "L3 MULTIMARCAS",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "mrr|venda.ia"
+  ],
+  [
+   "86b6v09q6",
+   "AUTOSHOW",
+   "ongoing",
+   "Adriel Queiroz Do Nascimento",
+   "churn janeiro/26|arr|onboarding junho/26|venda.ia|vaga rh"
+  ],
+  [
+   "86b6f9fxj",
+   "LM AUTOMÓVEIS",
+   "ongoing",
+   "Arthur Araújo",
+   "mrr"
+  ],
+  [
+   "86b6actmc",
+   "GRUPO CENAT",
+   "ongoing",
+   "Jhony Vidal",
+   "mrr"
+  ],
+  [
+   "86b6ackan",
+   "UNIMAIS",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "mrr"
+  ],
+  [
+   "86b68vk6f",
+   "AUTOMANIA VEÍCULOS",
+   "ongoing",
+   "Arthur Araújo",
+   "venda.ia|mrr"
+  ],
+  [
+   "86b549ugg",
+   "BELLOS CAR",
+   "ongoing",
+   "Jonas",
+   "mrr|disparo venda.ia"
+  ],
+  [
+   "86b4k0qt3",
+   "COOPER",
+   "ongoing",
+   "Robson Constantino de Souza Ferreira",
+   "mrr"
+  ],
+  [
+   "86b4k0qd8",
+   "ABV",
+   "ongoing",
+   "Jhony Vidal",
+   "churn agosto/26|venda.ia|mrr|churn julho/26"
+  ],
+  [
+   "86b4k0pzn",
+   "PUMA RECIFE",
+   "ongoing",
+   "Jhony Vidal",
+   "mrr"
+  ],
+  [
+   "86b4k0pvc",
+   "MT IPHONES CARUARU",
+   "ongoing",
+   "Isaac Maxwell",
+   "ou vai ou racha|mrr"
+  ],
+  [
+   "86b4k0pv4",
+   "CLÍNICA B+",
+   "ongoing",
+   "Jhony Vidal",
+   "sm|mrr"
+  ],
+  [
+   "86bbuznh7",
+   "AD ASTRA",
+   "churn",
+   "Jonas",
+   "arr|onboarding agosto/26"
+  ],
+  [
+   "86bb7u349",
+   "ADVEL",
+   "churn",
+   "Jonas",
+   "venda.ia|onboarding julho/26|arr"
+  ],
+  [
+   "86bb6f0d8",
+   "AUTO MULLER",
+   "churn",
+   "Robson Constantino de Souza Ferreira",
+   "mrr|onboarding julho/26|crm.ia|churn outubro/26"
+  ],
+  [
+   "86bayaqac",
+   "AMG",
+   "churn",
+   "Luan Sulivan",
+   "onboarding julho/26|venda.ia|arr"
+  ],
+  [
+   "86baxtruf",
+   "WT MOTORS",
+   "churn",
+   "Vinicius Araújo da Silva",
+   "onboarding julho/26|venda.ia|mrr"
+  ],
+  [
+   "86bavv0m0",
+   "TITANIUM",
+   "churn",
+   "Robson Constantino de Souza Ferreira",
+   "vaga rh|venda.ia|onboarding julho/26|arr"
+  ],
+  [
+   "86bav3tdh",
+   "MK VEICULOS",
+   "churn",
+   "Arthur Araújo",
+   "venda.ia|arr|onboarding junho/26"
+  ],
+  [
+   "86bajcy22",
+   "KING AUTOMOVEIS",
+   "churn",
+   "Pedro Henrique",
+   "churn setembro/2026|mrr|venda.ia|onboarding junho/26"
+  ],
+  [
+   "86baf091h",
+   "R2",
+   "churn",
+   "Jonas",
+   "crm.ia|onboarding junho/26|arr|venda.ia"
+  ],
+  [
+   "86badwgac",
+   "COLLEZIONE",
+   "churn",
+   "Adriel Queiroz Do Nascimento",
+   "onboarding junho/26|churn setembro/2026|churn agosto/26|mrr|venda.ia"
+  ],
+  [
+   "86ba7zjmd",
+   "TRIAUTO",
+   "churn",
+   "Jhony Vidal",
+   "onboarding maio/26|mrr|churn outubro/26|crm.ia|venda.ia"
+  ],
+  [
+   "86ba5ta86",
+   "ES VEICULOS",
+   "churn",
+   "Pedro Henrique",
+   "onboarding maio/26|mrr|venda.ia|churn outubro/26"
+  ],
+  [
+   "86ba1hr1n",
+   "IDEAL",
+   "churn",
+   "Adriel Queiroz Do Nascimento",
+   "arr|onboarding maio/26|venda.ia"
+  ],
+  [
+   "86ba09p4n",
+   "EDICAR",
+   "churn",
+   "Luan Sulivan",
+   "crm.ia|onboarding maio/26|arr|venda.ia"
+  ],
+  [
+   "86b9vx5g4",
+   "PARAÍSO VEÍCULOS",
+   "churn",
+   "Luan Sulivan",
+   "arr|venda.ia|onboarding maio/26"
+  ],
+  [
+   "86b9tpc8g",
+   "ZONASAT",
+   "churn",
+   "Adriel Queiroz Do Nascimento",
+   "arr|onboarding abril"
+  ],
+  [
+   "86b9jb0tf",
+   "SMART",
+   "churn",
+   "Jhony Vidal",
+   "churn setembro/2026|mrr|onboarding abril|venda.ia"
+  ],
+  [
+   "86b9jb0b5",
+   "LENHARD",
+   "churn",
+   "Arthur Araújo",
+   "venda.ia|arr|crm.ia|onboarding abril"
+  ],
+  [
+   "86b95zb9x",
+   "LUCIANO AUTOMÓVEIS",
+   "churn",
+   "Pedro Henrique",
+   "onboarding março|arr|venda.ia"
+  ],
+  [
+   "86b9233u7",
+   "CONFIAUTO",
+   "churn",
+   "Jonas",
+   "onboarding março|mrr|churn setembro/2026|churn outubro/26"
+  ],
+  [
+   "86b8rev3e",
+   "NORTE CAR",
+   "churn",
+   "Arthur Araújo",
+   "onboarding fevereiro|venda.ia|churn setembro/2026|mrr"
+  ],
+  [
+   "86b8reuez",
+   "IMPACT VEÍCULOS",
+   "churn",
+   "Jonas",
+   "arr|onboarding março|renovação/setembro|venda.ia"
+  ],
+  [
+   "86b8em9cr",
+   "PEPE",
+   "churn",
+   "Jhony Vidal",
+   "venda.ia|arr|renovação/julho|onboarding fevereiro|crm.ia"
+  ],
+  [
+   "86b8em97u",
+   "MTM MOTORS",
+   "churn",
+   "Robson Constantino de Souza Ferreira",
+   "venda.ia|mrr|churn setembro/2026|onboarding fevereiro"
+  ],
+  [
+   "86b84mg36",
+   "BRAVO VEÍCULOS",
+   "churn",
+   "Adriel Queiroz Do Nascimento",
+   "venda.ia|onboarding janeiro|arr|renovação/julho|crm.ia"
+  ],
+  [
+   "86b7jqb2c",
+   "HANGAR MULTIMARCAS",
+   "churn",
+   "Arthur Araújo",
+   "arr|venda.ia|renovação/maio|crm.ia|onboarding julho/26"
+  ],
+  [
+   "86b7bgkcd",
+   "ANJO MONITORA",
+   "churn",
+   "Adriel Queiroz Do Nascimento",
+   "churn outubro/26|mrr"
+  ],
+  [
+   "86b764yhf",
+   "ABRANTES",
+   "churn",
+   "Jonas",
+   "mrr|churn outubro/26"
+  ],
+  [
+   "86b6r8u31",
+   "AUTOCAR",
+   "churn",
+   "Luan Sulivan",
+   "churn setembro/2026|venda.ia|mrr"
+  ],
+  [
+   "86b6r8qu8",
+   "SID VEÍCULOS",
+   "churn",
+   "Arthur Araújo",
+   "churn setembro/2026|venda.ia bônus|mrr|onboarding maio/26"
+  ],
+  [
+   "86b61k0qj",
+   "TRÊS LAGOAS",
+   "churn",
+   "Pedro Henrique",
+   "mrr|churn outubro/26"
+  ],
+  [
+   "86b4k0qay",
+   "SC CLUBE",
+   "churn",
+   "Gabriel Elias da Silva Oliveira Nascimento",
+   "venda.ia|churn julho/26|mrr|churn outubro/26"
+  ]
+ ],
+ "no_meeting_15d": [
+  "86bc056rd",
+  "86bbm6k4d",
+  "86bbm6gp6",
+  "86bbjdvc3",
+  "86bbh6mad",
+  "86bbga234",
+  "86bb5ybp0",
+  "86bb5y98z",
+  "86bb5wgbf",
+  "86bb4n8cw",
+  "86bb21mmz",
+  "86baxebp7",
+  "86bawtycu",
+  "86bavv344",
+  "86bavv28v",
+  "86bav3fpr",
+  "86bame31p",
+  "86bajcy2w",
+  "86bajcy1f",
+  "86bacj45p",
+  "86ba5tfrx",
+  "86ba1hmkg",
+  "86b9ux6zt",
+  "86b9tg0d1",
+  "86b9p1kwn",
+  "86b9envdf",
+  "86b9enquc",
+  "86b93ft3v",
+  "86b93ft0b",
+  "86b8tu0ga",
+  "86b7m4p4z",
+  "86b7m0gww",
+  "86b7m0868",
+  "86b7jb2aq",
+  "86b549ugg",
+  "86b4k0qd8",
+  "86b4k0pv4"
+ ],
+ "retention": {
+  "open": {
+   "requisitou cancelamento": 76,
+   "tentativa de contato": 13,
+   "reunião marcada": 0,
+   "reunião realizada": 11
+  },
+  "open_truncated": true,
+  "closed_total": {
+   "retido": 0,
+   "perdido": 0
+  }
+ },
+ "overdue_truncated": true,
+ "overdue": [
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Vinicius Araújo da Silva",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Camila Bianca de Aguiar Braz",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Alison Serafim",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-29",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-29",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-29",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-29",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-29",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-29",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-30",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-30",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-30",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-30",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-30",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-29",
+   0
+  ],
+  [
+   "Amábily Almeida - AEG",
+   "2026-09-28",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-28",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-28",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-28",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-28",
+   0
+  ],
+  [
+   "Wayslanne Cavalcante",
+   "2026-09-28",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-28",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-28",
+   0
+  ],
+  [
+   "Pedro Henrique",
+   "2026-09-25",
+   1
+  ],
+  [
+   "Pedro Henrique",
+   "2026-09-25",
+   1
+  ],
+  [
+   "Pedro Henrique",
+   "2026-09-25",
+   1
+  ],
+  [
+   "Pedro Henrique",
+   "2026-09-25",
+   1
+  ],
+  [
+   "Arthur Araújo",
+   "2026-09-28",
+   1
+  ],
+  [
+   "Arthur Araújo",
+   "2026-09-28",
+   1
+  ],
+  [
+   "Arthur Araújo",
+   "2026-09-28",
+   1
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-28",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Alison Serafim",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-25",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-25",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-25",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-25",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-24",
+   0
+  ],
+  [
+   "",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-24",
+   0
+  ],
+  [
+   "Arthur Araújo",
+   "2026-09-24",
+   1
+  ],
+  [
+   "Arthur Araújo",
+   "2026-09-24",
+   1
+  ],
+  [
+   "Arthur Araújo",
+   "2026-09-24",
+   1
+  ],
+  [
+   "Arthur Araújo",
+   "2026-09-24",
+   1
+  ],
+  [
+   "Arthur Araújo",
+   "2026-09-24",
+   1
+  ],
+  [
+   "Arthur Araújo",
+   "2026-09-24",
+   1
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-23",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-23",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-23",
+   0
+  ],
+  [
+   "Geovanna Cavalcante AEG",
+   "2026-09-23",
+   0
+  ],
+  [
+   "Geovanna Cavalcante AEG",
+   "2026-09-23",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-01",
+   0
+  ],
+  [
+   "Wayslanne Cavalcante",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Amábily Almeida - AEG",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Amábily Almeida - AEG",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Amábily Almeida - AEG",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Vinicius Araújo da Silva",
+   "2026-09-21",
+   0
+  ],
+  [
+   "Arthur Araújo",
+   "2026-09-21",
+   1
+  ],
+  [
+   "Vinicius Araújo da Silva",
+   "2026-09-21",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-22",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-21",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-21",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-17",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-18",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-18",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-17",
+   0
+  ],
+  [
+   "Amábily Almeida - AEG",
+   "2026-09-18",
+   0
+  ],
+  [
+   "Amábily Almeida - AEG",
+   "2026-09-18",
+   0
+  ],
+  [
+   "Amábily Almeida - AEG",
+   "2026-09-18",
+   0
+  ],
+  [
+   "Amábily Almeida - AEG",
+   "2026-09-18",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-16",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-15",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-14",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-14",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-14",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-14",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-09",
+   0
+  ],
+  [
+   "Geovanna Cavalcante AEG",
+   "2026-09-11",
+   1
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-10",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-10",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-09",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-09",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-09",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-10",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-10",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-09",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-09",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-09",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-09",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-09",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-08",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-08",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-08",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-08",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-08",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-08",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-08",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-08",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-05",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-05",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-05",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-04",
+   0
+  ],
+  [
+   "Luan Sulivan",
+   "2026-09-03",
+   0
+  ],
+  [
+   "Luan Sulivan",
+   "2026-09-03",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-09-03",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-02",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-02",
+   0
+  ],
+  [
+   "Luan Sulivan",
+   "2026-09-02",
+   0
+  ],
+  [
+   "Luan Sulivan",
+   "2026-09-02",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Robson Constantino de Souza Ferreira",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-09-01",
+   0
+  ],
+  [
+   "Luan Sulivan",
+   "2026-08-31",
+   0
+  ],
+  [
+   "Luan Sulivan",
+   "2026-08-31",
+   0
+  ],
+  [
+   "Vinicius Araújo da Silva",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Vinicius Araújo da Silva",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Vinicius Araújo da Silva",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Vinicius Araújo da Silva",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Pedro Henrique",
+   "2026-10-02",
+   1
+  ],
+  [
+   "Pedro Henrique",
+   "2026-10-02",
+   1
+  ],
+  [
+   "Pedro Henrique",
+   "2026-10-02",
+   1
+  ],
+  [
+   "Pedro Henrique",
+   "2026-10-02",
+   1
+  ],
+  [
+   "Pedro Henrique",
+   "2026-10-02",
+   1
+  ],
+  [
+   "Arthur Araújo",
+   "2026-10-02",
+   1
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jhony Vidal",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Pedro Guilherme de Andrade Silva",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Adriel Queiroz Do Nascimento",
+   "2026-10-02",
+   1
+  ],
+  [
+   "Adriel Queiroz Do Nascimento",
+   "2026-10-02",
+   1
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ],
+  [
+   "Jonas",
+   "2026-10-02",
+   0
+  ]
+ ],
+ "news": [
+  {
+   "cat": "Seminovos",
+   "date": "2026-09-25",
+   "source": "Garagem360 / Fenauto",
+   "url": "https://garagem360.com.br/seminovos-de-ate-3-anos-crescem-135-em-2026-e-puxam-mercado-de-usados-a-125-milhoes-de-vendas/",
+   "title": "Seminovos de até 3 anos crescem 13,5% em 2026 e puxam o mercado de usados a 12,5 milhões de vendas",
+   "summary": "De janeiro a agosto o mercado de usados somou 12.532.488 negociações (+6,4% sobre 2025). A faixa de até 3 anos cresce o dobro da média.",
+   "impact": "Lojistas com estoque jovem estão no segmento que mais cresce: priorizar campanhas desses carros nos clientes AEG."
+  },
+  {
+   "cat": "Mercado 0km",
+   "date": "2026-10-01",
+   "source": "O Tempo / Fenabrave",
+   "url": "https://www.otempo.com.br/autotempo/2026/10/1/carros-chineses-tomam-21-das-vendas-e-pressionam-rivais-no-brasil",
+   "title": "Carros chineses tomam 21% das vendas e pressionam rivais no Brasil",
+   "summary": "Setembro fechou com 265.275 emplacamentos de leves (+14,5% sobre set/25). Marcas chinesas somaram 21,4% e eletrificados 22,9% do mercado.",
+   "impact": "Mais chineses e elétricos chegando à revenda nos próximos meses: preparar criativos e argumentos de venda para esses modelos."
+  },
+  {
+   "cat": "Preços & Fipe",
+   "date": "2026-10-01",
+   "source": "O Tempo",
+   "url": "https://www.otempo.com.br/autotempo/2026/10/1/tabela-fipe-de-outubro-de-2026-so-seis-carros-subiram-de-preco-veja-quais",
+   "title": "Tabela Fipe de outubro: só seis carros subiram de preço",
+   "summary": "De 84 modelos analisados, 78 ficaram mais baratos. A Toyota Hilux liderou as altas (+1,58%, de R$ 213.512 para R$ 216.884).",
+   "impact": "Estoques parados perdem valor mês a mês: reforçar giro e ofertas de preço nos anúncios dos clientes."
+  },
+  {
+   "cat": "Preços & Fipe",
+   "date": null,
+   "source": "Perfil Brasil",
+   "url": "https://brasil.perfil.com/carros/carros-usados-ficam-ate-157-mais-baratos-veja-os-modelos.phtml",
+   "title": "Usados famosos ficam até 15,7% mais baratos em 12 meses",
+   "summary": "Jeep Compass (−15,7%), Jeep Renegade (−13,8%), Chevrolet Tracker (−13,5%), Ford Ranger e Toyota Corolla Cross (−11,8%) lideram as quedas.",
+   "impact": "SUVs muito anunciados pelos clientes estão desvalorizando: bom gancho de \"preço baixou\" para campanhas."
+  },
+  {
+   "cat": "Preços & Fipe",
+   "date": null,
+   "source": "InfoMoney",
+   "url": "https://www.infomoney.com.br/minhas-financas/carros-usados-seguem-em-alta-em-2026-mas-eletricos-ampliam-desvalorizacao/",
+   "title": "Carros usados seguem em alta em 2026, mas elétricos ampliam desvalorização",
+   "summary": "Demanda por usados segue firme com o 0km caro e o crédito pesado; elétricos perdem valor mais rápido na revenda.",
+   "impact": "Orientar lojistas a girar rápido elétricos de estoque e evitar comprar caro na troca."
+  },
+  {
+   "cat": "Crédito",
+   "date": null,
+   "source": "Jornal de Brasília / B3",
+   "url": "https://jornaldebrasilia.com.br/noticias/economia/financiamento-de-veiculos-cresce-109-no-1o-semestre/",
+   "title": "Financiamento de veículos cresce 10,9% no 1º semestre e tem maior volume desde 2008",
+   "summary": "Usados responderam por 2,38 milhões de unidades financiadas no semestre, contra 1,39 milhão de novos.",
+   "impact": "Crédito é o motor da venda de seminovos: simulação de financiamento no anúncio e no atendimento da Venda.IA converte mais."
+  }
+ ],
+ "weather": {
+  "date": "2026-10-04",
+  "cities": [
+   {
+    "city": "Sanharó",
+    "uf": "PE",
+    "now": null,
+    "min": 18,
+    "max": 29,
+    "rain_prob": 0,
+    "wind_kmh": 29,
+    "humidity": null,
+    "condition": "Parcialmente nublado",
+    "source": "The Weather Channel",
+    "url": "https://weather.com/pt-BR/clima/10dias/l/Sanhar%C3%B3+Pernambuco?canonicalCityId=5f0ef07595b1db2626da75cd8a338002b7512694ac1a5549493dc1646c973a03"
+   },
+   {
+    "city": "Belo Jardim",
+    "uf": "PE",
+    "now": null,
+    "min": 20,
+    "max": 28,
+    "rain_prob": 66,
+    "wind_kmh": 11,
+    "humidity": "62–97%",
+    "condition": "Sol com nuvens e chuva rápida",
+    "source": "Climatempo",
+    "url": "https://www.climatempo.com.br/previsao-do-tempo/fim-de-semana/cidade/2179/belojardim-pe"
+   }
+  ]
+ },
+ "world": [
+  {
+   "cat": "Brasil",
+   "date": "2026-10-04",
+   "source": "O Tempo / TSE",
+   "url": "https://www.otempo.com.br/eleicoes/2026/presidentes/2026/10/4/eleitores-podem-decidir-neste-domingo-4-10-quem-sera-o-proximo-presidente-do-brasil",
+   "title": "Brasil vai às urnas hoje no 1º turno das eleições",
+   "summary": "Mais de 158 milhões de eleitores estão aptos a votar, das 8h às 17h (horário de Brasília), com 12 candidatos à Presidência. Se houver 2º turno, ele será em 25 de outubro."
+  },
+  {
+   "cat": "Mundo",
+   "date": "2026-10-03",
+   "source": "Euronews",
+   "url": "https://pt.euronews.com/video/2026/10/03/noticias-do-dia-3-de-outubro-2026-tarde",
+   "title": "Rússia atinge a segunda ponte de Kiev em dois dias",
+   "summary": "Os ataques miram as travessias do rio Dnipro, segundo o noticiário de 3 de outubro."
+  },
+  {
+   "cat": "Mundo",
+   "date": "2026-10-03",
+   "source": "Euronews",
+   "url": "https://pt.euronews.com/video/2026/10/03/noticias-do-dia-3-de-outubro-2026-tarde",
+   "title": "China abre investigação antidumping contra a União Europeia",
+   "summary": "A medida vem dias antes de uma rodada de negociações comerciais entre Pequim e o bloco europeu."
+  },
+  {
+   "cat": "Mundo",
+   "date": "2026-10-03",
+   "source": "Euronews",
+   "url": "https://pt.euronews.com/video/2026/10/03/noticias-do-dia-3-de-outubro-2026-tarde",
+   "title": "Presidente do Irã diz na ONU que o país não será intimidado, mas vai negociar",
+   "summary": "No mesmo dia, 56 países assinaram uma declaração contra o Irã nas Nações Unidas."
+  }
+ ],
+ "notes": [
+  "Domingo: nada mudou no ClickUp desde sábado à noite; radar de mercado e CRM Retenção mantidos da leitura de 03/10"
+ ]
+}
