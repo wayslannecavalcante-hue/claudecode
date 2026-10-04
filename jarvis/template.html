@@ -23,6 +23,7 @@
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { background: var(--bg); }
 body {
   background:
@@ -158,9 +159,109 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
   .news { grid-template-columns: 1fr; }
   .kpi .v { font-size: 28px; }
 }
+
+/* ===== Briefing conversado ===== */
+.brief { position: fixed; inset: 0; z-index: 50; display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
+  background: radial-gradient(900px 600px at 20% 30%, rgba(69, 224, 255, .12), transparent 60%), linear-gradient(var(--bg), var(--bg-2));
+  background-color: var(--bg);
+  padding: calc(env(safe-area-inset-top, 0px) + 14px) 20px calc(env(safe-area-inset-bottom, 0px) + 14px); gap: 14px; }
+.brief[hidden] { display: none !important; }
+.b-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; font: 500 12px var(--f-mono); color: var(--ink-2); letter-spacing: .08em; text-transform: uppercase; max-width: 1240px; width: 100%; margin: 0 auto; }
+.b-main { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px; max-width: 1240px; width: 100%; margin: 0 auto; min-height: 0; }
+.b-left { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 14px; min-height: 0; }
+.orb { position: relative; width: 220px; height: 220px; margin: 0 auto; }
+.orb .core { position: absolute; inset: 62px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, #c9f6ff, var(--cyan) 35%, #0b5f7a 75%, #052231);
+  box-shadow: 0 0 40px rgba(69, 224, 255, .55), inset 0 0 20px rgba(255, 255, 255, .25); transition: transform .12s ease; }
+.orb .r { position: absolute; border-radius: 50%; border: 1px solid rgba(69, 224, 255, .35); }
+.orb .r1 { inset: 40px; border-style: dashed; }
+.orb .r2 { inset: 18px; border-color: rgba(69, 224, 255, .2); border-top-color: var(--cyan); border-width: 2px; }
+.orb .r3 { inset: 0; border-color: rgba(69, 224, 255, .12); border-left-color: rgba(69, 224, 255, .6); }
+.orb .name { position: absolute; left: 0; right: 0; bottom: -8px; text-align: center; font: 600 13px var(--f-mono); letter-spacing: .3em; color: var(--cyan); }
+.orb.talking .core { animation: talk .5s ease-in-out infinite alternate; }
+.chat { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 4px; min-height: 0; }
+.msg { border: 1px solid var(--line); background: rgba(10, 22, 31, .9); padding: 10px 12px; font-size: 14px; line-height: 1.45; position: relative; }
+.msg::before { content: "JARVIS"; display: block; font: 600 10px var(--f-mono); letter-spacing: .16em; color: var(--cyan); margin-bottom: 4px; }
+.msg.cur { border-color: var(--line-2); box-shadow: 0 0 18px rgba(69, 224, 255, .12); }
+.caret::after { content: "▍"; color: var(--cyan); margin-left: 1px; }
+.stage { position: relative; min-height: 0; overflow-y: auto; display: grid; align-content: start; gap: 12px; padding: 4px 2px 8px; }
+.stage-title { font: 700 clamp(22px, 3vw, 34px)/1.1 var(--f-display); text-transform: uppercase; letter-spacing: .03em; }
+.stage-title span { color: var(--cyan); }
+.pop { animation: pop .45s cubic-bezier(.2, .9, .3, 1.2) both; }
+.big3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.big3 .kpi .v { font-size: clamp(40px, 6vw, 64px); }
+.s-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.s-news { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.s-news .card.focus { border-color: var(--cyan); box-shadow: 0 0 24px rgba(69, 224, 255, .18); }
+.b-bot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; max-width: 1240px; width: 100%; margin: 0 auto; }
+.steps { display: flex; gap: 6px; flex-wrap: wrap; }
+.steps button { font: 500 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; padding: 6px 8px; border: 1px solid var(--line); background: transparent; color: var(--ink-3); cursor: pointer; }
+.steps button.on { color: var(--cyan); border-color: var(--cyan); background: var(--cyan-dim); }
+.steps button.done { color: var(--ink-2); }
+.ctrls { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { font: 600 13px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 10px 14px; border: 1px solid var(--line-2); background: rgba(10, 22, 31, .9); color: var(--ink); cursor: pointer; }
+.btn:hover { border-color: var(--cyan); color: var(--cyan); }
+.btn.primary { background: var(--cyan); color: #03141c; border-color: var(--cyan); box-shadow: 0 0 24px rgba(69, 224, 255, .35); }
+.btn.primary:hover { color: #03141c; filter: brightness(1.08); }
+.start { display: grid; gap: 14px; justify-items: start; }
+.fab { position: fixed; right: 18px; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); z-index: 40; display: flex; align-items: center; gap: 10px; padding: 10px 14px 10px 10px; border: 1px solid var(--cyan); background: rgba(5, 12, 18, .92); color: var(--cyan); font: 600 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; cursor: pointer; box-shadow: 0 0 22px rgba(69, 224, 255, .25); }
+.fab i { width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #c9f6ff, var(--cyan) 40%, #0b5f7a); box-shadow: 0 0 12px var(--cyan); }
+.toast { position: fixed; right: 18px; bottom: calc(env(safe-area-inset-bottom, 0px) + 76px); z-index: 45; max-width: min(360px, calc(100vw - 36px)); border: 1px solid var(--line-2); border-left: 3px solid var(--c, var(--cyan)); background: rgba(8, 18, 26, .97); padding: 12px 14px; font-size: 14px; box-shadow: 0 10px 30px rgba(0, 0, 0, .5); }
+.toast b { display: block; font: 600 10px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--c, var(--cyan)); margin-bottom: 4px; }
+.kpi, .card, .alerts li { transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.kpi:hover, .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, .35), 0 0 0 1px var(--line-2); }
+.reveal { animation: rise .6s ease both; }
+@media (prefers-reduced-motion: no-preference) {
+  .orb .r1 { animation: spin 22s linear infinite; }
+  .orb .r2 { animation: spin 6s linear infinite; }
+  .orb .r3 { animation: spin 11s linear infinite reverse; }
+  .orb .core { animation: breathe 3.2s ease-in-out infinite; }
+  .toast { animation: pop .4s ease both; }
+}
+@media (prefers-reduced-motion: reduce) { .pop, .reveal { animation: none; } }
+@keyframes talk { from { transform: scale(.94); } to { transform: scale(1.08); } }
+@keyframes breathe { 50% { transform: scale(1.04); } }
+@keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
+@keyframes rise { from { opacity: .001; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (max-width: 900px) {
+  .b-main { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
+  .b-left { grid-template-columns: 110px minmax(0, 1fr); grid-template-rows: none; align-items: start; }
+  .orb { width: 110px; height: 110px; }
+  .orb .core { inset: 31px; } .orb .r1 { inset: 20px; } .orb .r2 { inset: 9px; }
+  .orb .name { font-size: 10px; bottom: -14px; letter-spacing: .2em; }
+  .chat { max-height: 120px; }
+  .steps button .sl { display: none; }
+  .b-bot { gap: 8px; }
+  .ctrls .btn { padding: 8px 10px; font-size: 12px; }
+  .brief { gap: 10px; }
+  .s-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .s-news { grid-template-columns: 1fr; }
+  .big3 { grid-template-columns: 1fr; }
+}
 </style>
 
 <div class="scan" aria-hidden="true"></div>
+<div class="brief" id="brief" role="dialog" aria-modal="true" aria-label="Briefing do Jarvis">
+  <div class="b-top"><span><span class="dot"></span>Jarvis · briefing de <span id="b-date"></span></span><button class="btn" id="b-skip">Ir para o painel ✕</button></div>
+  <div class="b-main">
+    <div class="b-left">
+      <div class="orb" id="orb" aria-hidden="true"><div class="r r3"></div><div class="r r2"></div><div class="r r1"></div><div class="core"></div><div class="name">JARVIS</div></div>
+      <div class="chat" id="chat" aria-live="polite"></div>
+    </div>
+    <div class="stage" id="stage"></div>
+  </div>
+  <div class="b-bot">
+    <div class="steps" id="steps"></div>
+    <div class="ctrls">
+      <button class="btn" id="b-prev">◀ Voltar</button>
+      <button class="btn" id="b-pause">Pausar</button>
+      <button class="btn" id="b-voice">Voz: ligada</button>
+      <button class="btn primary" id="b-next">Próximo ▶</button>
+    </div>
+  </div>
+</div>
+<button class="fab" id="fab" hidden><i></i>Briefing do Jarvis</button>
+<div class="toast" id="toast" hidden role="status"></div>
 <div class="wrap" id="app">
   <div class="statusbar" role="status">
     <span><span class="dot"></span><span class="on">JARVIS ONLINE</span> · AEG OPS</span>
@@ -351,4 +452,165 @@ function render() {
   $("#f-src").textContent = `Leitura ${D.date} · ${D.source}`;
 }
 render();
+
+/* ===== Jarvis conversa: briefing em etapas ===== */
+(function briefing() {
+  if (!D) return;
+  const k = D.kpis, news = D.news || [];
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const el = { brief: $("#brief"), chat: $("#chat"), stage: $("#stage"), steps: $("#steps"), orb: $("#orb"),
+    next: $("#b-next"), prev: $("#b-prev"), pause: $("#b-pause"), voice: $("#b-voice"), skip: $("#b-skip"), fab: $("#fab"), toast: $("#toast") };
+  $("#b-date").textContent = fmtDate(D.date);
+  const synth = window.speechSynthesis;
+  let voiceOn = !!synth, ptVoice = null;
+  const pickVoice = () => { try { const vs = synth.getVoices(); ptVoice = vs.find((v) => /pt[-_]BR/i.test(v.lang)) || vs.find((v) => /^pt/i.test(v.lang)) || null; } catch (e) {} };
+  if (synth) { pickVoice(); try { synth.onvoiceschanged = pickVoice; } catch (e) {} } else { el.voice.textContent = "Voz indisponível"; el.voice.disabled = true; }
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+  let run = 0, paused = false, stepIdx = 0, started = false;
+
+  const top3 = (arr, f) => arr.slice().sort((a, b) => f(b) - f(a)).slice(0, 3);
+  const plural = (n, s, p) => `${n} ${n === 1 ? s : p}`;
+  const vIA = Math.round((k.venda_ia / Math.max(k.ativos, 1)) * 100);
+  const od = k.atrasadas_truncado ? `mais de ${k.atrasadas}` : `${k.atrasadas}`;
+  const kpiTile = (v, l, s, cls = "") => `<div class="kpi pop ${cls}"><div class="l">${esc(l)}</div><div class="v" data-count="${typeof v === "number" ? v : ""}">${esc(v)}</div><div class="s">${s || ""}</div></div>`;
+  const newsCard = (n, i) => `<article class="card pop" id="bn-${i}"><div class="meta"><span class="cat">${esc(n.cat)}</span><span>${esc(n.source)}</span><span>${fmtDate(n.date)}</span></div><h3><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a></h3><p>${esc(n.summary)}</p>${n.impact ? `<div class="imp"><b>Impacto para a AEG</b>${esc(n.impact)}</div>` : ""}</article>`;
+  const countUp = (root) => root.querySelectorAll("[data-count]").forEach((node) => {
+    const end = Number(node.dataset.count); if (!node.dataset.count || reduce) return;
+    const t0 = performance.now(), suffix = node.textContent.replace(/^[\d.]+/, "");
+    const f = (t) => { const p = Math.min(1, (t - t0) / 900); node.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suffix; if (p < 1) requestAnimationFrame(f); };
+    requestAnimationFrame(f);
+  });
+  const add = (html) => { el.stage.insertAdjacentHTML("beforeend", html); const n = el.stage.lastElementChild; countUp(n); n.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" }); return n; };
+
+  // Etapas: cada uma é uma lista de falas; cada fala pode mostrar algo no palco.
+  const prio = D.priorities || [];
+  const csHot = top3(D.cs_rows.filter((r) => r.ativos), (r) => r.sem_reuniao * 3 + r.churn * 4 + r.atrasadas);
+  const STEPS = [
+    { label: "Abertura", beats: [
+      { say: `Bom dia, Wayslanne. Hoje é ${D.date_long}. Aqui é o Jarvis com a leitura da operação AEG.`,
+        show: () => add(`<div class="stage-title pop">Operação <span>AEG</span> · leitura do dia</div>`) },
+      { say: `Em resumo: ${k.ativos} clientes ativos, ${k.em_churn} no status churn e ${k.sem_reuniao} sem reunião há mais de quinze dias.`,
+        show: () => add(`<div class="big3">${kpiTile(k.ativos, "Clientes ativos", "", "cy")}${kpiTile(k.em_churn, "Status churn", `${k.churn_mes} previstos p/ ${D.month}`, "alert")}${kpiTile(k.sem_reuniao, "Sem reunião 15d+", `cobertura ${D.cobertura}%`, "warn")}</div>`) },
+      { say: news.length ? `Separei ${plural(news.length, "notícia", "notícias")} do mercado para você no final. Vamos lá.` : "Vamos lá." },
+    ] },
+    { label: "Alertas", beats: [
+      { say: prio.length ? `Primeiro, o que precisa da sua atenção hoje. São ${plural(prio.length, "alerta", "alertas")}.` : "Nenhum alerta crítico hoje.",
+        show: () => add(`<div class="stage-title pop">Alertas do <span>dia</span></div><ul class="alerts" id="b-alerts"></ul>`) },
+      ...prio.map((p) => ({ say: `${p.title}. ${p.detail}`,
+        show: () => { $("#b-alerts").insertAdjacentHTML("beforeend", `<li class="sev-${p.sev} pop"><span class="bar"></span><span class="tag">${SEV[p.sev]}</span><span class="t">${esc(p.title)}</span>${p.detail ? `<span class="d">${esc(p.detail)}</span>` : ""}</li>`); $("#b-alerts").lastElementChild.scrollIntoView({ block: "nearest" }); } })),
+    ] },
+    { label: "Carteira", beats: [
+      { say: `Agora a carteira. Dos ${k.ativos} ativos, ${k.onboarding} estão em onboarding, ${k.maturacao} entre o mês dois e o seis, ${k.ongoing} em ongoing e ${k.renovacao} em renovação.`,
+        show: () => add(`<div class="stage-title pop">Telemetria da <span>carteira</span></div><div class="s-grid">${kpiTile(k.ativos, "Ativos", `${k.mrr} MRR · ${k.arr} ARR`, "cy")}${kpiTile(k.onboarding, "Onboarding", "S1 → S4")}${kpiTile(k.maturacao, "Mês 2 a 6", "maturação")}${kpiTile(k.ongoing, "Ongoing", "carteira madura")}</div>`) },
+      { say: `Entraram ${k.novos_mes} clientes em ${D.month} até agora, contra ${k.novos_mes_anterior} em ${D.prev_month}. ${vIA}% da carteira usa a Venda.IA.`,
+        show: () => add(`<div class="s-grid">${kpiTile(k.novos_mes, `Entradas ${D.month}`, `${k.novos_mes_anterior} em ${D.prev_month}`)}${kpiTile(k.renovacao, "Renovações", "abertas")}${kpiTile(od, "Tarefas atrasadas", "squads e obrigações", "warn")}${kpiTile(vIA + "%", "Venda.IA", `${k.crm_ia} com CRM.IA`)}</div>`) },
+    ] },
+    { label: "Time", beats: [
+      { say: csHot.length ? `No time, quem mais precisa de apoio hoje: ${csHot.map((r) => r.cs).join(", ")}.` : "O time está sem pendências relevantes.",
+        show: () => add(`<div class="stage-title pop">Pontos de atenção do <span>time</span></div><div class="s-grid">${csHot.map((r) => kpiTile(r.cs, `${r.ativos} clientes`, `${r.sem_reuniao} sem reunião · ${r.churn} em churn · ${r.atrasadas} atrasadas`)).join("")}</div>`) },
+      ...csHot.map((r) => ({ say: `${r.cs}: ${plural(r.sem_reuniao, "cliente", "clientes")} sem reunião, ${r.churn} em churn e ${plural(r.atrasadas, "tarefa atrasada", "tarefas atrasadas")}.` })),
+    ] },
+    { label: "Notícias", beats: news.length ? [
+      { say: "Aqui estão as notícias do seu dia.", show: () => add(`<div class="stage-title pop">Radar de <span>mercado</span></div><div class="s-news" id="b-news"></div>`) },
+      ...news.map((n, i) => ({ say: `${n.title}. ${n.impact || n.summary}`,
+        show: () => { document.querySelectorAll("#b-news .card.focus").forEach((c) => c.classList.remove("focus")); $("#b-news").insertAdjacentHTML("beforeend", newsCard(n, i)); const c = $("#bn-" + i); c.classList.add("focus"); c.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" }); } })),
+    ] : [{ say: "Hoje não consegui coletar notícias do setor." }] },
+    { label: "Fechamento", beats: [
+      { say: `Esse foi o briefing. ${prio[0] ? "Minha sugestão para começar: " + prio[0].title.toLowerCase() + "." : ""} O painel completo está pronto. Bom trabalho, Wayslanne.`,
+        show: () => add(`<div class="start pop"><div class="stage-title">Painel completo <span>liberado</span></div><button class="btn primary" id="b-open">Abrir painel completo ▶</button></div>`) },
+    ] },
+  ];
+
+  el.steps.innerHTML = STEPS.map((s, i) => `<button data-i="${i}" aria-label="${esc(s.label)}">${String(i + 1).padStart(2, "0")}<span class="sl"> ${esc(s.label)}</span></button>`).join("");
+  const markSteps = () => el.steps.querySelectorAll("button").forEach((b, i) => { b.classList.toggle("on", i === stepIdx); b.classList.toggle("done", i < stepIdx); });
+
+  function speak(text, my) {
+    return new Promise((resolve) => {
+      const words = text.split(/\s+/).length;
+      const fallback = () => sleep(reduce ? 400 : Math.max(1600, words * 330)).then(resolve);
+      if (!voiceOn || !synth) return fallback();
+      try {
+        synth.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = "pt-BR"; if (ptVoice) u.voice = ptVoice; u.rate = 1.04; u.pitch = 0.95;
+        let done = false; const end = () => { if (!done) { done = true; resolve(); } };
+        u.onend = end; u.onerror = end;
+        setTimeout(end, Math.max(4000, words * 700));
+        synth.speak(u);
+      } catch (e) { fallback(); }
+    });
+  }
+  async function type(node, text, my) {
+    if (reduce) { node.textContent = text; return; }
+    node.classList.add("caret");
+    for (let i = 1; i <= text.length; i += 2) { if (my !== run) return; node.textContent = text.slice(0, i); await sleep(14); }
+    node.textContent = text; node.classList.remove("caret");
+  }
+  async function waitIfPaused(my) { while (paused && my === run) await sleep(150); }
+  async function playStep(i) {
+    const my = ++run; stepIdx = i; markSteps();
+    try { synth && synth.cancel(); } catch (e) {}
+    el.stage.innerHTML = "";
+    for (const beat of STEPS[i].beats) {
+      await waitIfPaused(my); if (my !== run) return;
+      el.chat.querySelectorAll(".msg.cur").forEach((m) => m.classList.remove("cur"));
+      const m = document.createElement("div"); m.className = "msg cur"; m.appendChild(document.createElement("span"));
+      el.chat.appendChild(m); el.chat.scrollTop = el.chat.scrollHeight;
+      beat.show && beat.show();
+      el.orb.classList.add("talking");
+      await Promise.all([type(m.firstChild, beat.say, my), speak(beat.say, my)]);
+      el.orb.classList.remove("talking");
+      if (my !== run) return;
+      el.chat.scrollTop = el.chat.scrollHeight;
+      await sleep(reduce ? 100 : 450);
+    }
+    if (my === run && i < STEPS.length - 1) playStep(i + 1);
+  }
+  function openDashboard() {
+    run++; try { synth && synth.cancel(); } catch (e) {}
+    el.orb.classList.remove("talking");
+    el.brief.hidden = true; el.fab.hidden = false;
+    document.querySelectorAll(".wrap > *").forEach((n, i) => { if (!reduce) { n.classList.remove("reveal"); void n.offsetWidth; n.style.animationDelay = `${i * 70}ms`; n.classList.add("reveal"); } });
+    countUp(document.querySelector("#kpis"));
+    setTimeout(() => toast(prio[0]), reduce ? 0 : 1200);
+  }
+  function toast(p) {
+    if (!p) return;
+    el.toast.style.setProperty("--c", `var(--${p.sev})`);
+    el.toast.innerHTML = `<b>${SEV[p.sev]} · prioridade nº 1</b>${esc(p.title)}`;
+    el.toast.hidden = false;
+    clearTimeout(toast.t); toast.t = setTimeout(() => { el.toast.hidden = true; }, 7000);
+  }
+  function showIntro() {
+    run++; started = false; paused = false; el.pause.textContent = "Pausar";
+    el.brief.hidden = false; el.fab.hidden = true; el.chat.innerHTML = ""; stepIdx = 0; markSteps();
+    el.chat.innerHTML = `<div class="msg cur"><span>Bom dia, Wayslanne. Sua leitura de ${esc(D.date_long)} está pronta: ${k.ativos} clientes ativos, ${prio.length} alertas e ${news.length} notícias do mercado. Quer que eu apresente?</span></div>`;
+    el.stage.innerHTML = `<div class="start"><div class="stage-title">Bom dia, <span>Wayslanne</span></div><p class="sub" style="color:var(--ink-2);max-width:56ch;margin:0">Vou te mostrar a operação em ${STEPS.length} etapas: alertas, carteira, time e as notícias do dia. Leva uns três minutos, com voz.</p><div class="ctrls"><button class="btn primary" id="b-start">▶ Iniciar briefing</button><button class="btn" id="b-start-mute">Iniciar sem voz</button></div></div>`;
+    el.next.textContent = "Iniciar ▶";
+  }
+  function start(withVoice) {
+    started = true; voiceOn = withVoice && !!synth; el.voice.textContent = synth ? (voiceOn ? "Voz: ligada" : "Voz: desligada") : "Voz indisponível";
+    el.chat.innerHTML = ""; el.next.textContent = "Próximo ▶"; playStep(0);
+  }
+
+  el.brief.addEventListener("click", (e) => {
+    const t = e.target.closest("button"); if (!t) return;
+    if (t.id === "b-start") start(true);
+    else if (t.id === "b-start-mute") start(false);
+    else if (t.id === "b-open") openDashboard();
+    else if (t.dataset.i !== undefined) { if (!started) start(voiceOn); else playStep(Number(t.dataset.i)); }
+  });
+  el.next.addEventListener("click", () => { if (!started) return start(true); paused = false; el.pause.textContent = "Pausar"; stepIdx < STEPS.length - 1 ? playStep(stepIdx + 1) : openDashboard(); });
+  el.prev.addEventListener("click", () => { if (started) { paused = false; el.pause.textContent = "Pausar"; playStep(Math.max(0, stepIdx - 1)); } });
+  el.pause.addEventListener("click", () => {
+    if (!started) return;
+    paused = !paused; el.pause.textContent = paused ? "Continuar" : "Pausar";
+    try { paused ? synth && synth.pause() : synth && synth.resume(); } catch (e) {}
+  });
+  el.voice.addEventListener("click", () => { voiceOn = !voiceOn; el.voice.textContent = voiceOn ? "Voz: ligada" : "Voz: desligada"; if (!voiceOn) try { synth.cancel(); } catch (e) {} });
+  el.skip.addEventListener("click", openDashboard);
+  el.fab.addEventListener("click", showIntro);
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !el.brief.hidden) openDashboard(); });
+  showIntro();
+})();
 </script>
