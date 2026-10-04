@@ -2233,5 +2233,70 @@
    "summary": "Usados responderam por 2,38 milhões de unidades financiadas no semestre, contra 1,39 milhão de novos.",
    "impact": "Crédito é o motor da venda de seminovos: simulação de financiamento no anúncio e no atendimento da Venda.IA converte mais."
   }
+ ],
+ "weather": {
+  "date": "2026-10-04",
+  "cities": [
+   {
+    "city": "Sanharó",
+    "uf": "PE",
+    "now": 19,
+    "min": 18,
+    "max": 28,
+    "rain_prob": 37,
+    "wind_kmh": null,
+    "humidity": null,
+    "condition": "Nublado",
+    "source": "The Weather / Climatempo",
+    "url": "https://www.climatempo.com.br/previsao-do-tempo/cidade/4925/sanharo-pe"
+   },
+   {
+    "city": "Belo Jardim",
+    "uf": "PE",
+    "now": null,
+    "min": 19,
+    "max": 28,
+    "rain_prob": 0,
+    "wind_kmh": 12,
+    "humidity": "49–92%",
+    "condition": "Sem chuva",
+    "source": "Climatempo",
+    "url": "https://www.climatempo.com.br/previsao-do-tempo/cidade/2179/belo-jardim-pe/"
+   }
+  ]
+ },
+ "world": [
+  {
+   "cat": "Brasil",
+   "date": "2026-10-03",
+   "source": "Euronews / Datafolha",
+   "url": "https://pt.euronews.com/2026/10/03/lula-e-flavio-bolsonaro-encerram-campanhas-na-vespera-de-umas-eleicoes-renhidas",
+   "title": "Lula e Flávio Bolsonaro encerram campanhas na véspera do 1º turno",
+   "summary": "O país vota neste domingo, 4 de outubro, com 12 candidatos à Presidência. No último Datafolha (24/09), Lula tinha 40% e Flávio Bolsonaro 36%, diferença dentro da margem de erro."
+  },
+  {
+   "cat": "Mundo",
+   "date": "2026-10-03",
+   "source": "Euronews",
+   "url": "https://pt.euronews.com/video/2026/10/03/noticias-do-dia-3-de-outubro-2026-tarde",
+   "title": "Rússia atinge a segunda ponte de Kiev em dois dias",
+   "summary": "Os ataques miram as travessias do rio Dnipro, segundo o noticiário de 3 de outubro."
+  },
+  {
+   "cat": "Mundo",
+   "date": "2026-10-03",
+   "source": "Euronews",
+   "url": "https://pt.euronews.com/video/2026/10/03/noticias-do-dia-3-de-outubro-2026-tarde",
+   "title": "China abre investigação antidumping contra a União Europeia",
+   "summary": "A medida vem dias antes de uma rodada de negociações comerciais entre Pequim e o bloco europeu."
+  },
+  {
+   "cat": "Mundo",
+   "date": "2026-10-03",
+   "source": "Euronews",
+   "url": "https://pt.euronews.com/video/2026/10/03/noticias-do-dia-3-de-outubro-2026-tarde",
+   "title": "Presidente do Irã diz na ONU que o país não será intimidado, mas vai negociar",
+   "summary": "No mesmo dia, 56 países assinaram uma declaração contra o Irã nas Nações Unidas."
+  }
  ]
 }

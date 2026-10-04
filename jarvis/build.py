@@ -164,6 +164,8 @@ def metrics(snap, cfg):
         "retention": snap.get("retention", {}),
         "notes": snap.get("notes", []),
         "news": snap.get("news", []),
+        "world": snap.get("world", []),
+        "weather": snap.get("weather", {}),
         "cobertura": round(100 * (len(active) - len(no_meet)) / max(len(active), 1)),
     }
 

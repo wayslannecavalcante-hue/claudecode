@@ -68,7 +68,14 @@ h1, h2, h3 { font-family: var(--f-display); margin: 0; text-wrap: balance; }
 .hero h1 span { color: var(--cyan); text-shadow: 0 0 22px rgba(69, 224, 255, .45); }
 .hero .sub { margin: 10px 0 0; color: var(--ink-2); max-width: 64ch; }
 .hero .date { margin-top: 8px; font: 500 13px var(--f-mono); color: var(--ink-3); letter-spacing: .08em; text-transform: uppercase; }
-.ring { width: 168px; height: 168px; position: relative; }
+.ring { width: 168px; height: 168px; position: relative; flex: none; }
+.hero-side { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: flex-end; }
+.wx { display: grid; gap: 8px; }
+.wx a { display: grid; grid-template-columns: auto auto; gap: 0 12px; align-items: center; padding: 8px 12px; border: 1px solid var(--line); background: rgba(5, 12, 18, .6); color: var(--ink); text-decoration: none; }
+.wx a:hover { border-color: var(--line-2); text-decoration: none; }
+.wx .c { font: 500 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); grid-column: 1 / -1; }
+.wx .t { font: 700 26px/1 var(--f-display); color: var(--cyan); }
+.wx .m { font: 400 12px/1.4 var(--f-mono); color: var(--ink-2); }
 .ring svg { width: 100%; height: 100%; display: block; }
 .ring .c { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
 .ring .c b { font: 700 38px/1 var(--f-display); color: var(--ink); }
@@ -154,6 +161,7 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
 }
 @media (max-width: 640px) {
   .hero { grid-template-columns: 1fr; }
+  .hero-side { justify-content: flex-start; }
   .ring { width: 140px; height: 140px; }
   .bar { grid-template-columns: 104px 1fr 36px; }
   .news { grid-template-columns: 1fr; }
@@ -199,6 +207,12 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
 .blist li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 10px; padding: 9px 10px; border-radius: 8px; border: 1px solid rgba(130, 200, 255, .18); background: rgba(2, 12, 40, .4); font-size: 14px; }
 .blist li .sv { grid-row: span 2; font: 600 9px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--c); border: 1px solid var(--c); padding: 3px 6px; border-radius: 4px; align-self: start; }
 .blist li .d { color: #a9c4e6; font-size: 13px; }
+.wxgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.wxc { border: 1px solid rgba(130, 200, 255, .25); border-radius: 10px; padding: 12px; background: rgba(2, 12, 40, .45); display: grid; gap: 6px; }
+.wxc .city { font: 700 17px var(--f-display); color: #fff; }
+.wxc .now { display: flex; align-items: center; gap: 10px; }
+.wxc .sun { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #ffd27a; box-shadow: 0 0 12px rgba(255, 210, 122, .6); flex: none; }
+.wxc .sun.cloud { border-color: #bfe6ff; box-shadow: 0 0 12px rgba(191, 230, 255, .5); }
 .bnews-band { height: 92px; border-radius: 10px; position: relative; overflow: hidden; border: 1px solid rgba(130, 200, 255, .25);
   background: radial-gradient(circle at 20% 40%, rgba(127, 214, 255, .35), transparent 45%), radial-gradient(circle at 80% 70%, rgba(80, 120, 255, .45), transparent 50%), linear-gradient(120deg, #0a2a78, #04123f); }
 .bnews-band span { position: absolute; left: 14px; bottom: 10px; font: 700 26px var(--f-display); color: rgba(255, 255, 255, .92); letter-spacing: .02em; text-shadow: 0 2px 12px rgba(0, 0, 0, .4); }
@@ -251,7 +265,7 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
   .b-top { grid-template-columns: 1fr auto; } .b-state { grid-column: 1 / -1; grid-row: 2; letter-spacing: .35em; }
   .b-bot { grid-template-columns: 1fr auto; } .b-steps { grid-column: 1 / -1; justify-content: center; } .b-ctl { justify-content: flex-end; }
   .bcard { padding: 12px; } .bcard .ttl { font-size: 17px; } .big { font-size: 34px; }
-  .quad { grid-template-columns: repeat(2, minmax(0, 1fr)); } .bcard .row { grid-template-columns: 1fr; }
+  .quad { grid-template-columns: repeat(2, minmax(0, 1fr)); } .wxgrid { grid-template-columns: 1fr; } .bcard .row { grid-template-columns: 1fr; }
   .dcard { width: 150px; } .bnews-band { height: 64px; } .bnews-band span { font-size: 20px; }
   .vsel { bottom: 140px; }
   .hide-sm { display: none; }
@@ -278,6 +292,7 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
         <button class="bb" id="b-prev" aria-label="Etapa anterior">◀</button>
         <button class="bb" id="b-next" aria-label="Próxima etapa">▶</button>
         <button class="bb" id="b-voice">Voz</button>
+        <button class="bb" id="b-music">Música: on</button>
         <button class="bb" id="b-sfx">Efeitos: on</button>
       </div>
     </div>
@@ -304,7 +319,7 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
       <div class="date" id="h-date"></div>
       <p class="sub" id="h-greet"></p>
     </div>
-    <div class="ring" id="ring" role="img"></div>
+    <div class="hero-side"><div class="wx" id="wx"></div><div class="ring" id="ring" role="img"></div></div>
   </header>
 
   <section class="panel" aria-labelledby="s-alert">
@@ -322,21 +337,26 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
     <div class="news" id="news"></div>
   </section>
 
+  <section class="panel" aria-labelledby="s-world">
+    <div class="sec-head"><h2 id="s-world"><span class="idx">03</span>Brasil e mundo</h2><span class="label" id="world-count"></span></div>
+    <div class="news" id="world"></div>
+  </section>
+
   <section class="grid2">
     <div class="panel">
-      <div class="sec-head"><h2><span class="idx">03</span>Jornada da carteira</h2><span class="label" id="j-total"></span></div>
+      <div class="sec-head"><h2><span class="idx">04</span>Jornada da carteira</h2><span class="label" id="j-total"></span></div>
       <div class="stack" id="stack" role="img"></div>
       <div class="legend" id="legend"></div>
       <div class="bars" id="statuses" style="margin-top:16px"></div>
     </div>
     <div class="panel">
-      <div class="sec-head"><h2><span class="idx">04</span>Tarefas atrasadas</h2><span class="label" id="od-total"></span></div>
+      <div class="sec-head"><h2><span class="idx">05</span>Tarefas atrasadas</h2><span class="label" id="od-total"></span></div>
       <div class="bars" id="overdue"></div>
     </div>
   </section>
 
   <section class="panel" aria-labelledby="s-cs">
-    <div class="sec-head"><h2 id="s-cs"><span class="idx">05</span>Carteira por CS</h2><span class="label">ativos e pendências</span></div>
+    <div class="sec-head"><h2 id="s-cs"><span class="idx">06</span>Carteira por CS</h2><span class="label">ativos e pendências</span></div>
     <div class="tbl-wrap">
       <table id="cs-table">
         <thead><tr><th>CS</th><th>Ativos</th><th>Onboarding</th><th>Mês 2–6</th><th>Ongoing</th><th>Renovação</th><th>Em churn</th><th>Sem reunião 15d+</th><th>Atrasadas</th></tr></thead>
@@ -347,12 +367,12 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
 
   <section class="grid2">
     <div class="panel">
-      <div class="sec-head"><h2><span class="idx">06</span>Onde agir</h2></div>
+      <div class="sec-head"><h2><span class="idx">07</span>Onde agir</h2></div>
       <div class="filters" role="tablist" id="tabs"></div>
       <div id="tab-body"></div>
     </div>
     <div class="panel">
-      <div class="sec-head"><h2><span class="idx">07</span>CRM Retenção</h2><span class="label">cards abertos</span></div>
+      <div class="sec-head"><h2><span class="idx">08</span>CRM Retenção</h2><span class="label">cards abertos</span></div>
       <div class="bars" id="retention"></div>
       <p class="note" id="ret-note" style="margin-top:12px"></p>
     </div>
@@ -418,6 +438,11 @@ function render() {
   ];
   $("#kpis").innerHTML = tiles.map((t) => `<div class="kpi ${t.cls || ""}"><div class="l">${esc(t.l)}</div><div class="v">${esc(t.v)}</div><div class="s">${t.s}</div></div>`).join("");
 
+  const W = (D.weather && D.weather.cities) || [];
+  $("#wx").innerHTML = W.map((c) => `<a href="${esc(c.url)}" target="_blank" rel="noopener" title="Fonte: ${esc(c.source)}"><span class="c">${esc(c.city)} · ${fmtDate(D.weather.date)}</span><span class="t">${c.max}°</span><span class="m">mín ${c.min}° · chuva ${c.rain_prob}%<br>${esc(c.condition || "")}</span></a>`).join("");
+  const world = D.world || [];
+  $("#world-count").textContent = `${world.length} manchetes`;
+  $("#world").innerHTML = world.length ? world.map((n) => `<article class="card"><div class="meta"><span class="cat">${esc(n.cat)}</span><span>${esc(n.source)}</span><span>${fmtDate(n.date)}</span></div><h3><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a></h3><p>${esc(n.summary)}</p></article>`).join("") : `<p class="empty">Sem manchetes gerais nesta leitura.</p>`;
   const cats = ["Todas", ...new Set(news.map((n) => n.cat))];
   let cat = "Todas";
   $("#news-count").textContent = `${news.length} sinais captados`;
@@ -572,6 +597,53 @@ render();
   const sfx = { boot() { tone(220, 440, 0.5, 0.04, "triangle"); tone(330, 660, 0.6, 0.03, "sine", 0.12); tone(660, 1320, 0.25, 0.025, "sine", 0.35); },
     card() { whoosh(); tone(1200, 1600, 0.08, 0.03, "sine", 0.18); }, item() { tone(900, 1300, 0.07, 0.025); }, done() { tone(523, 784, 0.25, 0.03); tone(784, 1046, 0.3, 0.03, "sine", 0.15); } };
 
+  /* ---------- Trilha musical (gerada ao vivo, sem arquivo de áudio) ---------- */
+  let musicOn = store.get("jarvis-music") !== "off", music = null;
+  $$("b-music").textContent = musicOn ? "Música: on" : "Música: off";
+  const CHORDS = [[57, 60, 64, 69], [53, 57, 60, 65], [48, 55, 60, 64], [55, 59, 62, 67]]; // Am F C G
+  const hz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+  function musicStart() {
+    if (!musicOn || music || !audio()) return;
+    const master = ac.createGain(); master.gain.value = 0.0001; master.connect(ac.destination);
+    master.gain.exponentialRampToValueAtTime(0.11, ac.currentTime + 3);
+    const delay = ac.createDelay(1); delay.delayTime.value = 0.41; const fb = ac.createGain(); fb.gain.value = 0.35;
+    delay.connect(fb).connect(delay); delay.connect(master);
+    const padF = ac.createBiquadFilter(); padF.type = "lowpass"; padF.frequency.value = 900; padF.Q.value = 0.7; padF.connect(master);
+    const lfo = ac.createOscillator(), lfoG = ac.createGain(); lfo.frequency.value = 0.07; lfoG.gain.value = 500; lfo.connect(lfoG).connect(padF.frequency); lfo.start();
+    music = { master, padF, delay, voices: [], timer: null, bar: 0 };
+    const beat = 60 / 96, barLen = beat * 8;
+    let next = ac.currentTime + 0.1;
+    const schedule = () => {
+      while (next < ac.currentTime + 1.5) {
+        const ch = CHORDS[music.bar % CHORDS.length];
+        ch.forEach((m, i) => [-7, 7].forEach((det) => {
+          const o = ac.createOscillator(), g = ac.createGain();
+          o.type = "sawtooth"; o.frequency.value = hz(m - 12); o.detune.value = det + i;
+          g.gain.setValueAtTime(0.0001, next); g.gain.exponentialRampToValueAtTime(0.025, next + 1.6); g.gain.setValueAtTime(0.025, next + barLen - 1.2); g.gain.exponentialRampToValueAtTime(0.0001, next + barLen + 0.8);
+          o.connect(g).connect(music.padF); o.start(next); o.stop(next + barLen + 1);
+        }));
+        const sub = ac.createOscillator(), sg = ac.createGain(); sub.type = "sine"; sub.frequency.value = hz(ch[0] - 24);
+        sg.gain.setValueAtTime(0.0001, next); sg.gain.exponentialRampToValueAtTime(0.08, next + 0.8); sg.gain.exponentialRampToValueAtTime(0.0001, next + barLen);
+        sub.connect(sg).connect(music.master); sub.start(next); sub.stop(next + barLen + 0.1);
+        for (let st = 0; st < 16; st++) {
+          if (music.bar % 8 < 2 && st % 2) continue;
+          const t = next + st * beat / 2, o = ac.createOscillator(), g = ac.createGain();
+          o.type = "triangle"; o.frequency.value = hz(ch[[0, 2, 1, 3, 2, 1, 3, 2][st % 8]] + 12);
+          g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.018, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.35);
+          o.connect(g); g.connect(music.master); g.connect(music.delay); o.start(t); o.stop(t + 0.4);
+        }
+        next += barLen; music.bar++;
+      }
+    };
+    schedule(); music.timer = setInterval(schedule, 500);
+  }
+  function musicStop() {
+    if (!music) return; const m = music; music = null; clearInterval(m.timer);
+    try { m.master.gain.cancelScheduledValues(ac.currentTime); m.master.gain.setValueAtTime(Math.max(0.0001, m.master.gain.value), ac.currentTime); m.master.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 1.5); setTimeout(() => m.master.disconnect(), 1800); } catch (e) {}
+  }
+  function duck(on) { if (!music) return; try { music.master.gain.cancelScheduledValues(ac.currentTime); music.master.gain.setTargetAtTime(on ? 0.035 : 0.11, ac.currentTime, 0.25); } catch (e) {} }
+  $$("b-music").addEventListener("click", () => { musicOn = !musicOn; store.set("jarvis-music", musicOn ? "on" : "off"); $$("b-music").textContent = musicOn ? "Música: on" : "Música: off"; musicOn && started ? musicStart() : musicStop(); });
+
   /* ---------- Voz ---------- */
   const synth = window.speechSynthesis;
   let voices = [], voice = null, voiceOn = !!synth && store.get("jarvis-voice") !== "__off__";
@@ -596,10 +668,10 @@ render();
   function speak(text, my) {
     setCaption(text);
     const words = capWords.length;
-    talking = true; el.state.textContent = "Falando";
+    talking = true; el.state.textContent = "Falando"; duck(true);
     return new Promise((resolve) => {
       let finished = false;
-      const finish = () => { if (finished) return; finished = true; talking = false; setCaption(text, words); resolve(); };
+      const finish = () => { if (finished) return; finished = true; talking = false; duck(false); setCaption(text, words); resolve(); };
       let ticker = null;
       const startTicker = (msPerWord) => { clearInterval(ticker); ticker = setInterval(() => { if (my !== run) { clearInterval(ticker); return finish(); } if (!paused && capShown < words) setCaption(text, capShown + 1); }, msPerWord); };
       if (!voiceOn || !synth || !voice) {
@@ -655,6 +727,12 @@ render();
           `<div class="row"><div class="inner trio">${num(k.ativos, "clientes ativos")}${num(k.em_churn, "status churn", "red")}${num(k.sem_reuniao, "sem reunião 15d+", "amb")}</div><div class="inner" style="display:grid;gap:8px">${num(D.cobertura + "%", "cobertura de reuniões")}<div class="mini-l">${k.mrr} MRR · ${k.arr} ARR</div></div></div>`, "ao vivo") } },
       { say: `São ${k.ativos} clientes ativos. ${k.em_churn} estão no status churn, ${k.churn_mes} deles previstos para ${D.month}, e ${k.sem_reuniao} estão sem reunião há mais de quinze dias.` },
     ] },
+    ...(((D.weather && D.weather.cities) || []).length ? [{ label: "Clima", beats: [
+      { say: "Antes dos números, o clima de hoje na região.",
+        card: { id: "wx", kick: "Panorama · Clima", mini: D.weather.cities.map((c) => `${c.city} ${c.max}°`).join(" · "), html: card("Panorama · Clima", "Sanharó e Belo Jardim", "☼",
+          `<div class="wxgrid">${D.weather.cities.map((c) => `<div class="wxc"><div class="city">${esc(c.city)} <span class="mini-l">${esc(c.uf || "")}</span></div><div class="now"><span class="sun ${c.rain_prob >= 30 ? "cloud" : ""}"></span><div class="big" style="font-size:36px">${c.now ?? c.max}°</div><div class="mini-l">${c.now != null ? "agora" : "máxima"}<br>${esc(c.condition || "")}</div></div><div class="trio"><div><b>${c.min}°</b><span class="mini-l">mínima</span></div><div><b>${c.max}°</b><span class="mini-l">máxima</span></div><div><b>${c.rain_prob}%</b><span class="mini-l">chuva</span></div></div>${c.wind_kmh ? `<div class="mini-l">vento ${c.wind_kmh} km/h${c.humidity ? " · umidade " + esc(c.humidity) : ""}</div>` : ""}</div>`).join("")}</div><div class="ft"><span>Previsão de ${fmtDate(D.weather.date)}</span><span>${esc(D.weather.cities.map((c) => c.source).filter((v, i, a) => a.indexOf(v) === i).join(" · "))}</span></div>`, fmtDate(D.weather.date)) } },
+      ...D.weather.cities.map((c) => ({ say: `Em ${c.city}, ${c.now != null ? `agora faz ${c.now} graus. A` : "a"} mínima será de ${c.min} e a máxima de ${c.max} graus, ${c.rain_prob ? `com ${c.rain_prob} por cento de chance de chuva` : "sem previsão de chuva"}${c.wind_kmh ? `, e vento de ${c.wind_kmh} quilômetros por hora` : ""}.` })),
+    ] }] : []),
     { label: "Atenção", beats: [
       { say: prio.length ? `${plural(prio.length, "ponto pede", "pontos pedem")} sua atenção hoje.` : "Nada exige interromper sua manhã antes do briefing.",
         card: { id: "att", kick: "Prioridades · Hoje", mini: `${prio.length} pontos de atenção`, html: card("Prioridades · Hoje", "Pedem sua atenção", "!", `<ul class="blist" id="b-att"></ul>`, `${prio.length} alertas`) } },
@@ -683,6 +761,13 @@ render();
         card: { id: "n" + i, kick: `${n.cat} · ${n.source}`, mini: n.title, html: card(`Radar · ${n.cat}`, n.source, "◈",
           `<div class="bnews-band"><b>${fmtDate(n.date)}</b><span>${esc(n.cat)}</span></div><div class="nt">${esc(n.title)}</div><p class="ns">${esc(n.summary)}</p>${n.impact ? `<div class="imp2"><b>Impacto para a AEG</b>${esc(n.impact)}</div>` : ""}<div class="ft"><span>${esc(n.source)}</span><a href="${esc(n.url)}" target="_blank" rel="noopener">Abrir matéria ↗</a></div>`, "nova") } })),
     ] },
+    ...((D.world || []).length ? [{ label: "Mundo", beats: [
+      { say: "Agora, as manchetes do Brasil e do mundo.",
+        card: { id: "wrd", kick: "Brasil e mundo", mini: `${D.world.length} manchetes`, html: card("Briefing matinal", "Brasil e mundo", "◍", `<div class="inner" style="display:flex;flex-wrap:wrap;gap:6px">${[...new Set(D.world.map((n) => n.cat))].map((c) => `<span class="badge" style="margin:0">${esc(c)}</span>`).join("")}</div>`) } },
+      ...D.world.map((n, i) => ({ say: `${n.cat === "Brasil" ? "No Brasil" : "No mundo"}: ${n.title}. ${n.summary}`,
+        card: { id: "w" + i, kick: `${n.cat} · ${n.source}`, mini: n.title, html: card(`Manchete · ${n.cat}`, n.source, "◍",
+          `<div class="bnews-band"><b>${fmtDate(n.date)}</b><span>${esc(n.cat)}</span></div><div class="nt">${esc(n.title)}</div><p class="ns">${esc(n.summary)}</p><div class="ft"><span>${esc(n.source)}</span><a href="${esc(n.url)}" target="_blank" rel="noopener">Abrir matéria ↗</a></div>`) } })),
+    ] }] : []),
     { label: "Fim", beats: [
       { say: `Esse foi o briefing de hoje. ${prio[0] ? "Sugiro começar por: " + prio[0].title.toLowerCase() + "." : ""} Deseja abrir o painel completo?`,
         card: { id: "end", kick: "Observações disponíveis", mini: "Briefing concluído", html: card("Observações disponíveis", "Briefing concluído", "✓",
@@ -713,18 +798,18 @@ render();
   function start(withVoice) {
     started = true; audio(); if (ac && ac.state === "suspended") ac.resume();
     voiceOn = withVoice && !!synth && !!voice; el.voice.textContent = !synth ? "Sem voz" : voiceOn ? "Voz" : "Voz: off";
-    el.deck.innerHTML = ""; current = null; sfx.boot(); playStep(0);
+    el.deck.innerHTML = ""; current = null; sfx.boot(); musicStart(); playStep(0);
   }
   function intro() {
     run++; started = false; paused = false; talking = false; el.state.textContent = "Pronto"; el.deck.innerHTML = ""; current = null;
     el.brief.hidden = false; el.fab.hidden = true; markSteps(-1); sizeCanvas();
     el.mic.textContent = "▶"; el.mic.classList.add("live"); el.mic.setAttribute("aria-label", "Iniciar briefing");
     el.focus.innerHTML = card("J.A.R.V.I.S · Briefing", "Bom dia, Wayslanne", "◎",
-      `<p class="ns">Seu briefing de ${esc(D.date_long)} está pronto: ${k.ativos} clientes ativos, ${prio.length} pontos de atenção e ${news.length} notícias do mercado. Leva uns três minutos.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bb primary" data-act="voice">▶ Iniciar com voz</button><button class="bb" data-act="mute">Iniciar sem voz</button><button class="bb" data-act="pick">Escolher voz</button></div>`);
+      `<p class="ns">Seu briefing de ${esc(D.date_long)} está pronto: o clima de Sanharó e Belo Jardim, ${k.ativos} clientes ativos, ${prio.length} pontos de atenção, ${news.length} notícias do mercado e ${(D.world || []).length} manchetes do Brasil e do mundo. Leva uns quatro minutos, com trilha sonora.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bb primary" data-act="voice">▶ Iniciar com voz</button><button class="bb" data-act="mute">Iniciar sem voz</button><button class="bb" data-act="pick">Escolher voz</button></div>`);
     setCaption(`Bom dia, Wayslanne. Toque em iniciar e eu apresento a operação de hoje.`); setCaption(capWords.join(" "), capWords.length);
   }
   function openDashboard() {
-    run++; talking = false; try { synth && synth.cancel(); } catch (e) {}
+    run++; talking = false; musicStop(); try { synth && synth.cancel(); } catch (e) {}
     el.brief.hidden = true; el.fab.hidden = false; el.vsel.hidden = true;
     document.querySelectorAll(".wrap > *").forEach((n, i) => { if (!reduce) { n.classList.remove("reveal"); void n.offsetWidth; n.style.animationDelay = `${i * 70}ms`; n.classList.add("reveal"); } });
     const p = prio[0];

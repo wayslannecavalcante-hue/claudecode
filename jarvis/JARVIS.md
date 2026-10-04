@@ -100,6 +100,36 @@ já estavam no snapshot anterior, a não ser que tragam dado novo. Para cada uma
 Nunca invente número, data ou link: use só o que veio da busca. Se a busca falhar,
 grave `"news": []` e registre em `notes`.
 
+### 5b. Clima de Sanharó e Belo Jardim (PE)
+
+As APIs de clima são bloqueadas neste ambiente, então use `WebSearch` (modo `extended`):
+`previsão do tempo Sanharó PE hoje temperatura mínima máxima chuva` e o mesmo para
+`Belo Jardim PE`. Grave em `weather`:
+
+```json
+{"date": "HOJE", "cities": [
+  {"city": "Sanharó", "uf": "PE", "now": 19 ou null, "min": 18, "max": 28, "rain_prob": 37,
+   "wind_kmh": 12 ou null, "humidity": "49–92%" ou null, "condition": "Nublado",
+   "source": "Climatempo", "url": "link da previsão"},
+  {"city": "Belo Jardim", ...}
+]}
+```
+
+Só números que vieram da busca; o que não vier fica `null`. Se a busca falhar para
+uma cidade, deixe-a fora da lista e registre em `notes`.
+
+### 5c. Brasil e mundo (manchetes gerais)
+
+`WebSearch` (modo `extended`) com `principais notícias do Brasil e do mundo hoje <data>`
+e `notícias internacionais hoje <data>`. Escolha de 3 a 6 manchetes de fontes conhecidas
+(Agência Brasil, g1, CNN Brasil, Folha, Estadão, BBC, Reuters, Euronews). Tom neutro em
+política, sem opinião. Grave em `world`:
+
+```json
+{"cat": "Brasil | Mundo", "date": "AAAA-MM-DD ou null", "source": "veículo", "url": "link",
+ "title": "manchete fiel", "summary": "1–2 frases factuais"}
+```
+
 ### 6. Snapshot, painel e publicação
 
 1. Grave `jarvis/data/snapshots/HOJE.json`:
@@ -114,6 +144,8 @@ grave `"news": []` e registre em `notes`.
      "overdue_truncated": false,
      "overdue": [...],
      "news": [...],
+     "weather": {...},
+     "world": [...],
      "notes": []
    }
    ```
