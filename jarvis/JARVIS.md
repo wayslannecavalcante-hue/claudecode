@@ -93,6 +93,20 @@ sem uso ou com queda forte. Grave em `skalo`:
 No máximo 8 `kpis`, 8 `alerts` e 5 `top`. Use só números que vieram do conector.
 Ao cruzar com o ClickUp, prefira citar clientes ativos da carteira.
 
+### 4c. Agenda da Wayslanne (Google Agenda)
+
+Procure as ferramentas com `ToolSearch` (`calendar`). Se houver, liste os eventos de HOJE
+(00:00–23:59, America/Sao_Paulo) da agenda principal, em ordem de horário, e grave:
+
+```json
+"agenda": {"date": "HOJE", "events": [{"start": "HH:MM", "end": "HH:MM", "title": "...",
+  "location": "..." ou null, "url": "link do evento" ou null, "all_day": false}]}
+```
+
+Agenda sem eventos: `"events": []` (o Jarvis diz que a agenda está livre). Sem ferramentas
+de agenda: não grave `agenda` e registre em `notes` "Google Agenda não disponível nesta leitura".
+Só compromissos do Google Agenda; nada de tarefas do ClickUp aqui.
+
 ### 5. Radar de mercado (notícias do dia)
 
 Use `WebSearch` (modo `extended`) com buscas em português sobre os últimos 7 dias, por exemplo:
@@ -166,6 +180,7 @@ política, sem opinião. Grave em `world`:
      "overdue": [...],
      "news": [...],
      "skalo": {...},
+     "agenda": {...},
      "weather": {...},
      "world": [...],
      "notes": []

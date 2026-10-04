@@ -327,6 +327,11 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
     <ul class="alerts" id="alerts"></ul>
   </section>
 
+  <section class="panel" aria-labelledby="s-agenda" id="agenda-sec" hidden>
+    <div class="sec-head"><h2 id="s-agenda"><span class="idx">AG</span>Sua agenda</h2><span class="label" id="agenda-label"></span></div>
+    <ul class="list" id="agenda-events"></ul>
+  </section>
+
   <section aria-label="Telemetria">
     <div class="kpis" id="kpis"></div>
   </section>
@@ -449,6 +454,13 @@ function render() {
 
   const W = (D.weather && D.weather.cities) || [];
   $("#wx").innerHTML = W.map((c) => `<a href="${esc(c.url)}" target="_blank" rel="noopener" title="Fonte: ${esc(c.source)}"><span class="c">${esc(c.city)} · ${fmtDate(D.weather.date)}</span><span class="t">${c.max}°</span><span class="m">mín ${c.min}° · chuva ${c.rain_prob}%<br>${esc(c.condition || "")}</span></a>`).join("");
+  const AG = D.agenda || {};
+  if (AG.date && Array.isArray(AG.events)) {
+    $("#agenda-sec").hidden = false;
+    $("#agenda-label").textContent = fmtDate(AG.date);
+    $("#agenda-events").innerHTML = AG.events.length ? AG.events.map((e) => `<li><span><b class="num">${esc(e.all_day ? "dia todo" : e.start + (e.end ? "–" + e.end : ""))}</b> ${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a>` : esc(e.title)}</span><span class="meta">${esc(e.location || "")}</span></li>`).join("")
+      : `<li><span class="meta">Nenhum compromisso registrado hoje.</span></li>`;
+  }
   const SK = D.skalo || {};
   if ((SK.kpis || []).length) {
     $("#skalo-sec").hidden = false;
@@ -751,6 +763,15 @@ render();
           `<div class="wxgrid">${D.weather.cities.map((c) => `<div class="wxc"><div class="city">${esc(c.city)} <span class="mini-l">${esc(c.uf || "")}</span></div><div class="now"><span class="sun ${c.rain_prob >= 30 ? "cloud" : ""}"></span><div class="big" style="font-size:36px">${c.now ?? c.max}°</div><div class="mini-l">${c.now != null ? "agora" : "máxima"}<br>${esc(c.condition || "")}</div></div><div class="trio"><div><b>${c.min}°</b><span class="mini-l">mínima</span></div><div><b>${c.max}°</b><span class="mini-l">máxima</span></div><div><b>${c.rain_prob}%</b><span class="mini-l">chuva</span></div></div>${c.wind_kmh ? `<div class="mini-l">vento ${c.wind_kmh} km/h${c.humidity ? " · umidade " + esc(c.humidity) : ""}</div>` : ""}</div>`).join("")}</div><div class="ft"><span>Previsão de ${fmtDate(D.weather.date)}</span><span>${esc(D.weather.cities.map((c) => c.source).filter((v, i, a) => a.indexOf(v) === i).join(" · "))}</span></div>`, fmtDate(D.weather.date)) } },
       ...D.weather.cities.map((c) => ({ say: `Em ${c.city}, ${c.now != null ? `agora faz ${c.now} graus. A` : "a"} mínima será de ${c.min} e a máxima de ${c.max} graus, ${c.rain_prob ? `com ${c.rain_prob} por cento de chance de chuva` : "sem previsão de chuva"}${c.wind_kmh ? `, e vento de ${c.wind_kmh} quilômetros por hora` : ""}.` })),
     ] }] : []),
+    ...((D.agenda || {}).date && Array.isArray(D.agenda.events) ? [{ label: "Agenda", beats: (() => {
+      const A = D.agenda, ev = A.events;
+      const evHtml = ev.length ? `<ul class="blist">${ev.map((e) => `<li style="--c:#7fd6ff"><span class="sv">${esc(e.all_day ? "Dia todo" : e.start)}</span><b>${esc(e.title)}</b><span class="d">${esc([e.end ? "até " + e.end : "", e.location || ""].filter(Boolean).join(" · "))}</span></li>`).join("")}</ul>` : `<div class="inner" style="text-align:center"><div class="ttl" style="font:600 16px var(--f-body)">Nenhum compromisso registrado</div><div class="mini-l">agenda livre</div></div>`;
+      return [
+        { say: ev.length ? `Sua agenda de hoje tem ${ev.length === 1 ? "um compromisso" : ev.length + " compromissos"}.` : "A agenda de hoje está livre, Wayslanne.",
+          card: { id: "ag", kick: "Agenda · Hoje", mini: ev.length ? `${ev.length} compromisso${ev.length > 1 ? "s" : ""}` : "Agenda livre", html: card("Agenda · Hoje", ev.length ? `${ev.length} compromisso${ev.length > 1 ? "s" : ""}` : "Agenda livre", "▦", evHtml, fmtDate(A.date)) } },
+        ...ev.slice(0, 6).map((e) => ({ say: `${e.all_day ? "O dia todo" : "Às " + e.start}: ${e.title}${e.location ? ", em " + e.location : ""}.` })),
+      ];
+    })() }] : []),
     { label: "Atenção", beats: [
       { say: prio.length ? `${plural(prio.length, "ponto pede", "pontos pedem")} sua atenção hoje.` : "Nada exige interromper sua manhã antes do briefing.",
         card: { id: "att", kick: "Prioridades · Hoje", mini: `${prio.length} pontos de atenção`, html: card("Prioridades · Hoje", "Pedem sua atenção", "!", `<ul class="blist" id="b-att"></ul>`, `${prio.length} alertas`) } },
