@@ -160,107 +160,136 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
   .kpi .v { font-size: 28px; }
 }
 
-/* ===== Briefing conversado ===== */
-.brief { position: fixed; inset: 0; z-index: 50; display: grid; grid-template-rows: auto minmax(0, 1fr) auto;
-  background: radial-gradient(900px 600px at 20% 30%, rgba(69, 224, 255, .12), transparent 60%), linear-gradient(var(--bg), var(--bg-2));
-  background-color: var(--bg);
-  padding: calc(env(safe-area-inset-top, 0px) + 14px) 20px calc(env(safe-area-inset-bottom, 0px) + 14px); gap: 14px; }
-.brief[hidden] { display: none !important; }
-.b-top { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; font: 500 12px var(--f-mono); color: var(--ink-2); letter-spacing: .08em; text-transform: uppercase; max-width: 1240px; width: 100%; margin: 0 auto; }
-.b-main { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: 24px; max-width: 1240px; width: 100%; margin: 0 auto; min-height: 0; }
-.b-left { display: grid; grid-template-rows: auto minmax(0, 1fr); gap: 14px; min-height: 0; }
-.orb { position: relative; width: 220px; height: 220px; margin: 0 auto; }
-.orb .core { position: absolute; inset: 62px; border-radius: 50%;
-  background: radial-gradient(circle at 40% 35%, #c9f6ff, var(--cyan) 35%, #0b5f7a 75%, #052231);
-  box-shadow: 0 0 40px rgba(69, 224, 255, .55), inset 0 0 20px rgba(255, 255, 255, .25); transition: transform .12s ease; }
-.orb .r { position: absolute; border-radius: 50%; border: 1px solid rgba(69, 224, 255, .35); }
-.orb .r1 { inset: 40px; border-style: dashed; }
-.orb .r2 { inset: 18px; border-color: rgba(69, 224, 255, .2); border-top-color: var(--cyan); border-width: 2px; }
-.orb .r3 { inset: 0; border-color: rgba(69, 224, 255, .12); border-left-color: rgba(69, 224, 255, .6); }
-.orb .name { position: absolute; left: 0; right: 0; bottom: -8px; text-align: center; font: 600 13px var(--f-mono); letter-spacing: .3em; color: var(--cyan); }
-.orb.talking .core { animation: talk .5s ease-in-out infinite alternate; }
-.chat { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding-right: 4px; min-height: 0; }
-.msg { border: 1px solid var(--line); background: rgba(10, 22, 31, .9); padding: 10px 12px; font-size: 14px; line-height: 1.45; position: relative; }
-.msg::before { content: "JARVIS"; display: block; font: 600 10px var(--f-mono); letter-spacing: .16em; color: var(--cyan); margin-bottom: 4px; }
-.msg.cur { border-color: var(--line-2); box-shadow: 0 0 18px rgba(69, 224, 255, .12); }
-.caret::after { content: "▍"; color: var(--cyan); margin-left: 1px; }
-.stage { position: relative; min-height: 0; overflow-y: auto; display: grid; align-content: start; gap: 12px; padding: 4px 2px 8px; }
-.stage-title { font: 700 clamp(22px, 3vw, 34px)/1.1 var(--f-display); text-transform: uppercase; letter-spacing: .03em; }
-.stage-title span { color: var(--cyan); }
-.pop { animation: pop .45s cubic-bezier(.2, .9, .3, 1.2) both; }
-.big3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.big3 .kpi .v { font-size: clamp(40px, 6vw, 64px); }
-.s-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
-.s-news { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.s-news .card.focus { border-color: var(--cyan); box-shadow: 0 0 24px rgba(69, 224, 255, .18); }
-.b-bot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; max-width: 1240px; width: 100%; margin: 0 auto; }
-.steps { display: flex; gap: 6px; flex-wrap: wrap; }
-.steps button { font: 500 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; padding: 6px 8px; border: 1px solid var(--line); background: transparent; color: var(--ink-3); cursor: pointer; }
-.steps button.on { color: var(--cyan); border-color: var(--cyan); background: var(--cyan-dim); }
-.steps button.done { color: var(--ink-2); }
-.ctrls { display: flex; gap: 8px; flex-wrap: wrap; }
-.btn { font: 600 13px var(--f-mono); letter-spacing: .06em; text-transform: uppercase; padding: 10px 14px; border: 1px solid var(--line-2); background: rgba(10, 22, 31, .9); color: var(--ink); cursor: pointer; }
-.btn:hover { border-color: var(--cyan); color: var(--cyan); }
-.btn.primary { background: var(--cyan); color: #03141c; border-color: var(--cyan); box-shadow: 0 0 24px rgba(69, 224, 255, .35); }
-.btn.primary:hover { color: #03141c; filter: brightness(1.08); }
-.start { display: grid; gap: 14px; justify-items: start; }
+/* ===== Briefing Jarvis (referência: esfera de energia + cartões + legenda) ===== */
+.brief { position: fixed; inset: 0; z-index: 50; overflow: hidden; color: #eaf6ff;
+  background: radial-gradient(1100px 700px at 50% 42%, #0b3a9e 0%, #062466 38%, #031035 75%, #020823 100%);
+  background-color: #031035; }
+.brief::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image: linear-gradient(rgba(120, 190, 255, .10) 1px, transparent 1px), linear-gradient(90deg, rgba(120, 190, 255, .10) 1px, transparent 1px);
+  background-size: 44px 44px; mask-image: radial-gradient(ellipse at 50% 45%, #000 35%, transparent 90%); }
+.brief::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse at 50% 50%, transparent 55%, rgba(0, 4, 20, .7)); }
+.b-shell { position: relative; z-index: 1; height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr) auto auto auto; gap: 10px;
+  padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px calc(env(safe-area-inset-bottom, 0px) + 12px); max-width: 1280px; margin: 0 auto; }
+.b-top { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
+.b-pill { justify-self: start; font: 500 11px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: #a9cfff; border: 1px solid rgba(120, 190, 255, .3); padding: 6px 10px; background: rgba(4, 20, 60, .6); }
+.b-state { text-align: center; font: 600 13px var(--f-mono); letter-spacing: .5em; color: #7fd6ff; text-shadow: 0 0 12px rgba(80, 200, 255, .8); text-transform: uppercase; }
+.b-state::after { content: ""; display: block; height: 4px; width: 120px; margin: 6px auto 0;
+  background: repeating-linear-gradient(90deg, rgba(127, 214, 255, .9) 0 3px, transparent 3px 6px); opacity: .7; }
+.b-x { justify-self: end; }
+.b-stage { position: relative; min-height: 0; display: grid; place-items: center; }
+#orb-cv { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(92vw, 70vh, 640px); height: min(92vw, 70vh, 640px); pointer-events: none; }
+.b-focus { position: relative; width: min(640px, 100%); max-height: 100%; overflow-y: auto; }
+.bcard { position: relative; border: 1px solid rgba(130, 200, 255, .45); border-radius: 14px; padding: 16px 18px; display: grid; gap: 12px;
+  background: linear-gradient(180deg, rgba(14, 42, 110, .92), rgba(5, 20, 64, .94)); box-shadow: 0 0 0 1px rgba(80, 170, 255, .12), 0 0 40px rgba(40, 140, 255, .35), inset 0 1px 0 rgba(255, 255, 255, .08); }
+.bcard .hd { display: flex; align-items: center; gap: 10px; }
+.bcard .ic { width: 34px; height: 34px; border-radius: 8px; border: 1px solid rgba(130, 200, 255, .5); display: grid; place-items: center; color: #7fd6ff; font: 600 15px var(--f-mono); background: rgba(40, 120, 255, .15); flex: none; }
+.bcard .kick { font: 600 10px var(--f-mono); letter-spacing: .18em; text-transform: uppercase; color: #7fd6ff; }
+.bcard .ttl { font: 700 20px/1.2 var(--f-display); color: #fff; }
+.bcard .badge { margin-left: auto; font: 600 10px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: #7fd6ff; border: 1px solid rgba(127, 214, 255, .5); padding: 4px 8px; border-radius: 999px; white-space: nowrap; }
+.bcard .inner { border: 1px solid rgba(130, 200, 255, .25); border-radius: 10px; padding: 12px; background: rgba(2, 12, 40, .45); }
+.bcard .row { display: grid; grid-template-columns: 2fr 1fr; gap: 10px; }
+.big { font: 700 44px/1 var(--f-display); color: #fff; font-variant-numeric: tabular-nums; }
+.big.red { color: #ff7a8a; } .big.amb { color: #ffb36b; }
+.mini-l { font: 500 10px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: #9cc3ef; }
+.trio { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.trio > div, .quad > div { display: grid; gap: 4px; }
+.quad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.quad .big { font-size: 30px; }
+.blist { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.blist li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 10px; padding: 9px 10px; border-radius: 8px; border: 1px solid rgba(130, 200, 255, .18); background: rgba(2, 12, 40, .4); font-size: 14px; }
+.blist li .sv { grid-row: span 2; font: 600 9px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--c); border: 1px solid var(--c); padding: 3px 6px; border-radius: 4px; align-self: start; }
+.blist li .d { color: #a9c4e6; font-size: 13px; }
+.bnews-band { height: 92px; border-radius: 10px; position: relative; overflow: hidden; border: 1px solid rgba(130, 200, 255, .25);
+  background: radial-gradient(circle at 20% 40%, rgba(127, 214, 255, .35), transparent 45%), radial-gradient(circle at 80% 70%, rgba(80, 120, 255, .45), transparent 50%), linear-gradient(120deg, #0a2a78, #04123f); }
+.bnews-band span { position: absolute; left: 14px; bottom: 10px; font: 700 26px var(--f-display); color: rgba(255, 255, 255, .92); letter-spacing: .02em; text-shadow: 0 2px 12px rgba(0, 0, 0, .4); }
+.bnews-band b { position: absolute; right: 14px; top: 10px; font: 600 10px var(--f-mono); letter-spacing: .14em; color: #bfe6ff; }
+.bcard .nt { font: 600 17px/1.35 var(--f-body); color: #fff; }
+.bcard .ns { color: #b8cdea; font-size: 14px; margin: 0; }
+.bcard .imp2 { border-left: 2px solid #7fd6ff; padding-left: 10px; font-size: 13px; color: #e6f3ff; }
+.bcard .imp2 b { display: block; font: 600 9px var(--f-mono); letter-spacing: .16em; color: #7fd6ff; text-transform: uppercase; margin-bottom: 2px; }
+.bcard .ft { display: flex; justify-content: space-between; gap: 10px; font: 500 10px var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: #8fb3df; }
+.bcard .ft a { color: #7fd6ff; }
+.deck { display: flex; gap: 10px; overflow-x: auto; padding: 4px 2px 6px; min-height: 0; scrollbar-width: thin; justify-content: safe center; }
+.dcard { flex: 0 0 auto; width: 190px; border: 1px solid rgba(130, 200, 255, .35); border-radius: 10px; padding: 8px 10px; background: rgba(6, 26, 80, .85); box-shadow: 0 0 18px rgba(40, 140, 255, .2); cursor: pointer; text-align: left; color: inherit; font: inherit; }
+.dcard:hover { border-color: #7fd6ff; }
+.dcard .kick { font: 600 9px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: #7fd6ff; }
+.dcard .t { font: 600 13px/1.25 var(--f-body); color: #fff; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-top: 3px; }
+.caption { min-height: 3.2em; text-align: center; font: 700 clamp(16px, 2.2vw, 22px)/1.35 var(--f-body); color: #fff; text-shadow: 0 2px 10px rgba(0, 0, 0, .7); max-width: 900px; margin: 0 auto; text-wrap: balance; }
+.caption .dim { color: rgba(255, 255, 255, .35); }
+.b-bot { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 10px; }
+.b-steps { display: flex; gap: 6px; flex-wrap: wrap; }
+.b-steps button { width: 28px; height: 6px; padding: 0; border: 0; border-radius: 3px; background: rgba(127, 214, 255, .2); cursor: pointer; }
+.b-steps button.on { background: #7fd6ff; box-shadow: 0 0 10px #7fd6ff; }
+.b-steps button.done { background: rgba(127, 214, 255, .55); }
+.mic { width: 58px; height: 58px; border-radius: 50%; border: 1px solid rgba(127, 214, 255, .7); background: radial-gradient(circle at 40% 35%, #2f8bff, #0a3aa8 60%, #062466); color: #fff; font: 600 18px var(--f-mono); cursor: pointer; box-shadow: 0 0 24px rgba(60, 160, 255, .6); }
+.mic.live { animation: ring 1.6s ease-out infinite; }
+@keyframes ring { 0% { box-shadow: 0 0 0 0 rgba(127, 214, 255, .55), 0 0 24px rgba(60, 160, 255, .6); } 100% { box-shadow: 0 0 0 18px rgba(127, 214, 255, 0), 0 0 24px rgba(60, 160, 255, .6); } }
+.b-ctl { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.bb { font: 600 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; padding: 8px 10px; border: 1px solid rgba(127, 214, 255, .4); border-radius: 6px; background: rgba(4, 20, 60, .7); color: #cfe8ff; cursor: pointer; }
+.bb:hover { border-color: #7fd6ff; color: #fff; }
+.bb.primary { background: #7fd6ff; color: #03124a; border-color: #7fd6ff; box-shadow: 0 0 24px rgba(127, 214, 255, .5); }
+.bb:focus-visible, .mic:focus-visible, .dcard:focus-visible { outline: 2px solid #7fd6ff; outline-offset: 2px; }
+.vsel { position: absolute; right: 16px; bottom: 90px; z-index: 3; width: min(340px, calc(100vw - 32px)); border: 1px solid rgba(127, 214, 255, .5); border-radius: 10px; background: rgba(4, 18, 56, .97); padding: 12px; display: grid; gap: 8px; box-shadow: 0 10px 40px rgba(0, 0, 0, .5); }
+.vsel label { font: 500 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: #9cc3ef; }
+.vsel select { width: 100%; background: #031035; color: #eaf6ff; border: 1px solid rgba(127, 214, 255, .4); padding: 8px; font: 14px var(--f-body); border-radius: 6px; }
+.vsel p { margin: 0; font-size: 12px; color: #9cc3ef; }
+.enter { animation: cardIn .55s cubic-bezier(.2, .9, .25, 1.15) both; }
+.enter-mini { animation: miniIn .45s ease both; }
+.blist li.enter { animation-duration: .4s; }
+@keyframes cardIn { from { opacity: 0; transform: translateY(26px) scale(.9); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes miniIn { from { opacity: 0; transform: translateY(-40px) scale(1.15); } to { opacity: 1; transform: none; } }
 .fab { position: fixed; right: 18px; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); z-index: 40; display: flex; align-items: center; gap: 10px; padding: 10px 14px 10px 10px; border: 1px solid var(--cyan); background: rgba(5, 12, 18, .92); color: var(--cyan); font: 600 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; cursor: pointer; box-shadow: 0 0 22px rgba(69, 224, 255, .25); }
-.fab i { width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #c9f6ff, var(--cyan) 40%, #0b5f7a); box-shadow: 0 0 12px var(--cyan); }
-.toast { position: fixed; right: 18px; bottom: calc(env(safe-area-inset-bottom, 0px) + 76px); z-index: 45; max-width: min(360px, calc(100vw - 36px)); border: 1px solid var(--line-2); border-left: 3px solid var(--c, var(--cyan)); background: rgba(8, 18, 26, .97); padding: 12px 14px; font-size: 14px; box-shadow: 0 10px 30px rgba(0, 0, 0, .5); }
+.fab i { width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #c9f6ff, #2f8bff 45%, #062466); box-shadow: 0 0 12px var(--cyan); }
+.toast { position: fixed; right: 18px; bottom: calc(env(safe-area-inset-bottom, 0px) + 76px); z-index: 45; max-width: min(360px, calc(100vw - 36px)); border: 1px solid var(--line-2); border-left: 3px solid var(--c, var(--cyan)); background: rgba(8, 18, 26, .97); padding: 12px 14px; font-size: 14px; box-shadow: 0 10px 30px rgba(0, 0, 0, .5); animation: cardIn .4s ease both; }
 .toast b { display: block; font: 600 10px var(--f-mono); letter-spacing: .14em; text-transform: uppercase; color: var(--c, var(--cyan)); margin-bottom: 4px; }
 .kpi, .card, .alerts li { transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
 .kpi:hover, .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, .35), 0 0 0 1px var(--line-2); }
 .reveal { animation: rise .6s ease both; }
-@media (prefers-reduced-motion: no-preference) {
-  .orb .r1 { animation: spin 22s linear infinite; }
-  .orb .r2 { animation: spin 6s linear infinite; }
-  .orb .r3 { animation: spin 11s linear infinite reverse; }
-  .orb .core { animation: breathe 3.2s ease-in-out infinite; }
-  .toast { animation: pop .4s ease both; }
-}
-@media (prefers-reduced-motion: reduce) { .pop, .reveal { animation: none; } }
-@keyframes talk { from { transform: scale(.94); } to { transform: scale(1.08); } }
-@keyframes breathe { 50% { transform: scale(1.04); } }
-@keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.96); } to { opacity: 1; transform: none; } }
 @keyframes rise { from { opacity: .001; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-@media (max-width: 900px) {
-  .b-main { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
-  .b-left { grid-template-columns: 110px minmax(0, 1fr); grid-template-rows: none; align-items: start; }
-  .orb { width: 110px; height: 110px; }
-  .orb .core { inset: 31px; } .orb .r1 { inset: 20px; } .orb .r2 { inset: 9px; }
-  .orb .name { font-size: 10px; bottom: -14px; letter-spacing: .2em; }
-  .chat { max-height: 120px; }
-  .steps button .sl { display: none; }
-  .b-bot { gap: 8px; }
-  .ctrls .btn { padding: 8px 10px; font-size: 12px; }
-  .brief { gap: 10px; }
-  .s-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .s-news { grid-template-columns: 1fr; }
-  .big3 { grid-template-columns: 1fr; }
+@media (prefers-reduced-motion: reduce) { .enter, .enter-mini, .reveal, .toast, .mic.live { animation: none; } }
+@media (max-width: 700px) {
+  .b-top { grid-template-columns: 1fr auto; } .b-state { grid-column: 1 / -1; grid-row: 2; letter-spacing: .35em; }
+  .b-bot { grid-template-columns: 1fr auto; } .b-steps { grid-column: 1 / -1; justify-content: center; } .b-ctl { justify-content: flex-end; }
+  .bcard { padding: 12px; } .bcard .ttl { font-size: 17px; } .big { font-size: 34px; }
+  .quad { grid-template-columns: repeat(2, minmax(0, 1fr)); } .bcard .row { grid-template-columns: 1fr; }
+  .dcard { width: 150px; } .bnews-band { height: 64px; } .bnews-band span { font-size: 20px; }
+  .vsel { bottom: 140px; }
+  .hide-sm { display: none; }
+  .caption { font-size: 15px; }
 }
 </style>
 
 <div class="scan" aria-hidden="true"></div>
 <div class="brief" id="brief" role="dialog" aria-modal="true" aria-label="Briefing do Jarvis">
-  <div class="b-top"><span><span class="dot"></span>Jarvis · briefing de <span id="b-date"></span></span><button class="btn" id="b-skip">Ir para o painel ✕</button></div>
-  <div class="b-main">
-    <div class="b-left">
-      <div class="orb" id="orb" aria-hidden="true"><div class="r r3"></div><div class="r r2"></div><div class="r r1"></div><div class="core"></div><div class="name">JARVIS</div></div>
-      <div class="chat" id="chat" aria-live="polite"></div>
+  <canvas id="orb-cv" aria-hidden="true"></canvas>
+  <div class="b-shell">
+    <div class="b-top">
+      <span class="b-pill">J.A.R.V.I.S<span class="hide-sm"> · AEG</span> · <span id="b-date"></span></span>
+      <div class="b-state" id="b-state">Pronto</div>
+      <button class="bb b-x" id="b-skip">Painel completo ✕</button>
     </div>
-    <div class="stage" id="stage"></div>
-  </div>
-  <div class="b-bot">
-    <div class="steps" id="steps"></div>
-    <div class="ctrls">
-      <button class="btn" id="b-prev">◀ Voltar</button>
-      <button class="btn" id="b-pause">Pausar</button>
-      <button class="btn" id="b-voice">Voz: ligada</button>
-      <button class="btn primary" id="b-next">Próximo ▶</button>
+    <div class="b-stage"><div class="b-focus" id="b-focus"></div></div>
+    <div class="deck" id="deck" aria-label="Cartões já apresentados"></div>
+    <div class="caption" id="caption" aria-live="polite"></div>
+    <div class="b-bot">
+      <div class="b-steps" id="b-steps"></div>
+      <button class="mic" id="mic" aria-label="Iniciar briefing">▶</button>
+      <div class="b-ctl">
+        <button class="bb" id="b-prev" aria-label="Etapa anterior">◀</button>
+        <button class="bb" id="b-next" aria-label="Próxima etapa">▶</button>
+        <button class="bb" id="b-voice">Voz</button>
+        <button class="bb" id="b-sfx">Efeitos: on</button>
+      </div>
+    </div>
+    <div class="vsel" id="vsel" hidden>
+      <label for="vsel-s">Voz do Jarvis neste aparelho</label>
+      <select id="vsel-s"></select>
+      <p>Prefira vozes masculinas "Natural" ou "Online" (ex.: Antonio, Donato, Fabio). A escolha fica salva neste navegador.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><button class="bb" id="vsel-test">Testar</button><button class="bb" id="vsel-off">Sem voz</button><button class="bb primary" id="vsel-ok">Ok</button></div>
     </div>
   </div>
 </div>
-<button class="fab" id="fab" hidden><i></i>Briefing do Jarvis</button>
+<button class="fab" id="fab" hidden><i></i>Chamar o Jarvis</button>
 <div class="toast" id="toast" hidden role="status"></div>
 <div class="wrap" id="app">
   <div class="statusbar" role="status">
@@ -453,164 +482,287 @@ function render() {
 }
 render();
 
-/* ===== Jarvis conversa: briefing em etapas ===== */
-(function briefing() {
+/* ===== Briefing Jarvis: esfera de energia, cartões, legenda e voz ===== */
+(function jarvisBriefing() {
   if (!D) return;
-  const k = D.kpis, news = D.news || [];
+  const k = D.kpis, news = D.news || [], prio = D.priorities || [];
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const el = { brief: $("#brief"), chat: $("#chat"), stage: $("#stage"), steps: $("#steps"), orb: $("#orb"),
-    next: $("#b-next"), prev: $("#b-prev"), pause: $("#b-pause"), voice: $("#b-voice"), skip: $("#b-skip"), fab: $("#fab"), toast: $("#toast") };
-  $("#b-date").textContent = fmtDate(D.date);
-  const synth = window.speechSynthesis;
-  let voiceOn = !!synth, ptVoice = null;
-  const pickVoice = () => { try { const vs = synth.getVoices(); ptVoice = vs.find((v) => /pt[-_]BR/i.test(v.lang)) || vs.find((v) => /^pt/i.test(v.lang)) || null; } catch (e) {} };
-  if (synth) { pickVoice(); try { synth.onvoiceschanged = pickVoice; } catch (e) {} } else { el.voice.textContent = "Voz indisponível"; el.voice.disabled = true; }
+  const $$ = (id) => document.getElementById(id);
+  const el = { brief: $$("brief"), focus: $$("b-focus"), deck: $$("deck"), cap: $$("caption"), state: $$("b-state"), steps: $$("b-steps"),
+    mic: $$("mic"), prev: $$("b-prev"), next: $$("b-next"), voice: $$("b-voice"), sfx: $$("b-sfx"), skip: $$("b-skip"), fab: $$("fab"), toast: $$("toast"),
+    vsel: $$("vsel"), vs: $$("vsel-s") };
+  $$("b-date").textContent = fmtDate(D.date);
+  const store = { get(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }, set(key, v) { try { localStorage.setItem(key, v); } catch (e) {} } };
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-  let run = 0, paused = false, stepIdx = 0, started = false;
 
-  const top3 = (arr, f) => arr.slice().sort((a, b) => f(b) - f(a)).slice(0, 3);
-  const plural = (n, s, p) => `${n} ${n === 1 ? s : p}`;
-  const vIA = Math.round((k.venda_ia / Math.max(k.ativos, 1)) * 100);
-  const od = k.atrasadas_truncado ? `mais de ${k.atrasadas}` : `${k.atrasadas}`;
-  const kpiTile = (v, l, s, cls = "") => `<div class="kpi pop ${cls}"><div class="l">${esc(l)}</div><div class="v" data-count="${typeof v === "number" ? v : ""}">${esc(v)}</div><div class="s">${s || ""}</div></div>`;
-  const newsCard = (n, i) => `<article class="card pop" id="bn-${i}"><div class="meta"><span class="cat">${esc(n.cat)}</span><span>${esc(n.source)}</span><span>${fmtDate(n.date)}</span></div><h3><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a></h3><p>${esc(n.summary)}</p>${n.impact ? `<div class="imp"><b>Impacto para a AEG</b>${esc(n.impact)}</div>` : ""}</article>`;
-  const countUp = (root) => root.querySelectorAll("[data-count]").forEach((node) => {
-    const end = Number(node.dataset.count); if (!node.dataset.count || reduce) return;
-    const t0 = performance.now(), suffix = node.textContent.replace(/^[\d.]+/, "");
-    const f = (t) => { const p = Math.min(1, (t - t0) / 900); node.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))) + suffix; if (p < 1) requestAnimationFrame(f); };
-    requestAnimationFrame(f);
-  });
-  const add = (html) => { el.stage.insertAdjacentHTML("beforeend", html); const n = el.stage.lastElementChild; countUp(n); n.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" }); return n; };
+  /* ---------- Esfera de energia (canvas) ---------- */
+  const cv = $$("orb-cv"), ctx = cv.getContext("2d");
+  let energy = 0.15, target = 0.15, talking = false, lastT = 0;
+  const RINGS = Array.from({ length: 12 }, (_, i) => ({
+    a: [0.025 + Math.random() * 0.03, 0.015 + Math.random() * 0.02, 0.01 + Math.random() * 0.015],
+    f: [2 + (i % 3), 3 + (i % 4), 5 + (i % 2)], p: [Math.random() * 6, Math.random() * 6, Math.random() * 6],
+    s: [0.25 + Math.random() * 0.35, -0.2 - Math.random() * 0.3, 0.4 + Math.random() * 0.4], tilt: Math.random() * Math.PI, sq: 0.9 + Math.random() * 0.1,
+  }));
+  function sizeCanvas() { const r = cv.getBoundingClientRect(), d = Math.min(window.devicePixelRatio || 1, 2); cv.width = Math.max(10, r.width * d); cv.height = Math.max(10, r.height * d); }
+  function drawOrb(t) {
+    const W = cv.width, H = cv.height, R = Math.min(W, H) * 0.32, cx = W / 2, cy = H / 2;
+    ctx.clearRect(0, 0, W, H);
+    const halo = ctx.createRadialGradient(cx, cy, R * 0.2, cx, cy, R * 1.6);
+    halo.addColorStop(0, `rgba(40,140,255,${0.10 + energy * 0.12})`); halo.addColorStop(1, "rgba(40,140,255,0)");
+    ctx.fillStyle = halo; ctx.fillRect(0, 0, W, H);
+    ctx.globalCompositeOperation = "lighter";
+    const amp = 0.8 + energy * 1.3;
+    RINGS.forEach((rg, i) => {
+      ctx.beginPath();
+      for (let j = 0; j <= 160; j++) {
+        const th = (j / 160) * Math.PI * 2;
+        let rr = 1;
+        for (let n = 0; n < 3; n++) rr += rg.a[n] * amp * Math.sin(rg.f[n] * th + rg.p[n] + t * rg.s[n] * (0.6 + energy));
+        const x0 = Math.cos(th) * R * rr, y0 = Math.sin(th) * R * rr * rg.sq;
+        const ang = rg.tilt + t * 0.05 * (i % 2 ? 1 : -1);
+        const x = cx + x0 * Math.cos(ang) - y0 * Math.sin(ang);
+        const y = cy + x0 * Math.sin(ang) + y0 * Math.cos(ang);
+        j ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = `rgba(${90 + i * 8},${200 + (i % 3) * 15},255,${0.32 + energy * 0.35})`;
+      ctx.lineWidth = (1 + (i % 3) * 0.6) * (W / 640);
+      ctx.shadowColor = "rgba(80,200,255,.9)"; ctx.shadowBlur = 14 * (W / 640);
+      ctx.stroke();
+    });
+    for (let s = 0; s < 4; s++) {
+      const th = t * (0.3 + s * 0.17) + s * 1.7, rr = R * (1 + 0.06 * Math.sin(t + s));
+      const g = ctx.createRadialGradient(cx + Math.cos(th) * rr, cy + Math.sin(th) * rr * 0.9, 0, cx + Math.cos(th) * rr, cy + Math.sin(th) * rr * 0.9, R * 0.18);
+      g.addColorStop(0, `rgba(200,240,255,${0.25 + energy * 0.4})`); g.addColorStop(1, "rgba(200,240,255,0)");
+      ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    }
+    ctx.globalCompositeOperation = "source-over"; ctx.shadowBlur = 0;
+  }
+  function loop(now) {
+    if (el.brief.hidden) { requestAnimationFrame(loop); return; }
+    const t = now / 1000, dt = Math.min(0.05, t - lastT); lastT = t;
+    if (talking && Math.random() < 0.08) target = 0.55 + Math.random() * 0.45;
+    if (!talking) target = 0.15;
+    energy += (target - energy) * Math.min(1, dt * 6); target += (0.35 - target) * dt * (talking ? 2 : 0);
+    drawOrb(t);
+    requestAnimationFrame(loop);
+  }
+  sizeCanvas(); addEventListener("resize", sizeCanvas);
+  if (reduce) drawOrb(1); else requestAnimationFrame(loop);
 
-  // Etapas: cada uma é uma lista de falas; cada fala pode mostrar algo no palco.
-  const prio = D.priorities || [];
-  const csHot = top3(D.cs_rows.filter((r) => r.ativos), (r) => r.sem_reuniao * 3 + r.churn * 4 + r.atrasadas);
-  const STEPS = [
-    { label: "Abertura", beats: [
-      { say: `Bom dia, Wayslanne. Hoje é ${D.date_long}. Aqui é o Jarvis com a leitura da operação AEG.`,
-        show: () => add(`<div class="stage-title pop">Operação <span>AEG</span> · leitura do dia</div>`) },
-      { say: `Em resumo: ${k.ativos} clientes ativos, ${k.em_churn} no status churn e ${k.sem_reuniao} sem reunião há mais de quinze dias.`,
-        show: () => add(`<div class="big3">${kpiTile(k.ativos, "Clientes ativos", "", "cy")}${kpiTile(k.em_churn, "Status churn", `${k.churn_mes} previstos p/ ${D.month}`, "alert")}${kpiTile(k.sem_reuniao, "Sem reunião 15d+", `cobertura ${D.cobertura}%`, "warn")}</div>`) },
-      { say: news.length ? `Separei ${plural(news.length, "notícia", "notícias")} do mercado para você no final. Vamos lá.` : "Vamos lá." },
-    ] },
-    { label: "Alertas", beats: [
-      { say: prio.length ? `Primeiro, o que precisa da sua atenção hoje. São ${plural(prio.length, "alerta", "alertas")}.` : "Nenhum alerta crítico hoje.",
-        show: () => add(`<div class="stage-title pop">Alertas do <span>dia</span></div><ul class="alerts" id="b-alerts"></ul>`) },
-      ...prio.map((p) => ({ say: `${p.title}. ${p.detail}`,
-        show: () => { $("#b-alerts").insertAdjacentHTML("beforeend", `<li class="sev-${p.sev} pop"><span class="bar"></span><span class="tag">${SEV[p.sev]}</span><span class="t">${esc(p.title)}</span>${p.detail ? `<span class="d">${esc(p.detail)}</span>` : ""}</li>`); $("#b-alerts").lastElementChild.scrollIntoView({ block: "nearest" }); } })),
-    ] },
-    { label: "Carteira", beats: [
-      { say: `Agora a carteira. Dos ${k.ativos} ativos, ${k.onboarding} estão em onboarding, ${k.maturacao} entre o mês dois e o seis, ${k.ongoing} em ongoing e ${k.renovacao} em renovação.`,
-        show: () => add(`<div class="stage-title pop">Telemetria da <span>carteira</span></div><div class="s-grid">${kpiTile(k.ativos, "Ativos", `${k.mrr} MRR · ${k.arr} ARR`, "cy")}${kpiTile(k.onboarding, "Onboarding", "S1 → S4")}${kpiTile(k.maturacao, "Mês 2 a 6", "maturação")}${kpiTile(k.ongoing, "Ongoing", "carteira madura")}</div>`) },
-      { say: `Entraram ${k.novos_mes} clientes em ${D.month} até agora, contra ${k.novos_mes_anterior} em ${D.prev_month}. ${vIA}% da carteira usa a Venda.IA.`,
-        show: () => add(`<div class="s-grid">${kpiTile(k.novos_mes, `Entradas ${D.month}`, `${k.novos_mes_anterior} em ${D.prev_month}`)}${kpiTile(k.renovacao, "Renovações", "abertas")}${kpiTile(od, "Tarefas atrasadas", "squads e obrigações", "warn")}${kpiTile(vIA + "%", "Venda.IA", `${k.crm_ia} com CRM.IA`)}</div>`) },
-    ] },
-    { label: "Time", beats: [
-      { say: csHot.length ? `No time, quem mais precisa de apoio hoje: ${csHot.map((r) => r.cs).join(", ")}.` : "O time está sem pendências relevantes.",
-        show: () => add(`<div class="stage-title pop">Pontos de atenção do <span>time</span></div><div class="s-grid">${csHot.map((r) => kpiTile(r.cs, `${r.ativos} clientes`, `${r.sem_reuniao} sem reunião · ${r.churn} em churn · ${r.atrasadas} atrasadas`)).join("")}</div>`) },
-      ...csHot.map((r) => ({ say: `${r.cs}: ${plural(r.sem_reuniao, "cliente", "clientes")} sem reunião, ${r.churn} em churn e ${plural(r.atrasadas, "tarefa atrasada", "tarefas atrasadas")}.` })),
-    ] },
-    { label: "Notícias", beats: news.length ? [
-      { say: "Aqui estão as notícias do seu dia.", show: () => add(`<div class="stage-title pop">Radar de <span>mercado</span></div><div class="s-news" id="b-news"></div>`) },
-      ...news.map((n, i) => ({ say: `${n.title}. ${n.impact || n.summary}`,
-        show: () => { document.querySelectorAll("#b-news .card.focus").forEach((c) => c.classList.remove("focus")); $("#b-news").insertAdjacentHTML("beforeend", newsCard(n, i)); const c = $("#bn-" + i); c.classList.add("focus"); c.scrollIntoView({ block: "nearest", behavior: reduce ? "auto" : "smooth" }); } })),
-    ] : [{ say: "Hoje não consegui coletar notícias do setor." }] },
-    { label: "Fechamento", beats: [
-      { say: `Esse foi o briefing. ${prio[0] ? "Minha sugestão para começar: " + prio[0].title.toLowerCase() + "." : ""} O painel completo está pronto. Bom trabalho, Wayslanne.`,
-        show: () => add(`<div class="start pop"><div class="stage-title">Painel completo <span>liberado</span></div><button class="btn primary" id="b-open">Abrir painel completo ▶</button></div>`) },
-    ] },
-  ];
+  /* ---------- Efeitos sonoros (Web Audio, só após clique) ---------- */
+  let ac = null, sfxOn = store.get("jarvis-sfx") !== "off";
+  el.sfx.textContent = sfxOn ? "Efeitos: on" : "Efeitos: off";
+  const audio = () => { if (!ac) { try { ac = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) {} } return ac; };
+  function tone(f1, f2, dur, vol = 0.05, type = "sine", delay = 0) {
+    if (!sfxOn || !audio()) return;
+    const t0 = ac.currentTime + delay, o = ac.createOscillator(), g = ac.createGain();
+    o.type = type; o.frequency.setValueAtTime(f1, t0); o.frequency.exponentialRampToValueAtTime(f2, t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + 0.015); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g).connect(ac.destination); o.start(t0); o.stop(t0 + dur + 0.02);
+  }
+  function whoosh() {
+    if (!sfxOn || !audio()) return;
+    const len = 0.35, buf = ac.createBuffer(1, ac.sampleRate * len, ac.sampleRate), d = buf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+    const src = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain();
+    src.buffer = buf; f.type = "bandpass"; f.Q.value = 1.2; f.frequency.setValueAtTime(600, ac.currentTime); f.frequency.exponentialRampToValueAtTime(3200, ac.currentTime + len);
+    g.gain.value = 0.05; src.connect(f).connect(g).connect(ac.destination); src.start();
+  }
+  const sfx = { boot() { tone(220, 440, 0.5, 0.04, "triangle"); tone(330, 660, 0.6, 0.03, "sine", 0.12); tone(660, 1320, 0.25, 0.025, "sine", 0.35); },
+    card() { whoosh(); tone(1200, 1600, 0.08, 0.03, "sine", 0.18); }, item() { tone(900, 1300, 0.07, 0.025); }, done() { tone(523, 784, 0.25, 0.03); tone(784, 1046, 0.3, 0.03, "sine", 0.15); } };
 
-  el.steps.innerHTML = STEPS.map((s, i) => `<button data-i="${i}" aria-label="${esc(s.label)}">${String(i + 1).padStart(2, "0")}<span class="sl"> ${esc(s.label)}</span></button>`).join("");
-  const markSteps = () => el.steps.querySelectorAll("button").forEach((b, i) => { b.classList.toggle("on", i === stepIdx); b.classList.toggle("done", i < stepIdx); });
+  /* ---------- Voz ---------- */
+  const synth = window.speechSynthesis;
+  let voices = [], voice = null, voiceOn = !!synth && store.get("jarvis-voice") !== "__off__";
+  const MALE = /antonio|donato|fabio|f[aá]bio|julio|j[uú]lio|humberto|nicolau|valerio|val[eé]rio|daniel|ricardo|felipe|jorge|duarte|male|masculin/i;
+  const score = (v) => (/pt[-_]BR/i.test(v.lang) ? 40 : /^pt/i.test(v.lang) ? 20 : 0) + (MALE.test(v.name) ? 30 : 0) + (/natural|online|neural|premium|enhanced/i.test(v.name) ? 20 : 0) + (v.localService ? 0 : 5);
+  function loadVoices() {
+    try { voices = synth.getVoices().filter((v) => /^pt/i.test(v.lang)).sort((a, b) => score(b) - score(a)); } catch (e) { voices = []; }
+    const saved = store.get("jarvis-voice");
+    voice = voices.find((v) => v.name === saved) || voices[0] || null;
+    el.vs.innerHTML = voices.length ? voices.map((v) => `<option value="${esc(v.name)}" ${voice && v.name === voice.name ? "selected" : ""}>${esc(v.name)} (${esc(v.lang)})</option>`).join("") : `<option>Nenhuma voz em português neste aparelho</option>`;
+    el.voice.textContent = !synth ? "Sem voz" : voiceOn ? "Voz" : "Voz: off";
+  }
+  if (synth) { loadVoices(); try { synth.onvoiceschanged = loadVoices; } catch (e) {} } else { el.voice.textContent = "Sem voz"; }
+  const isMale = () => voice && MALE.test(voice.name);
 
+  let capWords = [], capShown = 0;
+  function setCaption(text, upto) {
+    if (upto === undefined) { capWords = text.split(/\s+/); capShown = 0; }
+    else capShown = upto;
+    el.cap.innerHTML = capWords.map((w, i) => i < capShown ? esc(w) : `<span class="dim">${esc(w)}</span>`).join(" ");
+  }
   function speak(text, my) {
+    setCaption(text);
+    const words = capWords.length;
+    talking = true; el.state.textContent = "Falando";
     return new Promise((resolve) => {
-      const words = text.split(/\s+/).length;
-      const fallback = () => sleep(reduce ? 400 : Math.max(1600, words * 330)).then(resolve);
-      if (!voiceOn || !synth) return fallback();
+      let finished = false;
+      const finish = () => { if (finished) return; finished = true; talking = false; setCaption(text, words); resolve(); };
+      let ticker = null;
+      const startTicker = (msPerWord) => { clearInterval(ticker); ticker = setInterval(() => { if (my !== run) { clearInterval(ticker); return finish(); } if (!paused && capShown < words) setCaption(text, capShown + 1); }, msPerWord); };
+      if (!voiceOn || !synth || !voice) {
+        startTicker(reduce ? 60 : 280);
+        const wait = async () => { while (my === run && capShown < words) await sleep(100); await sleep(500); clearInterval(ticker); finish(); };
+        wait(); return;
+      }
       try {
         synth.cancel();
         const u = new SpeechSynthesisUtterance(text);
-        u.lang = "pt-BR"; if (ptVoice) u.voice = ptVoice; u.rate = 1.04; u.pitch = 0.95;
-        let done = false; const end = () => { if (!done) { done = true; resolve(); } };
-        u.onend = end; u.onerror = end;
-        setTimeout(end, Math.max(4000, words * 700));
+        u.voice = voice; u.lang = voice.lang || "pt-BR";
+        u.rate = 1.0; u.pitch = isMale() ? 0.88 : 0.72; u.volume = 1;
+        let gotBoundary = false;
+        u.onboundary = (ev) => { if (ev.name && ev.name !== "word") return; gotBoundary = true; clearInterval(ticker); target = 0.6 + Math.random() * 0.4; const upto = text.slice(0, ev.charIndex).split(/\s+/).filter(Boolean).length + 1; setCaption(text, Math.min(words, upto)); };
+        u.onend = () => { clearInterval(ticker); finish(); };
+        u.onerror = () => { clearInterval(ticker); finish(); };
+        startTicker(330);
+        setTimeout(() => { if (!gotBoundary) startTicker(330); }, 50);
+        setTimeout(() => { clearInterval(ticker); finish(); }, Math.max(6000, words * 900));
         synth.speak(u);
-      } catch (e) { fallback(); }
+      } catch (e) { startTicker(280); sleep(words * 280 + 400).then(finish); }
     });
   }
-  async function type(node, text, my) {
-    if (reduce) { node.textContent = text; return; }
-    node.classList.add("caret");
-    for (let i = 1; i <= text.length; i += 2) { if (my !== run) return; node.textContent = text.slice(0, i); await sleep(14); }
-    node.textContent = text; node.classList.remove("caret");
+
+  /* ---------- Cartões ---------- */
+  const card = (kick, ttl, ic, body, badge = "") => `<div class="bcard"><div class="hd"><div class="ic">${ic}</div><div><div class="kick">${esc(kick)}</div><div class="ttl">${esc(ttl)}</div></div>${badge ? `<span class="badge">${esc(badge)}</span>` : ""}</div>${body}</div>`;
+  const num = (v, l, cls = "") => `<div><div class="big ${cls}" data-count="${typeof v === "number" ? v : ""}">${esc(v)}</div><div class="mini-l">${esc(l)}</div></div>`;
+  const vIA = Math.round((k.venda_ia / Math.max(k.ativos, 1)) * 100);
+  const od = k.atrasadas_truncado ? `${k.atrasadas}+` : `${k.atrasadas}`;
+  const csHot = D.cs_rows.filter((r) => r.ativos).slice().sort((a, b) => (b.sem_reuniao * 3 + b.churn * 4 + b.atrasadas) - (a.sem_reuniao * 3 + a.churn * 4 + a.atrasadas)).slice(0, 3);
+  const plural = (n, s, p) => `${n} ${n === 1 ? s : p}`;
+  let current = null;
+  function countUp(root) {
+    root.querySelectorAll("[data-count]").forEach((n) => { const end = Number(n.dataset.count); if (!n.dataset.count || reduce) return; const t0 = performance.now(); const f = (t) => { const p = Math.min(1, (t - t0) / 900); n.textContent = Math.round(end * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); });
   }
-  async function waitIfPaused(my) { while (paused && my === run) await sleep(150); }
-  async function playStep(i) {
-    const my = ++run; stepIdx = i; markSteps();
-    try { synth && synth.cancel(); } catch (e) {}
-    el.stage.innerHTML = "";
-    for (const beat of STEPS[i].beats) {
-      await waitIfPaused(my); if (my !== run) return;
-      el.chat.querySelectorAll(".msg.cur").forEach((m) => m.classList.remove("cur"));
-      const m = document.createElement("div"); m.className = "msg cur"; m.appendChild(document.createElement("span"));
-      el.chat.appendChild(m); el.chat.scrollTop = el.chat.scrollHeight;
-      beat.show && beat.show();
-      el.orb.classList.add("talking");
-      await Promise.all([type(m.firstChild, beat.say, my), speak(beat.say, my)]);
-      el.orb.classList.remove("talking");
-      if (my !== run) return;
-      el.chat.scrollTop = el.chat.scrollHeight;
-      await sleep(reduce ? 100 : 450);
+  function showCard(c, silent) {
+    if (current && current.id !== c.id && !el.deck.querySelector(`[data-id="${current.id}"]`)) {
+      el.deck.insertAdjacentHTML("beforeend", `<button class="dcard enter-mini" data-id="${current.id}"><div class="kick">${esc(current.kick)}</div><div class="t">${esc(current.mini)}</div></button>`);
+      el.deck.scrollTo({ left: el.deck.scrollWidth, behavior: reduce ? "auto" : "smooth" });
     }
-    if (my === run && i < STEPS.length - 1) playStep(i + 1);
+    current = c; cards[c.id] = c;
+    el.focus.innerHTML = `<div class="enter">${c.html}</div>`;
+    countUp(el.focus); if (!silent) sfx.card();
   }
-  function openDashboard() {
-    run++; try { synth && synth.cancel(); } catch (e) {}
-    el.orb.classList.remove("talking");
-    el.brief.hidden = true; el.fab.hidden = false;
-    document.querySelectorAll(".wrap > *").forEach((n, i) => { if (!reduce) { n.classList.remove("reveal"); void n.offsetWidth; n.style.animationDelay = `${i * 70}ms`; n.classList.add("reveal"); } });
-    countUp(document.querySelector("#kpis"));
-    setTimeout(() => toast(prio[0]), reduce ? 0 : 1200);
-  }
-  function toast(p) {
-    if (!p) return;
-    el.toast.style.setProperty("--c", `var(--${p.sev})`);
-    el.toast.innerHTML = `<b>${SEV[p.sev]} · prioridade nº 1</b>${esc(p.title)}`;
-    el.toast.hidden = false;
-    clearTimeout(toast.t); toast.t = setTimeout(() => { el.toast.hidden = true; }, 7000);
-  }
-  function showIntro() {
-    run++; started = false; paused = false; el.pause.textContent = "Pausar";
-    el.brief.hidden = false; el.fab.hidden = true; el.chat.innerHTML = ""; stepIdx = 0; markSteps();
-    el.chat.innerHTML = `<div class="msg cur"><span>Bom dia, Wayslanne. Sua leitura de ${esc(D.date_long)} está pronta: ${k.ativos} clientes ativos, ${prio.length} alertas e ${news.length} notícias do mercado. Quer que eu apresente?</span></div>`;
-    el.stage.innerHTML = `<div class="start"><div class="stage-title">Bom dia, <span>Wayslanne</span></div><p class="sub" style="color:var(--ink-2);max-width:56ch;margin:0">Vou te mostrar a operação em ${STEPS.length} etapas: alertas, carteira, time e as notícias do dia. Leva uns três minutos, com voz.</p><div class="ctrls"><button class="btn primary" id="b-start">▶ Iniciar briefing</button><button class="btn" id="b-start-mute">Iniciar sem voz</button></div></div>`;
-    el.next.textContent = "Iniciar ▶";
+  const cards = {};
+  el.deck.addEventListener("click", (e) => { const b = e.target.closest(".dcard"); if (b && cards[b.dataset.id]) { el.focus.innerHTML = `<div class="enter">${cards[b.dataset.id].html}</div>`; } });
+
+  const sevColor = (s) => `var(--${s})`;
+  const STEPS = [
+    { label: "Abertura", beats: [
+      { say: `Bom dia, Wayslanne. Todos os sistemas da operação AEG estão sincronizados. Aqui está o seu briefing de ${D.date_long}.`,
+        card: { id: "pan", kick: "Panorama · Operação AEG", mini: `${k.ativos} ativos · ${k.em_churn} em churn`, html: card("Panorama · Operação AEG", "Carteira hoje", "◎",
+          `<div class="row"><div class="inner trio">${num(k.ativos, "clientes ativos")}${num(k.em_churn, "status churn", "red")}${num(k.sem_reuniao, "sem reunião 15d+", "amb")}</div><div class="inner" style="display:grid;gap:8px">${num(D.cobertura + "%", "cobertura de reuniões")}<div class="mini-l">${k.mrr} MRR · ${k.arr} ARR</div></div></div>`, "ao vivo") } },
+      { say: `São ${k.ativos} clientes ativos. ${k.em_churn} estão no status churn, ${k.churn_mes} deles previstos para ${D.month}, e ${k.sem_reuniao} estão sem reunião há mais de quinze dias.` },
+    ] },
+    { label: "Atenção", beats: [
+      { say: prio.length ? `${plural(prio.length, "ponto pede", "pontos pedem")} sua atenção hoje.` : "Nada exige interromper sua manhã antes do briefing.",
+        card: { id: "att", kick: "Prioridades · Hoje", mini: `${prio.length} pontos de atenção`, html: card("Prioridades · Hoje", "Pedem sua atenção", "!", `<ul class="blist" id="b-att"></ul>`, `${prio.length} alertas`) } },
+      ...prio.map((p) => ({ say: p.detail && p.detail.length <= 140 ? `${p.title}. ${p.detail}` : `${p.title}.`, item: () => {
+        const ul = el.focus.querySelector("#b-att"); if (!ul) return;
+        ul.insertAdjacentHTML("beforeend", `<li class="enter" style="--c:${sevColor(p.sev)}"><span class="sv">${SEV[p.sev]}</span><b>${esc(p.title)}</b>${p.detail ? `<span class="d">${esc(p.detail)}</span>` : ""}</li>`);
+        cards.att.html = el.focus.firstElementChild.innerHTML; sfx.item(); } })),
+    ] },
+    { label: "Carteira", beats: [
+      { say: `Na jornada da carteira: ${k.onboarding} clientes em onboarding, ${k.maturacao} entre o mês dois e o seis, ${k.ongoing} em ongoing e ${k.renovacao} em renovação.`,
+        card: { id: "car", kick: "Carteira · Jornada", mini: `${k.onboarding} onboarding · ${k.ongoing} ongoing`, html: card("Carteira · Jornada", "Onde estão os clientes", "◫",
+          `<div class="inner quad">${num(k.onboarding, "onboarding")}${num(k.maturacao, "mês 2 a 6")}${num(k.ongoing, "ongoing")}${num(k.renovacao, "renovação")}</div><div class="inner quad">${num(k.novos_mes, "entradas " + D.month)}${num(k.novos_mes_anterior, "entradas " + D.prev_month)}${num(vIA + "%", "usam Venda.IA")}${num(od, "tarefas atrasadas", "amb")}</div>`) } },
+      { say: `Em ${D.month} entraram ${k.novos_mes} clientes até agora, contra ${k.novos_mes_anterior} em ${D.prev_month}. ${vIA} por cento da carteira usa a Venda IA, e o time acumula ${k.atrasadas_truncado ? "mais de " : ""}${k.atrasadas} tarefas atrasadas.` },
+    ] },
+    { label: "Time", beats: [
+      { say: csHot.length ? `No time, quem mais precisa do seu apoio hoje: ${csHot.map((r) => r.cs).join(", ")}.` : "O time está sem pendências relevantes.",
+        card: { id: "time", kick: "Time · Customer Success", mini: csHot.map((r) => r.cs).join(", "), html: card("Time · Customer Success", "Quem precisa de apoio", "◉",
+          `<ul class="blist">${csHot.map((r) => `<li style="--c:var(--serious)"><span class="sv">${r.ativos} clientes</span><b>${esc(r.cs)}</b><span class="d">${r.sem_reuniao} sem reunião · ${r.churn} em churn · ${r.atrasadas} tarefas atrasadas</span></li>`).join("")}</ul>`) } },
+      ...csHot.map((r) => ({ say: `${r.cs}: ${plural(r.sem_reuniao, "cliente", "clientes")} sem reunião, ${r.churn} em churn e ${plural(r.atrasadas, "tarefa atrasada", "tarefas atrasadas")}.` })),
+    ] },
+    { label: "Notícias", beats: [
+      { say: news.length ? `Atualizei o radar de notícias. Separei ${plural(news.length, "destaque", "destaques")} do mercado de seminovos e do setor automotivo.` : "Não consegui atualizar o radar de notícias hoje.",
+        card: { id: "rad", kick: "Briefing matinal", mini: `Radar · ${news.length} notícias`, html: card("Briefing matinal", "Atualizando o radar de notícias…", "⌁",
+          `<div class="inner" style="display:flex;flex-wrap:wrap;gap:6px">${[...new Set(news.map((n) => n.cat))].map((c) => `<span class="badge" style="margin:0">${esc(c)}</span>`).join("")}</div>`) } },
+      ...news.map((n, i) => ({ say: `${i === 0 ? "Começando por " : ""}${n.cat}. ${n.title}. ${n.impact ? "Para a AEG: " + n.impact : n.summary}`,
+        card: { id: "n" + i, kick: `${n.cat} · ${n.source}`, mini: n.title, html: card(`Radar · ${n.cat}`, n.source, "◈",
+          `<div class="bnews-band"><b>${fmtDate(n.date)}</b><span>${esc(n.cat)}</span></div><div class="nt">${esc(n.title)}</div><p class="ns">${esc(n.summary)}</p>${n.impact ? `<div class="imp2"><b>Impacto para a AEG</b>${esc(n.impact)}</div>` : ""}<div class="ft"><span>${esc(n.source)}</span><a href="${esc(n.url)}" target="_blank" rel="noopener">Abrir matéria ↗</a></div>`, "nova") } })),
+    ] },
+    { label: "Fim", beats: [
+      { say: `Esse foi o briefing de hoje. ${prio[0] ? "Sugiro começar por: " + prio[0].title.toLowerCase() + "." : ""} Deseja abrir o painel completo?`,
+        card: { id: "end", kick: "Observações disponíveis", mini: "Briefing concluído", html: card("Observações disponíveis", "Briefing concluído", "✓",
+          `<p class="ns">O painel completo tem a carteira por CS, as listas de churn, renovações e reuniões, e todas as notícias com filtro.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bb primary" data-act="open">Abrir painel completo ▶</button><button class="bb" data-act="replay">Ouvir de novo</button></div>`) },
+        after: () => { sfx.done(); el.state.textContent = "Concluído"; } },
+    ] },
+  ];
+  el.steps.innerHTML = STEPS.map((s, i) => `<button data-i="${i}" title="${esc(s.label)}" aria-label="Etapa ${i + 1}: ${esc(s.label)}"></button>`).join("");
+  const markSteps = (i) => el.steps.querySelectorAll("button").forEach((b, j) => { b.classList.toggle("on", j === i); b.classList.toggle("done", j < i); });
+
+  /* ---------- Motor ---------- */
+  let run = 0, paused = false, started = false, stepIdx = 0;
+  const waitPause = async (my) => { while (paused && my === run) await sleep(120); };
+  async function playStep(i) {
+    const my = ++run; stepIdx = i; markSteps(i); paused = false; el.mic.textContent = "❚❚"; el.mic.classList.add("live"); el.mic.setAttribute("aria-label", "Pausar");
+    try { synth && synth.cancel(); } catch (e) {}
+    for (const b of STEPS[i].beats) {
+      await waitPause(my); if (my !== run) return;
+      if (b.card) { showCard(b.card); await sleep(reduce ? 50 : 350); }
+      if (b.item) b.item();
+      await speak(b.say, my); if (my !== run) return;
+      b.after && b.after();
+      await sleep(reduce ? 80 : 380);
+    }
+    if (my !== run) return;
+    if (i < STEPS.length - 1) playStep(i + 1); else { el.mic.textContent = "↺"; el.mic.classList.remove("live"); el.mic.setAttribute("aria-label", "Ouvir de novo"); }
   }
   function start(withVoice) {
-    started = true; voiceOn = withVoice && !!synth; el.voice.textContent = synth ? (voiceOn ? "Voz: ligada" : "Voz: desligada") : "Voz indisponível";
-    el.chat.innerHTML = ""; el.next.textContent = "Próximo ▶"; playStep(0);
+    started = true; audio(); if (ac && ac.state === "suspended") ac.resume();
+    voiceOn = withVoice && !!synth && !!voice; el.voice.textContent = !synth ? "Sem voz" : voiceOn ? "Voz" : "Voz: off";
+    el.deck.innerHTML = ""; current = null; sfx.boot(); playStep(0);
   }
-
+  function intro() {
+    run++; started = false; paused = false; talking = false; el.state.textContent = "Pronto"; el.deck.innerHTML = ""; current = null;
+    el.brief.hidden = false; el.fab.hidden = true; markSteps(-1); sizeCanvas();
+    el.mic.textContent = "▶"; el.mic.classList.add("live"); el.mic.setAttribute("aria-label", "Iniciar briefing");
+    el.focus.innerHTML = card("J.A.R.V.I.S · Briefing", "Bom dia, Wayslanne", "◎",
+      `<p class="ns">Seu briefing de ${esc(D.date_long)} está pronto: ${k.ativos} clientes ativos, ${prio.length} pontos de atenção e ${news.length} notícias do mercado. Leva uns três minutos.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bb primary" data-act="voice">▶ Iniciar com voz</button><button class="bb" data-act="mute">Iniciar sem voz</button><button class="bb" data-act="pick">Escolher voz</button></div>`);
+    setCaption(`Bom dia, Wayslanne. Toque em iniciar e eu apresento a operação de hoje.`); setCaption(capWords.join(" "), capWords.length);
+  }
+  function openDashboard() {
+    run++; talking = false; try { synth && synth.cancel(); } catch (e) {}
+    el.brief.hidden = true; el.fab.hidden = false; el.vsel.hidden = true;
+    document.querySelectorAll(".wrap > *").forEach((n, i) => { if (!reduce) { n.classList.remove("reveal"); void n.offsetWidth; n.style.animationDelay = `${i * 70}ms`; n.classList.add("reveal"); } });
+    const p = prio[0];
+    if (p) setTimeout(() => {
+      el.toast.style.setProperty("--c", `var(--${p.sev})`); el.toast.innerHTML = `<b>${SEV[p.sev]} · prioridade nº 1</b>${esc(p.title)}`; el.toast.hidden = false;
+      setTimeout(() => { el.toast.hidden = true; }, 7000);
+    }, reduce ? 0 : 1200);
+  }
   el.brief.addEventListener("click", (e) => {
-    const t = e.target.closest("button"); if (!t) return;
-    if (t.id === "b-start") start(true);
-    else if (t.id === "b-start-mute") start(false);
-    else if (t.id === "b-open") openDashboard();
-    else if (t.dataset.i !== undefined) { if (!started) start(voiceOn); else playStep(Number(t.dataset.i)); }
+    const b = e.target.closest("[data-act]"); if (!b) return;
+    const a = b.dataset.act;
+    if (a === "voice") start(true); else if (a === "mute") start(false); else if (a === "open") openDashboard();
+    else if (a === "replay") start(voiceOn); else if (a === "pick") el.vsel.hidden = false;
   });
-  el.next.addEventListener("click", () => { if (!started) return start(true); paused = false; el.pause.textContent = "Pausar"; stepIdx < STEPS.length - 1 ? playStep(stepIdx + 1) : openDashboard(); });
-  el.prev.addEventListener("click", () => { if (started) { paused = false; el.pause.textContent = "Pausar"; playStep(Math.max(0, stepIdx - 1)); } });
-  el.pause.addEventListener("click", () => {
-    if (!started) return;
-    paused = !paused; el.pause.textContent = paused ? "Continuar" : "Pausar";
-    try { paused ? synth && synth.pause() : synth && synth.resume(); } catch (e) {}
+  el.mic.addEventListener("click", () => {
+    if (!started) return start(true);
+    if (stepIdx === STEPS.length - 1 && !talking && el.mic.textContent === "↺") return start(voiceOn);
+    paused = !paused; el.state.textContent = paused ? "Pausado" : "Falando";
+    el.mic.textContent = paused ? "▶" : "❚❚"; el.mic.setAttribute("aria-label", paused ? "Continuar" : "Pausar");
+    try { paused ? synth.pause() : synth.resume(); } catch (e) {}
   });
-  el.voice.addEventListener("click", () => { voiceOn = !voiceOn; el.voice.textContent = voiceOn ? "Voz: ligada" : "Voz: desligada"; if (!voiceOn) try { synth.cancel(); } catch (e) {} });
+  el.next.addEventListener("click", () => { if (!started) return start(true); stepIdx < STEPS.length - 1 ? playStep(stepIdx + 1) : openDashboard(); });
+  el.prev.addEventListener("click", () => { if (started) playStep(Math.max(0, stepIdx - 1)); });
+  el.steps.addEventListener("click", (e) => { const b = e.target.closest("[data-i]"); if (!b) return; if (!started) { start(voiceOn); return; } playStep(Number(b.dataset.i)); });
+  el.voice.addEventListener("click", () => { if (synth) el.vsel.hidden = !el.vsel.hidden; });
+  el.sfx.addEventListener("click", () => { sfxOn = !sfxOn; store.set("jarvis-sfx", sfxOn ? "on" : "off"); el.sfx.textContent = sfxOn ? "Efeitos: on" : "Efeitos: off"; });
+  el.vs.addEventListener("change", () => { voice = voices.find((v) => v.name === el.vs.value) || voice; voiceOn = true; store.set("jarvis-voice", voice ? voice.name : ""); el.voice.textContent = "Voz"; });
+  $$("vsel-test").addEventListener("click", () => { voiceOn = true; const my = ++run; speak("Bom dia, Wayslanne. Todos os sistemas operacionais.", my); });
+  $$("vsel-off").addEventListener("click", () => { voiceOn = false; store.set("jarvis-voice", "__off__"); el.voice.textContent = "Voz: off"; el.vsel.hidden = true; });
+  $$("vsel-ok").addEventListener("click", () => { el.vsel.hidden = true; });
   el.skip.addEventListener("click", openDashboard);
-  el.fab.addEventListener("click", showIntro);
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !el.brief.hidden) openDashboard(); });
-  showIntro();
+  el.fab.addEventListener("click", intro);
+  document.addEventListener("keydown", (e) => {
+    if (el.brief.hidden) return;
+    if (e.key === "Escape") openDashboard();
+    else if (e.key === "ArrowRight") el.next.click(); else if (e.key === "ArrowLeft") el.prev.click();
+    else if (e.key === " " && e.target === document.body) { e.preventDefault(); el.mic.click(); }
+  });
+  intro();
 })();
 </script>
