@@ -72,6 +72,27 @@ Grave só os IDs em `no_meeting_15d`.
 O `due_date` vem em milissegundos UTC; converta com fuso −03:00. Se precisar
 parar antes da última página, grave `overdue_truncated: true`.
 
+### 4b. Skalo.IA (resultados dos clientes)
+
+Procure as ferramentas do conector com `ToolSearch` (`skalo`). Se não houver nenhuma,
+pule este passo e registre em `notes`: "Conector Skalo.IA não disponível nesta leitura".
+
+Se houver, explore o que elas oferecem e colete, para os clientes AEG, os indicadores
+das últimas 24h e dos últimos 7 dias que existirem, por exemplo: leads recebidos,
+conversas atendidas pela IA, tempo de resposta, visitas agendadas, vendas, clientes
+sem uso ou com queda forte. Grave em `skalo`:
+
+```json
+{"period": "últimos 7 dias (até HOJE)",
+ "headline": "1 frase com o principal resultado, ex.: 'Foram 1.240 leads, 8% a mais que na semana anterior.'",
+ "kpis": [{"label": "Leads", "value": "1.240", "detail": "+8% vs semana anterior", "tone": "good|warn|bad|null"}],
+ "alerts": [{"name": "Cliente", "info": "o problema, com número", "url": "link se houver"}],
+ "top": [{"name": "Cliente", "info": "o destaque, com número", "url": null}]}
+```
+
+No máximo 8 `kpis`, 8 `alerts` e 5 `top`. Use só números que vieram do conector.
+Ao cruzar com o ClickUp, prefira citar clientes ativos da carteira.
+
 ### 5. Radar de mercado (notícias do dia)
 
 Use `WebSearch` (modo `extended`) com buscas em português sobre os últimos 7 dias, por exemplo:
@@ -144,6 +165,7 @@ política, sem opinião. Grave em `world`:
      "overdue_truncated": false,
      "overdue": [...],
      "news": [...],
+     "skalo": {...},
      "weather": {...},
      "world": [...],
      "notes": []

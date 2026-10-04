@@ -337,6 +337,15 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
     <div class="news" id="news"></div>
   </section>
 
+  <section class="panel" aria-labelledby="s-skalo" id="skalo-sec" hidden>
+    <div class="sec-head"><h2 id="s-skalo"><span class="idx">SK</span>Skalo.IA · resultados dos clientes</h2><span class="label" id="skalo-period"></span></div>
+    <div class="kpis" id="skalo-kpis"></div>
+    <div class="grid2" style="margin-top:14px">
+      <div><div class="label" style="margin-bottom:8px">Clientes em alerta</div><ul class="list" id="skalo-alerts"></ul></div>
+      <div><div class="label" style="margin-bottom:8px">Destaques</div><ul class="list" id="skalo-top"></ul></div>
+    </div>
+  </section>
+
   <section class="panel" aria-labelledby="s-world">
     <div class="sec-head"><h2 id="s-world"><span class="idx">03</span>Brasil e mundo</h2><span class="label" id="world-count"></span></div>
     <div class="news" id="world"></div>
@@ -440,6 +449,15 @@ function render() {
 
   const W = (D.weather && D.weather.cities) || [];
   $("#wx").innerHTML = W.map((c) => `<a href="${esc(c.url)}" target="_blank" rel="noopener" title="Fonte: ${esc(c.source)}"><span class="c">${esc(c.city)} · ${fmtDate(D.weather.date)}</span><span class="t">${c.max}°</span><span class="m">mín ${c.min}° · chuva ${c.rain_prob}%<br>${esc(c.condition || "")}</span></a>`).join("");
+  const SK = D.skalo || {};
+  if ((SK.kpis || []).length) {
+    $("#skalo-sec").hidden = false;
+    $("#skalo-period").textContent = SK.period || "";
+    $("#skalo-kpis").innerHTML = SK.kpis.map((x) => `<div class="kpi ${x.tone === "bad" ? "alert" : x.tone === "warn" ? "warn" : x.tone === "good" ? "cy" : ""}"><div class="l">${esc(x.label)}</div><div class="v">${esc(x.value)}</div><div class="s">${esc(x.detail || "")}</div></div>`).join("");
+    const li = (c) => `<li><span>${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a>` : esc(c.name)}</span><span class="meta">${esc(c.info || "")}</span></li>`;
+    $("#skalo-alerts").innerHTML = (SK.alerts || []).map(li).join("") || `<li><span class="meta">Nenhum cliente em alerta.</span></li>`;
+    $("#skalo-top").innerHTML = (SK.top || []).map(li).join("") || `<li><span class="meta">Sem destaques.</span></li>`;
+  }
   const world = D.world || [];
   $("#world-count").textContent = `${world.length} manchetes`;
   $("#world").innerHTML = world.length ? world.map((n) => `<article class="card"><div class="meta"><span class="cat">${esc(n.cat)}</span><span>${esc(n.source)}</span><span>${fmtDate(n.date)}</span></div><h3><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a></h3><p>${esc(n.summary)}</p></article>`).join("") : `<p class="empty">Sem manchetes gerais nesta leitura.</p>`;
@@ -747,6 +765,12 @@ render();
           `<div class="inner quad">${num(k.onboarding, "onboarding")}${num(k.maturacao, "mês 2 a 6")}${num(k.ongoing, "ongoing")}${num(k.renovacao, "renovação")}</div><div class="inner quad">${num(k.novos_mes, "entradas " + D.month)}${num(k.novos_mes_anterior, "entradas " + D.prev_month)}${num(vIA + "%", "usam Venda.IA")}${num(od, "tarefas atrasadas", "amb")}</div>`) } },
       { say: `Em ${D.month} entraram ${k.novos_mes} clientes até agora, contra ${k.novos_mes_anterior} em ${D.prev_month}. ${vIA} por cento da carteira usa a Venda IA, e o time acumula ${k.atrasadas_truncado ? "mais de " : ""}${k.atrasadas} tarefas atrasadas.` },
     ] },
+    ...(((D.skalo || {}).kpis || []).length ? [{ label: "Skalo", beats: [
+      { say: `Agora os resultados da Skalo IA${D.skalo.period ? ", " + D.skalo.period : ""}. ${D.skalo.headline || ""}`,
+        card: { id: "sk", kick: "Skalo.IA · Resultados", mini: D.skalo.kpis.slice(0, 2).map((x) => `${x.value} ${x.label}`).join(" · "), html: card("Skalo.IA · Resultados", D.skalo.period || "Clientes AEG", "◆",
+          `<div class="inner quad">${D.skalo.kpis.slice(0, 8).map((x) => num(x.value, x.label, x.tone === "bad" ? "red" : x.tone === "warn" ? "amb" : "")).join("")}</div>${(D.skalo.alerts || []).length ? `<ul class="blist">${D.skalo.alerts.slice(0, 4).map((c) => `<li style="--c:var(--serious)"><span class="sv">Alerta</span><b>${esc(c.name)}</b><span class="d">${esc(c.info || "")}</span></li>`).join("")}</ul>` : ""}`) } },
+      ...((D.skalo.alerts || []).length ? [{ say: `Clientes que merecem atenção na Skalo: ${D.skalo.alerts.slice(0, 4).map((c) => c.name + (c.info ? ", " + c.info : "")).join("; ")}.` }] : []),
+    ] }] : []),
     { label: "Time", beats: [
       { say: csHot.length ? `No time, quem mais precisa do seu apoio hoje: ${csHot.map((r) => r.cs).join(", ")}.` : "O time está sem pendências relevantes.",
         card: { id: "time", kick: "Time · Customer Success", mini: csHot.map((r) => r.cs).join(", "), html: card("Time · Customer Success", "Quem precisa de apoio", "◉",
