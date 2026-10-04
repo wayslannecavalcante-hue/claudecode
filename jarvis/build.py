@@ -16,6 +16,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 SNAP_DIR = ROOT / "data" / "snapshots"
+DETAILS_DIR = ROOT / "data" / "details"
+RITUAL_OK = {"SIM"}
+RITUAL_GAP = {"NÃO", "NÃO APARECEU"}
+RITUAL_MOVED = {"REMARCADA", "REMARCADAA", "MARCADA"}
 OUT = ROOT / "out" / "jarvis.html"
 TEMPLATE = ROOT / "template.html"
 
@@ -158,6 +162,7 @@ def metrics(snap, cfg):
         "in_churn": sorted(in_churn, key=lambda c: (c not in churn_month, c["cs"], c["name"])),
         "churn_month_ids": [c["id"] for c in churn_month],
         "no_meeting": sorted(no_meet, key=lambda c: (c["cs"], c["name"])),
+        "all_clients": clients,
         "renewals": sorted(renewals, key=lambda c: (c["cs"], c["name"])),
         "new_month": sorted(new_month, key=lambda c: c["name"]),
         "overdue_rows": overdue_rows,
@@ -169,6 +174,139 @@ def metrics(snap, cfg):
         "skalo": snap.get("skalo", {}),
         "agenda": snap.get("agenda", {}),
         "cobertura": round(100 * (len(active) - len(no_meet)) / max(len(active), 1)),
+    }
+
+
+def load_details(date):
+    """Custom fields per client (extract_fields.py output). Uses the newest file up to `date`;
+    all files sharing that date prefix (e.g. 2026-10-04.json, 2026-10-04.p1.json) are merged."""
+    days = sorted({f.name[:10] for f in DETAILS_DIR.glob("*.json") if f.name[:10] <= date})
+    if not days:
+        return {}, None
+    day = days[-1]
+    merged = {}
+    for f in sorted(DETAILS_DIR.glob(f"{day}*.json")):
+        merged.update(load_json(f))
+    return merged, day
+
+
+def brl(v):
+    return "R$ " + f"{v:,.0f}".replace(",", ".")
+
+
+def diretoria(r, snap, details, details_day, cfg):
+    """Director + coordination view built from the clients' custom fields."""
+    if not details:
+        return None
+    today = dt.date.fromisoformat(snap["date"])
+    now_ms = dt.datetime(today.year, today.month, today.day, 12, tzinfo=dt.timezone(dt.timedelta(hours=-3))).timestamp() * 1000
+    days_since = lambda ms: int((now_ms - ms) // 86400000) if ms else None
+    churn_ids = set(r["churn_month_ids"])
+    rows = []
+    for c in r["all_clients"]:
+        d = details.get(c["id"])
+        if not d:
+            continue
+        rit = {k.strip(): str(v).strip() for k, v in (d.get("rituais") or {}).items()}
+        cs_full = d.get("cs") or ""
+        row = {
+            "id": c["id"], "name": c["name"], "url": c["url"], "status": c["status"], "group": c["group"],
+            "cs": short(cs_full.split(",")[0].strip(), cfg) if cs_full else "Sem CS",
+            "gestor": c["cs"], "fee_raw": float(d.get("fee") or 0), "squad": d.get("squad") or "Sem squad",
+            "plano": str(d.get("plano") or "").strip(), "contrato": str(d.get("contrato") or "").strip(),
+            "dias_reuniao": days_since(d.get("ultima_reuniao")),
+            "dias_auditoria": days_since(d.get("ultima_auditoria")),
+            "lt_meses": (lambda e: (today.year - e.year) * 12 + today.month - e.month)(
+                dt.date.fromtimestamp(d["entrada"] / 1000)) if d.get("entrada") else None,
+            "rit_ok": sum(1 for v in rit.values() if v in RITUAL_OK),
+            "rit_gap": [k for k, v in rit.items() if v in RITUAL_GAP and not k.startswith("Treinamento")],
+            "rit_moved": [k for k, v in rit.items() if v in RITUAL_MOVED],
+            "trein_gap": sum(1 for k, v in rit.items() if k.startswith("Treinamento") and v in RITUAL_GAP),
+            "churn_mes": c["id"] in churn_ids,
+            "missing": [lbl for key, lbl in (("cs", "CS"), ("fee", "fee"), ("squad", "squad"),
+                                             ("entrada", "data de entrada"), ("contrato", "contrato"),
+                                             ("ultima_reuniao", "última reunião")) if not d.get(key)],
+        }
+        fee_max = cfg.get("fee_max_plausivel", 50000)
+        row["fee"] = row["fee_raw"] if row["fee_raw"] <= fee_max else 0.0
+        issues = []
+        if row["fee_raw"] > fee_max:
+            issues.append((f"fee suspeito ({brl(row['fee_raw'])})", 3))
+        if row["contrato"] and row["contrato"] != "ASSINOU":
+            issues.append(("contrato " + row["contrato"].lower(), 3))
+        if row["dias_reuniao"] is None:
+            issues.append(("sem data de reunião", 2))
+        elif row["dias_reuniao"] >= 15:
+            issues.append((f"{row['dias_reuniao']} dias sem reunião", 3 if row["dias_reuniao"] >= 30 else 2))
+        if row["rit_gap"]:
+            issues.append(("ritual marcado NÃO: " + ", ".join(x.replace("Checkpoint", "CP").replace("Relatório", "Rel") for x in row["rit_gap"]), len(row["rit_gap"])))
+        if row["missing"]:
+            issues.append(("falta " + ", ".join(row["missing"]), 1))
+        row["issues"] = [i for i, _ in issues]
+        row["score"] = sum(w for _, w in issues)
+        rows.append(row)
+
+    active = [x for x in rows if x["group"] != "churn"]
+    n_active_total = r["kpis"]["ativos"]
+    mrr = sum(x["fee"] for x in active)
+    em_churn = [x for x in rows if x["group"] == "churn"]
+    churn_mes = [x for x in rows if x["churn_mes"]]
+    sem_reu = [x for x in active if x["dias_reuniao"] is None or x["dias_reuniao"] >= 15]
+    renov = [x for x in active if x["group"] == "renovacao"]
+    risco_ids = {x["id"] for x in em_churn + churn_mes} | {x["id"] for x in sem_reu if (x["dias_reuniao"] or 99) >= 30}
+    risco = [x for x in rows if x["id"] in risco_ids]
+    base_mes = mrr + sum(x["fee"] for x in churn_mes if x["group"] == "churn")
+
+    by_squad = defaultdict(lambda: [0, 0.0])
+    for x in active:
+        by_squad[x["squad"]][0] += 1
+        by_squad[x["squad"]][1] += x["fee"]
+
+    per_cs = defaultdict(list)
+    for x in rows:
+        per_cs[x["cs"]].append(x)
+    audit = []
+    for cs, xs in per_cs.items():
+        act = [x for x in xs if x["group"] != "churn"]
+        rit_total = sum(x["rit_ok"] + len(x["rit_gap"]) for x in act)
+        audit.append({
+            "cs": cs, "ativos": len(act), "mrr": sum(x["fee"] for x in act),
+            "em_churn": sum(1 for x in xs if x["group"] == "churn"),
+            "mrr_churn": sum(x["fee"] for x in xs if x["group"] == "churn" or x["churn_mes"]),
+            "sem_reuniao": sum(1 for x in act if x["dias_reuniao"] is None or x["dias_reuniao"] >= 15),
+            "rituais_pct": round(100 * sum(x["rit_ok"] for x in act) / rit_total) if rit_total else None,
+            "rituais_gap": sum(len(x["rit_gap"]) for x in act),
+            "remarcados": sum(len(x["rit_moved"]) for x in act),
+            "contrato_pend": sum(1 for x in act if x["contrato"] and x["contrato"] != "ASSINOU"),
+            "sem_auditoria": sum(1 for x in act if x["dias_auditoria"] is None or x["dias_auditoria"] > 30),
+            "dados": sum(1 for x in act if x["missing"]),
+        })
+    audit.sort(key=lambda a: (-a["ativos"], a["cs"]))
+
+    conferir = sorted((x for x in active if x["issues"]), key=lambda x: (-x["score"], -x["fee"]))
+    hig = Counter(m for x in active for m in x["missing"])
+    return {
+        "details_day": details_day,
+        "cobertos": len(active), "ativos_total": n_active_total,
+        "mrr": mrr, "ticket": mrr / max(len(active), 1),
+        "mrr_em_churn": sum(x["fee"] for x in em_churn),
+        "mrr_churn_mes": sum(x["fee"] for x in churn_mes),
+        "churn_mes_pct": round(100 * sum(x["fee"] for x in churn_mes) / base_mes, 1) if base_mes else 0,
+        "mrr_risco": sum(x["fee"] for x in risco), "n_risco": len(risco),
+        "mrr_sem_reuniao": sum(x["fee"] for x in sem_reu), "n_sem_reuniao": len(sem_reu),
+        "mrr_renov": sum(x["fee"] for x in renov), "n_renov": len(renov),
+        "squads": sorted(({"squad": k, "n": v[0], "mrr": v[1]} for k, v in by_squad.items()), key=lambda s: -s["mrr"]),
+        "audit": audit,
+        "conferir": [{k: x[k] for k in ("id", "name", "url", "cs", "gestor", "fee", "status", "issues", "score")} for x in conferir],
+        "contrato_pend": [{"name": x["name"], "url": x["url"], "cs": x["cs"], "fee": x["fee"], "contrato": x["contrato"]}
+                          for x in active if x["contrato"] and x["contrato"] != "ASSINOU"],
+        "fee_suspeito": [{"name": x["name"], "url": x["url"], "cs": x["cs"], "fee": x["fee_raw"]}
+                         for x in active if x["fee_raw"] > cfg.get("fee_max_plausivel", 50000)],
+        "higiene": {"faltando": dict(hig), "sem_auditoria": sum(1 for x in active if x["dias_auditoria"] is None),
+                    "auditoria_30d": sum(1 for x in active if x["dias_auditoria"] is not None and x["dias_auditoria"] <= 30),
+                    "treinamento_nao": sum(1 for x in active if x["trein_gap"])},
+        "maiores": [{"name": x["name"], "url": x["url"], "cs": x["cs"], "fee": x["fee"], "issues": x["issues"]}
+                    for x in sorted(active, key=lambda x: -x["fee"])[:10]],
     }
 
 
@@ -185,6 +323,21 @@ def priorities(r, cfg):
     """Ranked list of what deserves attention this morning."""
     k = r["kpis"]
     items = []
+    dr = r.get("dir")
+    if dr:
+        if dr["mrr_risco"]:
+            items.append({"sev": "critical", "title": f"{brl(dr['mrr_risco'])} de MRR em risco ({dr['n_risco']} clientes)",
+                          "detail": f"Status churn, churn previsto para {r['month']} ou 30+ dias sem reunião. "
+                                    f"Churn previsto no mês: {brl(dr['mrr_churn_mes'])} ({dr['churn_mes_pct']}% do MRR)."})
+        if dr["fee_suspeito"]:
+            items.append({"sev": "serious", "title": f"{len(dr['fee_suspeito'])} fee oficial com valor fora do padrão (fora do MRR)",
+                          "detail": ", ".join(f"{c['name']}: {brl(c['fee'])} ({c['cs']})" for c in dr["fee_suspeito"]) + ". Corrija no ClickUp."})
+        if dr["contrato_pend"]:
+            items.append({"sev": "serious", "title": f"{len(dr['contrato_pend'])} clientes ativos sem contrato assinado",
+                          "detail": ", ".join(f"{c['name']} ({c['cs']})" for c in dr["contrato_pend"][:6]) + ("…" if len(dr["contrato_pend"]) > 6 else "")})
+        if dr["higiene"]["auditoria_30d"] == 0:
+            items.append({"sev": "warning", "title": "Nenhum cliente com auditoria da coordenação nos últimos 30 dias",
+                          "detail": "O campo \"Última auditoria coord\" está vazio. Ao conferir um cliente, preencha a data para o Jarvis acompanhar."})
     cm = [c for c in r["in_churn"] if c["id"] in r["churn_month_ids"]]
     if cm:
         items.append({"sev": "critical", "title": f"{len(cm)} clientes com churn previsto para {r['month']}",
@@ -229,6 +382,11 @@ def main():
         idx = len(snaps) - 1
     cur = metrics(load_json(snaps[idx]), cfg)
     prev = metrics(load_json(snaps[idx - 1]), cfg) if idx > 0 else None
+    details, details_day = load_details(cur["date"])
+    cur["dir"] = diretoria(cur, load_json(snaps[idx]), details, details_day, cfg)
+    cur.pop("all_clients", None)
+    if prev:
+        prev.pop("all_clients", None)
     cur["delta"] = deltas(cur, prev)
     cur["priorities"] = priorities(cur, cfg)
     cur["history"] = [{"date": p.stem, **{k: v for k, v in metrics(load_json(p), cfg)["kpis"].items()

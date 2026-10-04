@@ -336,6 +336,30 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
     <div class="kpis" id="kpis"></div>
   </section>
 
+  <section class="panel" aria-labelledby="s-dir" id="dir-sec" hidden>
+    <div class="sec-head"><h2 id="s-dir"><span class="idx">DR</span>Visão da diretoria · receita</h2><span class="label" id="dir-cov"></span></div>
+    <div class="kpis" id="dir-kpis"></div>
+    <div class="grid2" style="margin-top:14px">
+      <div><div class="label" style="margin-bottom:8px">MRR por squad</div><div class="bars" id="dir-squads"></div></div>
+      <div><div class="label" style="margin-bottom:8px">10 maiores contas</div><ul class="list" id="dir-top"></ul></div>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="s-aud" id="aud-sec" hidden>
+    <div class="sec-head"><h2 id="s-aud"><span class="idx">CO</span>Coordenação · conferência por CS</h2><span class="label">campo "CS responsável"</span></div>
+    <p class="note">Rituais = Checkpoints e Relatórios 1–4 marcados SIM sobre os preenchidos (NÃO e NÃO APARECEU contam como pendência; Treinamentos ficam de fora). Sem reunião = última reunião há 15+ dias ou vazia. Auditoria = campo "Última auditoria coord" nos últimos 30 dias.</p>
+    <div class="tbl-wrap">
+      <table id="aud-table">
+        <thead><tr><th>CS</th><th>Ativos</th><th>MRR</th><th>MRR em churn</th><th>Sem reunião 15d+</th><th>Rituais OK</th><th>Rituais marcados NÃO</th><th>Remarcados</th><th>Contrato pendente</th><th>Sem auditoria</th><th>Cadastro incompleto</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="sec-head" style="margin-top:18px"><h2 style="font-size:15px"><span class="idx">✓</span>Conferir hoje</h2><span class="label" id="conf-count"></span></div>
+    <div class="filters" id="conf-filters" role="group" aria-label="Filtrar por CS"></div>
+    <ul class="list" id="conf-list"></ul>
+    <p class="note" id="hig-note" style="margin-top:12px"></p>
+  </section>
+
   <section class="panel" aria-labelledby="s-news">
     <div class="sec-head"><h2 id="s-news"><span class="idx">02</span>Radar de mercado</h2><span class="label" id="news-count"></span></div>
     <div class="filters" id="news-filters" role="group" aria-label="Filtrar notícias"></div>
@@ -370,10 +394,10 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
   </section>
 
   <section class="panel" aria-labelledby="s-cs">
-    <div class="sec-head"><h2 id="s-cs"><span class="idx">06</span>Carteira por CS</h2><span class="label">ativos e pendências</span></div>
+    <div class="sec-head"><h2 id="s-cs"><span class="idx">06</span>Carteira por responsável da tarefa</h2><span class="label">responsável no ClickUp (não é o campo CS)</span></div>
     <div class="tbl-wrap">
       <table id="cs-table">
-        <thead><tr><th>CS</th><th>Ativos</th><th>Onboarding</th><th>Mês 2–6</th><th>Ongoing</th><th>Renovação</th><th>Em churn</th><th>Sem reunião 15d+</th><th>Atrasadas</th></tr></thead>
+        <thead><tr><th>Responsável</th><th>Ativos</th><th>Onboarding</th><th>Mês 2–6</th><th>Ongoing</th><th>Renovação</th><th>Em churn</th><th>Sem reunião 15d+</th><th>Atrasadas</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -503,6 +527,43 @@ function render() {
 
   const cell = (v, hotAt) => `<td class="${v === 0 ? "zero" : hotAt && v >= hotAt ? "hot" : ""}">${v}</td>`;
   $("#cs-table tbody").innerHTML = D.cs_rows.map((r) => `<tr><td>${esc(r.cs)}</td>${cell(r.ativos)}${cell(r.onboarding)}${cell(r.maturacao)}${cell(r.ongoing)}${cell(r.renovacao)}${cell(r.churn, 3)}${cell(r.sem_reuniao, 4)}${cell(r.atrasadas, 15)}</tr>`).join("");
+
+  const DR = D.dir;
+  const R$ = (v) => "R$ " + Math.round(v).toLocaleString("pt-BR");
+  if (DR) {
+    $("#dir-sec").hidden = false; $("#aud-sec").hidden = false;
+    $("#dir-cov").textContent = `campos de ${DR.cobertos} de ${DR.ativos_total} ativos · leitura ${fmtDate(DR.details_day)}`;
+    const dt = [
+      { l: "MRR da carteira", v: R$(DR.mrr), s: `ticket médio ${R$(DR.ticket)}`, cls: "cy" },
+      { l: "MRR em risco", v: R$(DR.mrr_risco), s: `${DR.n_risco} clientes: churn ou 30+ dias sem reunião`, cls: "alert" },
+      { l: `Churn previsto ${D.month}`, v: R$(DR.mrr_churn_mes), s: `${String(DR.churn_mes_pct).replace(".", ",")}% do MRR`, cls: DR.mrr_churn_mes ? "warn" : "" },
+      { l: "MRR no status churn", v: R$(DR.mrr_em_churn), s: `${k.em_churn} clientes aguardando tratativa`, cls: "warn" },
+      { l: "Renovações em aberto", v: R$(DR.mrr_renov), s: `${DR.n_renov} clientes em renovação` },
+      { l: "MRR sem reunião 15d+", v: R$(DR.mrr_sem_reuniao), s: `${DR.n_sem_reuniao} clientes`, cls: DR.n_sem_reuniao ? "warn" : "" },
+    ];
+    $("#dir-kpis").innerHTML = dt.map((t) => `<div class="kpi ${t.cls || ""}"><div class="l">${esc(t.l)}</div><div class="v" style="font-size:26px">${esc(t.v)}</div><div class="s">${esc(t.s)}</div></div>`).join("");
+    const maxSq = Math.max(...DR.squads.map((q) => q.mrr), 1);
+    $("#dir-squads").innerHTML = DR.squads.map((q) => `<div class="bar" title="${esc(q.squad)}: ${q.n} clientes"><span class="lbl">${esc(q.squad)} · ${q.n}</span><span class="track"><span class="fill" style="width:${(q.mrr / maxSq) * 100}%;--c:var(--st3)"></span></span><span class="n num" style="min-width:84px">${(q.mrr / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} mil</span></div>`).join("");
+    $("#dir-top").innerHTML = DR.maiores.map((c) => `<li><span><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a> <span class="meta">${esc(c.cs)}</span></span><span class="meta">${R$(c.fee)}${c.issues.length ? " · ⚠ " + esc(c.issues[0]) : ""}</span></li>`).join("");
+    const pc = (v, bad) => `<td class="${v === null ? "zero" : v < bad ? "hot" : ""}">${v === null ? "–" : v + "%"}</td>`;
+    $("#aud-table tbody").innerHTML = DR.audit.map((a) => `<tr><td>${esc(a.cs)}</td>${cell(a.ativos)}<td>${R$(a.mrr)}</td><td class="${a.mrr_churn ? "hot" : "zero"}">${R$(a.mrr_churn)}</td>${cell(a.sem_reuniao, 4)}${pc(a.rituais_pct, 70)}${cell(a.rituais_gap, 20)}${cell(a.remarcados, 5)}${cell(a.contrato_pend, 1)}${cell(a.sem_auditoria, 1)}${cell(a.dados, 1)}</tr>`).join("");
+    let csF = "Todos";
+    try { csF = localStorage.getItem("jarvis-conf") || csF; } catch (e) {}
+    const csList = ["Todos", ...DR.audit.map((a) => a.cs)];
+    if (!csList.includes(csF)) csF = "Todos";
+    const drawConf = () => {
+      const rows = DR.conferir.filter((c) => csF === "Todos" || c.cs === csF);
+      $("#conf-filters").innerHTML = csList.map((c) => `<button class="chip" aria-pressed="${c === csF}" data-cs="${esc(c)}">${esc(c)}</button>`).join("");
+      $("#conf-count").textContent = `${rows.length} clientes com pendência`;
+      $("#conf-list").innerHTML = rows.slice(0, 40).map((c) => `<li><span><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a> <span class="meta">${esc(c.cs)} · ${R$(c.fee)}</span></span><span class="meta">${esc(c.issues.join(" · "))}</span></li>`).join("") || `<li><span class="meta">Nada para conferir.</span></li>`;
+    };
+    $("#conf-filters").addEventListener("click", (e) => { const b = e.target.closest("[data-cs]"); if (!b) return; csF = b.dataset.cs; try { localStorage.setItem("jarvis-conf", csF); } catch (er) {} drawConf(); });
+    drawConf();
+    const H = DR.higiene, miss = Object.entries(H.faltando).map(([f, n]) => `${n} sem ${f}`);
+    $("#hig-note").textContent = `Higiene do cadastro: ${H.auditoria_30d} de ${DR.cobertos} clientes com auditoria da coordenação nos últimos 30 dias` +
+      (miss.length ? ` · ${miss.join(" · ")}` : "") + (DR.fee_suspeito.length ? ` · fee fora do padrão (fora do MRR): ${DR.fee_suspeito.map((c) => c.name + " " + R$(c.fee)).join(", ")}` : "") +
+      `. As fórmulas LT, "Dias SEM reunião" e SITUAÇÃO do ClickUp usam o campo DATA ATUAL, que está travado em 2023; o Jarvis calcula esses prazos pela data de hoje.`;
+  }
 
   const item = (c, extra) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a><span class="meta">${esc(c.cs)} · ${esc(extra ?? c.status)}</span></li>`;
   const churnIds = new Set(D.churn_month_ids);
@@ -757,6 +818,16 @@ render();
           `<div class="row"><div class="inner trio">${num(k.ativos, "clientes ativos")}${num(k.em_churn, "status churn", "red")}${num(k.sem_reuniao, "sem reunião 15d+", "amb")}</div><div class="inner" style="display:grid;gap:8px">${num(D.cobertura + "%", "cobertura de reuniões")}<div class="mini-l">${k.mrr} MRR · ${k.arr} ARR</div></div></div>`, "ao vivo") } },
       { say: `São ${k.ativos} clientes ativos. ${k.em_churn} estão no status churn, ${k.churn_mes} deles previstos para ${D.month}, e ${k.sem_reuniao} estão sem reunião há mais de quinze dias.` },
     ] },
+    ...(D.dir ? [{ label: "Diretoria", beats: (() => {
+      const R = D.dir, rs = (v) => "R$ " + Math.round(v).toLocaleString("pt-BR");
+      const fala = (v) => v >= 1e6 ? `${(v / 1e6).toFixed(1).replace(".", ",")} milhão de reais` : v >= 1000 ? `${Math.round(v / 1000)} mil reais` : `${Math.round(v)} reais`;
+      return [
+        { say: `Na visão da diretoria: a carteira soma ${fala(R.mrr)} de MRR, com ticket médio de ${fala(R.ticket)}. Hoje há ${fala(R.mrr_risco)} em risco, em ${R.n_risco} clientes.`,
+          card: { id: "dir", kick: "Diretoria · Receita", mini: `MRR ${rs(R.mrr)} · risco ${rs(R.mrr_risco)}`, html: card("Diretoria · Receita", "Receita recorrente", "$",
+            `<div class="inner trio">${num(rs(R.mrr), "MRR da carteira")}${num(rs(R.mrr_risco), "MRR em risco", "red")}${num(rs(R.mrr_churn_mes), "churn previsto " + D.month, "amb")}</div><div class="inner trio">${num(rs(R.mrr_renov), "em renovação")}${num(rs(R.mrr_sem_reuniao), "sem reunião 15d+", "amb")}${num(String(R.churn_mes_pct).replace(".", ",") + "%", "churn do mês")}</div>`, `${R.cobertos}/${R.ativos_total} clientes`) } },
+        { say: `O churn previsto para ${D.month} é de ${fala(R.mrr_churn_mes)}, ${String(R.churn_mes_pct).replace(".", ",")} por cento do MRR. As renovações em aberto somam ${fala(R.mrr_renov)}.${R.fee_suspeito.length ? ` Atenção: ${R.fee_suspeito.map((c) => c.name).join(" e ")} tem fee fora do padrão no ClickUp e ficou fora do cálculo.` : ""}` },
+      ];
+    })() }] : []),
     ...(((D.weather && D.weather.cities) || []).length ? [{ label: "Clima", beats: [
       { say: "Antes dos números, o clima de hoje na região.",
         card: { id: "wx", kick: "Panorama · Clima", mini: D.weather.cities.map((c) => `${c.city} ${c.max}°`).join(" · "), html: card("Panorama · Clima", "Sanharó e Belo Jardim", "☼",
@@ -798,6 +869,20 @@ render();
           `<ul class="blist">${csHot.map((r) => `<li style="--c:var(--serious)"><span class="sv">${r.ativos} clientes</span><b>${esc(r.cs)}</b><span class="d">${r.sem_reuniao} sem reunião · ${r.churn} em churn · ${r.atrasadas} tarefas atrasadas</span></li>`).join("")}</ul>`) } },
       ...csHot.map((r) => ({ say: `${r.cs}: ${plural(r.sem_reuniao, "cliente", "clientes")} sem reunião, ${r.churn} em churn e ${plural(r.atrasadas, "tarefa atrasada", "tarefas atrasadas")}.` })),
     ] },
+    ...(D.dir ? [{ label: "Conferência", beats: (() => {
+      const R = D.dir, A = R.audit.filter((a) => a.ativos >= 3);
+      const pior = A.slice().sort((a, b) => (a.rituais_pct ?? 100) - (b.rituais_pct ?? 100))[0];
+      const top = R.conferir.slice(0, 5);
+      return [
+        { say: `Agora a conferência da coordenação. ${R.conferir.length} clientes têm alguma pendência de ritual, reunião, contrato ou cadastro.${pior ? ` A carteira com menos rituais em dia é a de ${pior.cs}, com ${pior.rituais_pct} por cento.` : ""}`,
+          card: { id: "conf", kick: "Coordenação · Conferência", mini: `${R.conferir.length} pendências`, html: card("Coordenação · Conferência", "Rituais por CS", "✓",
+            `<ul class="blist">${A.map((a) => `<li style="--c:${(a.rituais_pct ?? 100) < 70 ? "var(--serious)" : "var(--cyan)"}"><span class="sv">${a.rituais_pct ?? "–"}%</span><b>${esc(a.cs)}</b><span class="d">${a.ativos} ativos · ${a.sem_reuniao} sem reunião · ${a.contrato_pend} contrato pendente · ${a.rituais_gap} rituais marcados NÃO</span></li>`).join("")}</ul>`, `${R.conferir.length} a conferir`) } },
+        ...(top.length ? [{ say: `Para conferir primeiro: ${top.map((c) => `${c.name}, da ${c.cs}`).join("; ")}.`,
+          card: { id: "conf2", kick: "Coordenação · Conferir hoje", mini: top.map((c) => c.name).slice(0, 3).join(", "), html: card("Coordenação · Conferir hoje", "Comece por estes", "☰",
+            `<ul class="blist">${top.map((c) => `<li style="--c:var(--critical)"><span class="sv">${esc(c.cs)}</span><b>${esc(c.name)}</b><span class="d">${esc(c.issues.join(" · "))}</span></li>`).join("")}</ul>`) } }] : []),
+        ...(R.higiene.auditoria_30d === 0 ? [{ say: "E um lembrete: nenhum cliente tem auditoria da coordenação registrada. Ao conferir, preencha a data no campo Última auditoria coord." }] : []),
+      ];
+    })() }] : []),
     { label: "Notícias", beats: [
       { say: news.length ? `Atualizei o radar de notícias. Separei ${plural(news.length, "destaque", "destaques")} do mercado de seminovos e do setor automotivo.` : "Não consegui atualizar o radar de notícias hoje.",
         card: { id: "rad", kick: "Briefing matinal", mini: `Radar · ${news.length} notícias`, html: card("Briefing matinal", "Atualizando o radar de notícias…", "⌁",

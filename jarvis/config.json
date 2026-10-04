@@ -33,6 +33,7 @@
   "churn_status": "churn",
   "ignore_name_prefixes": ["MODELO"],
   "overdue_alert_per_person": 15,
+  "fee_max_plausivel": 50000,
   "people": {
     "Robson Constantino de Souza Ferreira": "Robson",
     "Pedro Guilherme de Andrade Silva": "Pedro Guilherme",

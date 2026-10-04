@@ -44,6 +44,32 @@ Inclua todas as tags exatamente como vêm (o script usa `mrr`, `arr`, `venda.ia`
 `crm.ia`, `onboarding <mês>/26`, `churn <mês>/26`, `renovação/<mês>`). Linhas
 com nome começando em "MODELO" podem ficar; o script ignora.
 
+### 1b. Campos dos clientes (visão da diretoria e conferência da coordenação)
+
+A lista do passo 1 não traz campos personalizados. Para o MRR, os rituais e a
+conferência por CS, busque cada cliente com `clickup_get_task`
+(`include=["custom_fields"]`). São ~160 chamadas, então divida os IDs dos clientes
+(fora os de status `churn`, que podem reaproveitar a leitura anterior) em 4 agentes
+em paralelo. Instruções para cada agente:
+
+- As respostas grandes são salvas em `~/.claude/projects/**/tool-results/`. Não leia
+  esses arquivos; no fim rode
+  `python3 jarvis/extract_fields.py HOJE.pN <caminhos salvos>` (N = 1..4).
+  **Sempre passe os caminhos**: sem eles o script varre todos os arquivos da sessão.
+- Respostas que voltarem inline: grave em `jarvis/data/details/HOJE.pNinline.json`
+  (dict por ID) com as mesmas chaves do script: name, status, assignee, fee, cs,
+  squad, plano, nicho, skalo, contrato, ultima_reuniao, entrada, ultima_auditoria,
+  acompanhamento e rituais (`Checkpoint 1..4`, `Relatório 1..4`, `Treinamento 1..4`
+  → nome da opção). Nunca copie telefones, senhas nem o campo ACESSOS.
+
+O `build.py` junta todos os `jarvis/data/details/HOJE*.json`. Se faltar a leitura de
+hoje, ele usa a mais recente e mostra a data no painel. A pasta `details/` não é
+versionada nem publicada (tem nomes de contatos dos clientes).
+
+Regras que o painel aplica: fee acima de `fee_max_plausivel` (config) é tratado como
+erro de cadastro e fica fora do MRR; prazos (dias sem reunião, LT) são calculados
+pela data de hoje, porque o campo DATA ATUAL do ClickUp está travado em 2023.
+
 ### 2. Clientes sem reunião há 15+ dias
 
 `clickup_filter_tasks` na mesma lista, mesmos `statuses` do passo 1 **sem**
