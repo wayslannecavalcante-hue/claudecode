@@ -305,6 +305,9 @@ def diretoria(r, snap, details, details_day, cfg):
         "higiene": {"faltando": dict(hig), "sem_auditoria": sum(1 for x in active if x["dias_auditoria"] is None),
                     "auditoria_30d": sum(1 for x in active if x["dias_auditoria"] is not None and x["dias_auditoria"] <= 30),
                     "treinamento_nao": sum(1 for x in active if x["trein_gap"])},
+        "carteira": [[x["name"], x["cs"], x["gestor"], x["fee"], x["status"], x["dias_reuniao"],
+                       x["rit_ok"], len(x["rit_gap"]), x["contrato"], x["squad"], x["plano"]]
+                      for x in sorted(rows, key=lambda x: x["name"])],
         "maiores": [{"name": x["name"], "url": x["url"], "cs": x["cs"], "fee": x["fee"], "issues": x["issues"]}
                     for x in sorted(active, key=lambda x: -x["fee"])[:10]],
     }

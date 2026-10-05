@@ -242,6 +242,13 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
 .bb { font: 600 11px var(--f-mono); letter-spacing: .08em; text-transform: uppercase; padding: 8px 10px; border: 1px solid rgba(127, 214, 255, .4); border-radius: 6px; background: rgba(4, 20, 60, .7); color: #cfe8ff; cursor: pointer; }
 .bb:hover { border-color: #7fd6ff; color: #fff; }
 .bb.primary { background: #7fd6ff; color: #03124a; border-color: #7fd6ff; box-shadow: 0 0 24px rgba(127, 214, 255, .5); }
+.b-talk { display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap; }
+.b-talk form { display: flex; gap: 6px; flex: 0 1 420px; min-width: 0; }
+.b-talk input { flex: 1; min-width: 0; font: 400 14px var(--f-body); padding: 8px 10px; border-radius: 6px; border: 1px solid rgba(127, 214, 255, .4); background: rgba(4, 20, 60, .7); color: #fff; }
+.b-talk input::placeholder { color: rgba(207, 232, 255, .55); }
+.bb.listening { background: #ff5468; border-color: #ff5468; color: #fff; animation: ring 1.4s ease-out infinite; }
+.qa .q { font: 600 13px var(--f-mono); color: #7fd6ff; letter-spacing: .04em; margin-bottom: 8px; }
+.qa .a { font: 400 16px/1.5 var(--f-body); color: #fff; white-space: pre-wrap; }
 .bb:focus-visible, .mic:focus-visible, .dcard:focus-visible { outline: 2px solid #7fd6ff; outline-offset: 2px; }
 .vsel { position: absolute; right: 16px; bottom: 90px; z-index: 3; width: min(340px, calc(100vw - 32px)); border: 1px solid rgba(127, 214, 255, .5); border-radius: 10px; background: rgba(4, 18, 56, .97); padding: 12px; display: grid; gap: 8px; box-shadow: 0 10px 40px rgba(0, 0, 0, .5); }
 .vsel label { font: 500 11px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: #9cc3ef; }
@@ -285,6 +292,10 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
     <div class="b-stage"><div class="b-focus" id="b-focus"></div></div>
     <div class="deck" id="deck" aria-label="Cartões já apresentados"></div>
     <div class="caption" id="caption" aria-live="polite"></div>
+    <div class="b-talk" id="b-talk-bar" hidden>
+      <button class="bb primary" id="b-talk" aria-label="Falar com o Jarvis">🎙 Falar com o Jarvis</button>
+      <form id="b-ask" autocomplete="off"><input id="b-q" aria-label="Pergunta para o Jarvis" placeholder="ou digite: quanto de MRR a Geovanna tem em risco?"><button class="bb" type="submit">Enviar</button></form>
+    </div>
     <div class="b-bot">
       <div class="b-steps" id="b-steps"></div>
       <button class="mic" id="mic" aria-label="Iniciar briefing">▶</button>
@@ -899,9 +910,9 @@ render();
           `<div class="bnews-band"><b>${fmtDate(n.date)}</b><span>${esc(n.cat)}</span></div><div class="nt">${esc(n.title)}</div><p class="ns">${esc(n.summary)}</p><div class="ft"><span>${esc(n.source)}</span><a href="${esc(n.url)}" target="_blank" rel="noopener">Abrir matéria ↗</a></div>`) } })),
     ] }] : []),
     { label: "Fim", beats: [
-      { say: `Esse foi o briefing de hoje. ${prio[0] ? "Sugiro começar por: " + prio[0].title.toLowerCase() + "." : ""} Deseja abrir o painel completo?`,
+      { say: `Esse foi o briefing de hoje. ${prio[0] ? "Sugiro começar por: " + prio[0].title.toLowerCase() + "." : ""} Se quiser, toque em falar com o Jarvis e me pergunte o que precisar.`,
         card: { id: "end", kick: "Observações disponíveis", mini: "Briefing concluído", html: card("Observações disponíveis", "Briefing concluído", "✓",
-          `<p class="ns">O painel completo tem a carteira por CS, as listas de churn, renovações e reuniões, e todas as notícias com filtro.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bb primary" data-act="open">Abrir painel completo ▶</button><button class="bb" data-act="replay">Ouvir de novo</button></div>`) },
+          `<p class="ns">O painel completo tem a carteira por CS, as listas de churn, renovações e reuniões, e todas as notícias com filtro.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bb primary" data-act="open">Abrir painel completo ▶</button><button class="bb" data-act="replay">Ouvir de novo</button><button class="bb" data-act="talk">🎙 Fazer uma pergunta</button></div>`) },
         after: () => { sfx.done(); el.state.textContent = "Concluído"; } },
     ] },
   ];
@@ -935,7 +946,7 @@ render();
     el.brief.hidden = false; el.fab.hidden = true; markSteps(-1); sizeCanvas();
     el.mic.textContent = "▶"; el.mic.classList.add("live"); el.mic.setAttribute("aria-label", "Iniciar briefing");
     el.focus.innerHTML = card("J.A.R.V.I.S · Briefing", "Bom dia, Wayslanne", "◎",
-      `<p class="ns">Seu briefing de ${esc(D.date_long)} está pronto: o clima de Sanharó e Belo Jardim, ${k.ativos} clientes ativos, ${prio.length} pontos de atenção, ${news.length} notícias do mercado e ${(D.world || []).length} manchetes do Brasil e do mundo. Leva uns quatro minutos, com trilha sonora.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bb primary" data-act="voice">▶ Iniciar com voz</button><button class="bb" data-act="mute">Iniciar sem voz</button><button class="bb" data-act="pick">Escolher voz</button></div>`);
+      `<p class="ns">Seu briefing de ${esc(D.date_long)} está pronto: o clima de Sanharó e Belo Jardim, ${k.ativos} clientes ativos, ${prio.length} pontos de atenção, ${news.length} notícias do mercado e ${(D.world || []).length} manchetes do Brasil e do mundo. Leva uns quatro minutos, com trilha sonora.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bb primary" data-act="voice">▶ Iniciar com voz</button><button class="bb" data-act="mute">Iniciar sem voz</button><button class="bb" data-act="pick">Escolher voz</button><button class="bb" data-act="talk">🎙 Só conversar</button></div>`);
     setCaption(`Bom dia, Wayslanne. Toque em iniciar e eu apresento a operação de hoje.`); setCaption(capWords.join(" "), capWords.length);
   }
   function openDashboard() {
@@ -953,9 +964,10 @@ render();
     const a = b.dataset.act;
     if (a === "voice") start(true); else if (a === "mute") start(false); else if (a === "open") openDashboard();
     else if (a === "replay") start(voiceOn); else if (a === "pick") el.vsel.hidden = false;
+    else if (a === "talk") $$("b-talk").click();
   });
   el.mic.addEventListener("click", () => {
-    if (!started) return start(true);
+    if (!started || el.mic.textContent === "◎") return start(started ? voiceOn : true);
     if (stepIdx === STEPS.length - 1 && !talking && el.mic.textContent === "↺") return start(voiceOn);
     paused = !paused; el.state.textContent = paused ? "Pausado" : "Falando";
     el.mic.textContent = paused ? "▶" : "❚❚"; el.mic.setAttribute("aria-label", paused ? "Continuar" : "Pausar");
@@ -973,11 +985,113 @@ render();
   el.skip.addEventListener("click", openDashboard);
   el.fab.addEventListener("click", intro);
   document.addEventListener("keydown", (e) => {
-    if (el.brief.hidden) return;
+    if (el.brief.hidden || e.target.closest && e.target.closest("input,select,textarea")) return;
     if (e.key === "Escape") openDashboard();
     else if (e.key === "ArrowRight") el.next.click(); else if (e.key === "ArrowLeft") el.prev.click();
     else if (e.key === " " && e.target === document.body) { e.preventDefault(); el.mic.click(); }
   });
+
+  /* ---------- Conversa por voz ---------- */
+  const talkBar = $$("b-talk-bar"), talkBtn = $$("b-talk"), askForm = $$("b-ask"), askIn = $$("b-q");
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let sampleFn = null, rec = null, listening = false, handsFree = false, asking = null, turns = [];
+  const R$f = (v) => "R$ " + Math.round(v || 0).toLocaleString("pt-BR");
+  function contexto() {
+    const R = D.dir || {};
+    const L = [];
+    L.push(`Data da leitura: ${D.date_long}. Fonte: ClickUp "Operacional AEG" (lista Gestão de Clientes) e notícias públicas.`);
+    L.push(`Carteira: ${k.ativos} ativos; onboarding ${k.onboarding}; mês 2 a 6 ${k.maturacao}; ongoing ${k.ongoing}; renovação ${k.renovacao}; status churn ${k.em_churn}; churn previsto ${D.month} ${k.churn_mes}; entradas ${D.month} ${k.novos_mes} (${D.prev_month}: ${k.novos_mes_anterior}); sem reunião 15d+ ${k.sem_reuniao}; tarefas atrasadas ${k.atrasadas}${k.atrasadas_truncado ? "+" : ""}; Venda.IA ${k.venda_ia}.`);
+    if (R.mrr != null) {
+      L.push(`Receita: MRR ${R$f(R.mrr)} (${R.cobertos} clientes ativos com campos lidos), ticket médio ${R$f(R.ticket)}, MRR em risco ${R$f(R.mrr_risco)} em ${R.n_risco} clientes (status churn, churn do mês ou 30+ dias sem reunião), churn previsto no mês ${R$f(R.mrr_churn_mes)} (${R.churn_mes_pct}% do MRR), MRR no status churn ${R$f(R.mrr_em_churn)}, renovações ${R$f(R.mrr_renov)} em ${R.n_renov} clientes, MRR sem reunião 15d+ ${R$f(R.mrr_sem_reuniao)} em ${R.n_sem_reuniao} clientes.`);
+      L.push("Squads: " + R.squads.map((q) => `${q.squad} ${q.n} clientes ${R$f(q.mrr)}`).join("; ") + ".");
+      L.push("Conferência por CS (campo CS responsável): " + R.audit.map((a) => `${a.cs}: ${a.ativos} ativos, MRR ${R$f(a.mrr)}, MRR em churn ${R$f(a.mrr_churn)}, ${a.em_churn} em churn, ${a.sem_reuniao} sem reunião 15d+, rituais OK ${a.rituais_pct ?? "-"}%, ${a.rituais_gap} rituais marcados NÃO, ${a.remarcados} remarcados, ${a.contrato_pend} contrato pendente, ${a.sem_auditoria} sem auditoria`).join(" | ") + ".");
+      if (R.fee_suspeito.length) L.push("Fee fora do padrão (fora do MRR): " + R.fee_suspeito.map((c) => `${c.name} ${R$f(c.fee)}`).join(", ") + ".");
+      L.push(`Auditoria da coordenação nos últimos 30 dias: ${R.higiene.auditoria_30d} clientes. Campos faltando: ${JSON.stringify(R.higiene.faltando)}.`);
+      L.push("Clientes (nome | CS | responsável da tarefa | fee | status | dias desde a última reunião | rituais SIM | rituais NÃO | contrato | squad | plano):");
+      R.carteira.forEach((c) => L.push(c.map((v, i) => i === 3 ? R$f(v) : v ?? "-").join(" | ")));
+      L.push("Pendências a conferir: " + R.conferir.slice(0, 40).map((c) => `${c.name} (${c.cs}): ${c.issues.join(", ")}`).join("; "));
+    }
+    L.push("Prioridades do dia: " + prio.map((p) => p.title + (p.detail ? " — " + p.detail : "")).join(" | "));
+    L.push("Churn: " + D.in_churn.map((c) => `${c.name} (${c.cs}${D.churn_month_ids.includes(c.id) ? ", previsto " + D.month : ""})`).join(", "));
+    L.push("Renovações: " + D.renewals.map((c) => `${c.name} (${c.status})`).join(", "));
+    L.push("Tarefas atrasadas por pessoa: " + D.overdue_rows.map((o) => `${o.who} ${o.n} (${o.urgent} urgentes, mais antiga ${o.oldest})`).join(", "));
+    const ret = D.retention || {}; if (ret.open) L.push(`CRM Retenção: abertos ${JSON.stringify(ret.open)}, fechados ${JSON.stringify(ret.closed_total || {})}.`);
+    ((D.weather || {}).cities || []).forEach((c) => L.push(`Clima ${c.city}: mín ${c.min}°, máx ${c.max}°, chuva ${c.rain_prob}%, ${c.condition || ""}.`));
+    const A = D.agenda || {}; if (Array.isArray(A.events)) L.push("Agenda de hoje: " + (A.events.map((e) => `${e.all_day ? "dia todo" : e.start} ${e.title}`).join("; ") || "livre"));
+    L.push("Notícias do mercado: " + news.map((n) => `[${n.cat}] ${n.title} (${n.source}, ${n.date || "s/d"}): ${n.summary}`).join(" || "));
+    L.push("Brasil e mundo: " + (D.world || []).map((n) => `${n.title}: ${n.summary}`).join(" || "));
+    return L.join("\n");
+  }
+  const REGRAS = `Você é o Jarvis, assistente da Wayslanne, diretora de operações da AEG (agência de marketing para lojas de veículos). Ela atua também como coordenação e conferência do time de CS. Responda em português do Brasil, em tom de conversa falada: no máximo 4 frases curtas, sem markdown, sem listas, sem emojis, valores em reais por extenso aproximado quando ajudar a fala (ex.: "cerca de 140 mil reais"). Use SOMENTE os dados abaixo; se a resposta não estiver neles, diga que não tem esse dado na leitura de hoje e sugira onde olhar no ClickUp. Nunca invente números, nomes ou datas. Quando fizer sentido, termine com uma sugestão prática de próximo passo.\n\nDADOS DA LEITURA DE HOJE:\n`;
+  function qaCard(q, a) {
+    showCard({ id: "qa" + Date.now(), kick: "Conversa · Jarvis", mini: q, html: card("Conversa · Jarvis", "Você perguntou", "◎", `<div class="inner qa"><div class="q">“${esc(q)}”</div><div class="a" id="qa-a">${esc(a)}</div></div>`) }, true);
+  }
+  async function ask(q) {
+    q = (q || "").trim(); if (!q) return;
+    if (!sampleFn) { setCaption("A conversa não está disponível neste visualizador."); setCaption(capWords.join(" "), capWords.length); return; }
+    if (/^(obrigad[oa]|tchau|encerrar|pode parar|só isso)\b/i.test(q)) { handsFree = false; const my = ++run; await speak("Por nada, Wayslanne. Estou aqui quando precisar.", my); return; }
+    if (asking) asking.abort();
+    const my = ++run; paused = false; try { synth && synth.cancel(); } catch (e) {}
+    started = true; audio();
+    el.mic.textContent = "◎"; el.mic.classList.remove("live"); el.mic.setAttribute("aria-label", "Ouvir o briefing");
+    el.state.textContent = "Pensando"; target = 0.7;
+    qaCard(q, "Pensando…"); setCaption("Pensando…"); setCaption("Pensando…", 1);
+    const hist = turns.slice(-5);
+    const msgs = [];
+    [...hist, { q }].forEach((h, i) => {
+      msgs.push({ role: "user", content: i === 0 ? REGRAS + contexto() + "\n\nPERGUNTA DA WAYSLANNE: " + h.q : h.q });
+      if (h.a) msgs.push({ role: "assistant", content: h.a });
+    });
+    asking = new AbortController();
+    try {
+      const { text } = await sampleFn(msgs, { signal: asking.signal, cache: false, modelTier: "quick",
+        onText: ({ text }) => { const n = el.focus.querySelector("#qa-a"); if (n) n.textContent = text; } });
+      if (my !== run) return;
+      turns = [...turns, { q, a: text }].slice(-5);
+      const n = el.focus.querySelector("#qa-a"); if (n) n.textContent = text;
+      if (current) cards[current.id] = { ...current, html: el.focus.firstElementChild.innerHTML };
+      await speak(text, my);
+      if (my === run) { el.state.textContent = handsFree ? "Ouvindo" : "Pronto"; if (handsFree) listen(); }
+    } catch (e) {
+      if (e && e.code === "cancelled") return;
+      const msg = e && e.code === "not_granted" ? "Preciso da sua permissão para responder. Toque em falar de novo e permita." :
+        e && e.code === "rate_limited" ? "Muitas perguntas seguidas. Espere alguns segundos e tente de novo." : "Não consegui responder agora. Tente de novo em instantes.";
+      handsFree = false; const n = el.focus.querySelector("#qa-a"); if (n) n.textContent = msg;
+      if (my === run) await speak(msg, my);
+    } finally { el.state.textContent = listening ? "Ouvindo" : el.state.textContent; }
+  }
+  function setListening(on) {
+    listening = on; talkBtn.classList.toggle("listening", on);
+    talkBtn.textContent = on ? "■ Parar de ouvir" : "🎙 Falar com o Jarvis";
+    if (on) { el.state.textContent = "Ouvindo"; target = 0.45; duck(true); }
+  }
+  function listen() {
+    if (!SR) { askIn.focus(); setCaption("Este navegador não reconhece voz. Digite a pergunta ou abra no Chrome ou Edge."); setCaption(capWords.join(" "), capWords.length); return; }
+    try { synth && synth.cancel(); } catch (e) {}
+    run++; talking = false;
+    rec = new SR(); rec.lang = "pt-BR"; rec.interimResults = true; rec.continuous = false; rec.maxAlternatives = 1;
+    let finalText = "";
+    rec.onresult = (ev) => {
+      let interim = ""; for (let i = ev.resultIndex; i < ev.results.length; i++) { const r = ev.results[i]; if (r.isFinal) finalText += r[0].transcript; else interim += r[0].transcript; }
+      const shown = (finalText + " " + interim).trim(); setCaption(shown); setCaption(shown, capWords.length);
+    };
+    rec.onerror = (ev) => {
+      setListening(false); handsFree = false;
+      const m = ev.error === "not-allowed" || ev.error === "service-not-allowed" ? "O microfone está bloqueado aqui. Libere o microfone no navegador ou digite a pergunta abaixo." :
+        ev.error === "no-speech" ? "Não ouvi nada. Toque em falar quando quiser." : ev.error === "aborted" ? "" : "Não consegui ouvir. Digite a pergunta abaixo.";
+      if (m) { setCaption(m); setCaption(m, capWords.length); el.state.textContent = "Pronto"; }
+    };
+    rec.onend = () => { const was = listening; setListening(false); duck(false); if (was && finalText.trim()) ask(finalText); else if (was && !finalText.trim()) el.state.textContent = "Pronto"; };
+    try { rec.start(); setListening(true); setCaption("Pode falar, estou ouvindo…"); setCaption(capWords.join(" "), capWords.length); } catch (e) { setListening(false); }
+  }
+  talkBtn.addEventListener("click", () => {
+    audio(); if (ac && ac.state === "suspended") ac.resume();
+    if (listening) { handsFree = false; try { rec.abort(); } catch (e) {} setListening(false); el.state.textContent = "Pronto"; return; }
+    handsFree = true; if (!started) { started = true; voiceOn = !!synth && !!voice && store.get("jarvis-voice") !== "__off__"; }
+    listen();
+  });
+  askForm.addEventListener("submit", (e) => { e.preventDefault(); const q = askIn.value; askIn.value = ""; handsFree = false; if (!started) { started = true; voiceOn = !!synth && !!voice && store.get("jarvis-voice") !== "__off__"; } ask(q); });
+  if (window.claude && claude.use) claude.use("sample").then((s) => { sampleFn = s; talkBar.hidden = !s; }).catch(() => {});
   intro();
 })();
 </script>
