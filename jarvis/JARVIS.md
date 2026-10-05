@@ -123,7 +123,10 @@ resultado); `ranking_clientes` (gasto, asc) para quem não gastou; `status_integ
 com erro de permissão. `saldo_contas` sem cliente costuma estourar o tempo: tente uma vez e,
 se falhar, registre em `notes`. Cruze nomes com a carteira do ClickUp (ativos x churn) antes
 de alertar. Grave também `ranking`: lista `[cliente, gasto, resultados, custo por resultado]`
-do top 50, que alimenta as respostas do Jarvis na conversa.
+do top 50, `sem_gasto` (nomes dos clientes sem investimento na semana) e `contas_erro`
+(nomes dos clientes com conta Meta em erro). Esses três campos alimentam a ficha de cada
+cliente na aba Clientes e as respostas do Jarvis. O cruzamento com o ClickUp é por nome;
+quando um nome da Skalo não bater, acrescente o par em `skalo_alias` no `config.json`.
 
 No máximo 8 `kpis`, 8 `alerts` e 5 `top`. Use só números que vieram do conector.
 Ao cruzar com o ClickUp, prefira citar clientes ativos da carteira.

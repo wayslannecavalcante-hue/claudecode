@@ -1,6 +1,9 @@
 {
   "workspace_id": "31113012",
-  "space": {"id": "90142477365", "name": "Operacional AEG"},
+  "space": {
+    "id": "90142477365",
+    "name": "Operacional AEG"
+  },
   "lists": {
     "gestao_clientes": "901408581641",
     "crm_retencao": "901413635330",
@@ -18,20 +21,62 @@
     "squad": "c69a4d17-e368-4be5-ac68-b237532231f7"
   },
   "stage_groups": [
-    {"key": "onboarding", "label": "Onboarding (S1–S4)", "prefixes": ["s1 -", "s2 -", "s4 -"]},
-    {"key": "maturacao", "label": "Mês 2 a 6", "prefixes": ["mês "]},
-    {"key": "ongoing", "label": "Ongoing", "prefixes": ["ongoing"]},
-    {"key": "renovacao", "label": "Renovação", "prefixes": ["renovação"]}
+    {
+      "key": "onboarding",
+      "label": "Onboarding (S1–S4)",
+      "prefixes": [
+        "s1 -",
+        "s2 -",
+        "s4 -"
+      ]
+    },
+    {
+      "key": "maturacao",
+      "label": "Mês 2 a 6",
+      "prefixes": [
+        "mês "
+      ]
+    },
+    {
+      "key": "ongoing",
+      "label": "Ongoing",
+      "prefixes": [
+        "ongoing"
+      ]
+    },
+    {
+      "key": "renovacao",
+      "label": "Renovação",
+      "prefixes": [
+        "renovação"
+      ]
+    }
   ],
   "status_order": [
-    "s1 - pré briefing", "s1 - call raio x", "s1 - setup ads", "s1 - 1ª campanha",
-    "s2 - call papo vendedores", "s2 - call diagnóstico", "s4 - call ativação",
-    "mês 2 - página de destino", "mês 2 - follow up", "mês 3 - rotina resgate", "mês 3 - follow day",
-    "mês 4 - plan trimestre", "mês 4 - sábado previsível", "mês 5 - google meu negócio", "mês 6 - redes sociais",
-    "renovação oportunidade", "renovação proposta feita", "renovação fechada", "ongoing"
+    "s1 - pré briefing",
+    "s1 - call raio x",
+    "s1 - setup ads",
+    "s1 - 1ª campanha",
+    "s2 - call papo vendedores",
+    "s2 - call diagnóstico",
+    "s4 - call ativação",
+    "mês 2 - página de destino",
+    "mês 2 - follow up",
+    "mês 3 - rotina resgate",
+    "mês 3 - follow day",
+    "mês 4 - plan trimestre",
+    "mês 4 - sábado previsível",
+    "mês 5 - google meu negócio",
+    "mês 6 - redes sociais",
+    "renovação oportunidade",
+    "renovação proposta feita",
+    "renovação fechada",
+    "ongoing"
   ],
   "churn_status": "churn",
-  "ignore_name_prefixes": ["MODELO"],
+  "ignore_name_prefixes": [
+    "MODELO"
+  ],
   "overdue_alert_per_person": 15,
   "fee_max_plausivel": 50000,
   "people": {
@@ -52,5 +97,20 @@
     "Pedro Henrique": "Pedro Henrique",
     "Jonas": "Jonas",
     "": "Sem responsável"
+  },
+  "skalo_alias": {
+    "Apronova - BM": "APRONOVA",
+    "Pinguim 01": "PINGUIM MOTORS",
+    "Concept Motors Chapeco": "CONCEPT MOTORS",
+    "Barão Veiculosvenda": "BARÃO VEÍCULOS",
+    "Avelloz Cabo e Prazeres": "AVELLOZ MOTORS",
+    "Davi Veiculos": "DAVI VEICULOS",
+    "Acesso Carro": "ACESSO CAR",
+    "FinanAuto": "FINAN AUTO",
+    "EVVO CAR": "EVVOCAR",
+    "Lv multimarcas": "LV MULTIMARCAS",
+    "MM Veículos RP": "MM VEICULOS",
+    "Leandro multmarcas": "LEANDRO MULTIMARCAS",
+    "Cr car multimarcas": "CR CAR"
   }
 }

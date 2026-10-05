@@ -190,6 +190,42 @@ def load_details(date):
     return merged, day
 
 
+STOP_WORDS = {"veiculos", "veiculo", "automoveis", "seminovos", "negocios", "ltda", "01", "2023", "rp", "bm"}
+
+
+def name_key(n):
+    import re
+    import unicodedata
+    n = unicodedata.normalize("NFKD", n or "").encode("ascii", "ignore").decode().lower()
+    toks = [{"multmarcas": "multimarcas"}.get(t, t) for t in re.split(r"[^a-z0-9&]+", n) if t]
+    return " ".join(t for t in toks if t not in STOP_WORDS) or " ".join(toks)
+
+
+def skalo_index(skalo, aliases):
+    """Map ClickUp client name keys to Skalo.IA data (ranking, no spend, account errors)."""
+    idx = {}
+    def put(name, **kv):
+        k = name_key(aliases.get(name.strip(), name))
+        idx.setdefault(k, {"skalo_nome": name.strip()}).update(kv)
+    for n, gasto, res, cpr in skalo.get("ranking", []):
+        put(n, gasto=gasto, resultados=res, cpr=cpr)
+    for n in skalo.get("sem_gasto", []):
+        put(n, gasto=0, resultados=0, cpr=None)
+    for n in skalo.get("contas_erro", []):
+        put(n, erro_conta=True)
+    return idx
+
+
+def find_skalo(idx, name):
+    k = name_key(name)
+    if k in idx:
+        return idx[k]
+    # Fuzzy: same first word when one side is a single word, and only if unambiguous.
+    hits = [v for kk, v in idx.items() if kk and k and kk.split()[0] == k.split()[0]
+            and (len(k.split()) == 1 or len(kk.split()) == 1)]
+    return hits[0] if len(hits) == 1 else None
+
+
 def brl(v):
     return "R$ " + f"{v:,.0f}".replace(",", ".")
 
@@ -202,6 +238,7 @@ def diretoria(r, snap, details, details_day, cfg):
     now_ms = dt.datetime(today.year, today.month, today.day, 12, tzinfo=dt.timezone(dt.timedelta(hours=-3))).timestamp() * 1000
     days_since = lambda ms: int((now_ms - ms) // 86400000) if ms else None
     churn_ids = set(r["churn_month_ids"])
+    sk_idx = skalo_index(r.get("skalo") or {}, cfg.get("skalo_alias", {}))
     rows = []
     for c in r["all_clients"]:
         d = details.get(c["id"])
@@ -305,9 +342,13 @@ def diretoria(r, snap, details, details_day, cfg):
         "higiene": {"faltando": dict(hig), "sem_auditoria": sum(1 for x in active if x["dias_auditoria"] is None),
                     "auditoria_30d": sum(1 for x in active if x["dias_auditoria"] is not None and x["dias_auditoria"] <= 30),
                     "treinamento_nao": sum(1 for x in active if x["trein_gap"])},
-        "carteira": [[x["name"], x["cs"], x["gestor"], x["fee"], x["status"], x["dias_reuniao"],
-                       x["rit_ok"], len(x["rit_gap"]), x["contrato"], x["squad"], x["plano"]]
-                      for x in sorted(rows, key=lambda x: x["name"])],
+        "clientes": [{"id": x["id"], "name": x["name"], "url": x["url"], "cs": x["cs"], "gestor": x["gestor"],
+                      "fee": x["fee"], "status": x["status"], "group": x["group"], "squad": x["squad"],
+                      "plano": x["plano"], "contrato": x["contrato"], "dias_reuniao": x["dias_reuniao"],
+                      "lt": x["lt_meses"], "rit_ok": x["rit_ok"], "rit_gap": x["rit_gap"], "issues": x["issues"],
+                      "score": x["score"], "churn_mes": x["churn_mes"],
+                      "skalo": find_skalo(sk_idx, x["name"])}
+                     for x in sorted(rows, key=lambda x: x["name"])],
         "maiores": [{"name": x["name"], "url": x["url"], "cs": x["cs"], "fee": x["fee"], "issues": x["issues"]}
                     for x in sorted(active, key=lambda x: -x["fee"])[:10]],
     }
@@ -331,7 +372,7 @@ def priorities(r, cfg):
         if dr["mrr_risco"]:
             items.append({"sev": "critical", "title": f"{brl(dr['mrr_risco'])} de MRR em risco ({dr['n_risco']} clientes)",
                           "detail": f"Status churn, churn previsto para {r['month']} ou 30+ dias sem reunião. "
-                                    f"Churn previsto no mês: {brl(dr['mrr_churn_mes'])} ({dr['churn_mes_pct']}% do MRR)."})
+                                    f"Churn previsto no mês: {brl(dr['mrr_churn_mes'])} ({str(dr['churn_mes_pct']).replace('.', ',')}% do MRR)."})
         if dr["fee_suspeito"]:
             items.append({"sev": "serious", "title": f"{len(dr['fee_suspeito'])} fee oficial com valor fora do padrão (fora do MRR)",
                           "detail": ", ".join(f"{c['name']}: {brl(c['fee'])} ({c['cs']})" for c in dr["fee_suspeito"]) + ". Corrija no ClickUp."})
@@ -374,9 +415,8 @@ def priorities(r, cfg):
     if clashes:
         items.append({"sev": "info", "title": f"{len(clashes)} conflitos de horário na sua agenda de hoje",
                       "detail": "; ".join(clashes)})
-    for n in r.get("notes", []):
-        items.append({"sev": "info", "title": n, "detail": ""})
-    return items
+    rank = {"critical": 0, "serious": 1, "warning": 2, "info": 3}
+    return sorted(items, key=lambda i: rank.get(i["sev"], 9))
 
 
 def main():

@@ -2,8 +2,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: HUD de central de comando. Faixa de status, alertas, telemetria (KPIs + anel de cobertura),
-   radar de mercado, jornada, carteira por CS e listas de ação. Visual escuro por escolha, igual em qualquer tema. */
+/* Layout: HUD de central de comando. Faixa "Hoje" (3 decisões, agenda, clima) e quatro abas:
+   Diretoria, Coordenação, Clientes e Mercado. Visual escuro por escolha, igual em qualquer tema. */
 :root {
   --bg: #050a0f;
   --bg-2: #08121a;
@@ -89,6 +89,49 @@ h1, h2, h3 { font-family: var(--f-display); margin: 0; text-wrap: balance; }
     background: linear-gradient(transparent, rgba(69, 224, 255, .07), transparent); animation: scan 2.4s ease-out 1 forwards; }
   @keyframes scan { from { transform: translateY(-120px); } to { transform: translateY(110vh); opacity: 0; } }
 }
+
+/* Faixa "Hoje" e abas */
+.today { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 24px; }
+.today h1 { font-size: clamp(28px, 4.4vw, 46px); font-weight: 700; letter-spacing: .02em; line-height: 1; text-transform: uppercase; margin-top: 6px; }
+.today h1 span { color: var(--cyan); text-shadow: 0 0 22px rgba(69, 224, 255, .45); }
+.today .sub { margin: 10px 0 0; color: var(--ink-2); max-width: 64ch; }
+.decide { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; counter-reset: d; }
+.decide li { counter-increment: d; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 2px 12px; padding: 10px 12px; border: 1px solid var(--line); border-left: 3px solid var(--c); background: rgba(5, 12, 18, .55); }
+.decide li::before { content: counter(d); grid-row: span 2; font: 700 24px/1 var(--f-display); color: var(--c); }
+.decide b { font-weight: 600; }
+.decide span { grid-column: 2; color: var(--ink-2); font-size: 13px; }
+.more-alerts { margin-top: 10px; }
+.more-alerts summary, footer summary { cursor: pointer; font: 500 12px var(--f-mono); color: var(--cyan); letter-spacing: .06em; }
+.more-alerts .alerts { margin-top: 8px; }
+.today-side { display: grid; gap: 12px; align-content: start; }
+.agenda { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; max-height: 330px; overflow-y: auto; }
+.agenda li { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 8px; padding: 6px 8px; border-left: 2px solid var(--line-2); font-size: 14px; }
+.agenda li.clash { border-left-color: var(--serious); }
+.agenda li.clash .h { color: var(--serious); }
+.agenda .h { font: 500 12px/1.6 var(--f-mono); color: var(--ink-2); }
+.wx { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.tabsnav { display: flex; gap: 4px; border-bottom: 1px solid var(--line-2); overflow-x: auto; position: sticky; top: 0; z-index: 3; background: var(--bg); }
+.tabsnav button { font: 600 13px var(--f-display); letter-spacing: .12em; text-transform: uppercase; padding: 12px 18px; border: 0; border-bottom: 2px solid transparent; background: transparent; color: var(--ink-2); cursor: pointer; white-space: nowrap; }
+.tabsnav button:hover { color: var(--ink); }
+.tabsnav button[aria-selected="true"] { color: var(--cyan); border-bottom-color: var(--cyan); }
+.tabpanel { display: grid; gap: 18px; }
+.kpis-6 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.kpis-6 .kpi .v { font-size: 26px; }
+.cli-tools { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 14px; }
+.cli-tools input { flex: 1 1 260px; min-width: 0; font: 400 14px var(--f-body); padding: 9px 12px; border: 1px solid var(--line-2); background: rgba(5, 12, 18, .7); color: var(--ink); }
+.fichas { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 10px; }
+.ficha { border: 1px solid var(--line); border-left: 3px solid var(--c, var(--line-2)); background: rgba(5, 12, 18, .6); padding: 12px 14px; display: grid; gap: 6px; align-content: start; }
+.ficha .top { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+.ficha .top a { font-weight: 600; color: var(--ink); }
+.ficha .fee { font: 600 14px var(--f-mono); color: var(--cyan); white-space: nowrap; }
+.ficha .meta { font: 400 12px/1.5 var(--f-mono); color: var(--ink-3); }
+.ficha .row2 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; font: 400 12px/1.4 var(--f-mono); color: var(--ink-2); }
+.ficha .row2 b { display: block; font: 600 15px var(--f-display); color: var(--ink); }
+.ficha .iss { margin: 0; padding-left: 16px; font-size: 13px; color: var(--ink-2); }
+.ficha .sk { font: 400 12px/1.5 var(--f-mono); color: var(--ink-2); border-top: 1px dashed var(--line); padding-top: 6px; }
+footer ul { margin: 6px 0 0; padding-left: 18px; }
+@media (max-width: 980px) { .today { grid-template-columns: 1fr; } .kpis-6 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .kpis-6 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .agenda li { grid-template-columns: 78px minmax(0, 1fr); } }
 
 .alerts { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
 .alerts li { display: grid; grid-template-columns: 4px auto minmax(0, 1fr); gap: 4px 14px; align-items: start; padding: 12px 14px 12px 0; border: 1px solid var(--line); background: rgba(5, 12, 18, .55); }
@@ -325,113 +368,125 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
     <span class="group"><span id="sb-sync"></span><span id="sb-clock"></span></span>
   </div>
 
-  <header class="hero">
-    <div>
-      <div class="label">Briefing operacional diário</div>
-      <h1>Bom dia, <span>Wayslanne</span></h1>
-      <div class="date" id="h-date"></div>
+  <header class="today panel" aria-labelledby="h-title">
+    <div class="today-main">
+      <div class="label" id="h-date"></div>
+      <h1 id="h-title">Bom dia, <span>Wayslanne</span></h1>
       <p class="sub" id="h-greet"></p>
+      <div class="label" style="margin:16px 0 8px">As 3 decisões de hoje</div>
+      <ol class="decide" id="decide"></ol>
+      <details class="more-alerts" id="more-alerts"><summary></summary><ul class="alerts" id="alerts"></ul></details>
     </div>
-    <div class="hero-side"><div class="wx" id="wx"></div><div class="ring" id="ring" role="img"></div></div>
+    <aside class="today-side">
+      <div class="label" style="margin-bottom:8px">Agenda <span id="agenda-label"></span></div>
+      <ul class="agenda" id="agenda-events"></ul>
+      <div class="wx" id="wx"></div>
+    </aside>
   </header>
 
-  <section class="panel" aria-labelledby="s-alert">
-    <div class="sec-head"><h2 id="s-alert"><span class="idx">01</span>Alertas do dia</h2><span class="label">por gravidade</span></div>
-    <ul class="alerts" id="alerts"></ul>
-  </section>
+  <nav class="tabsnav" role="tablist" aria-label="Áreas do painel" id="main-tabs">
+    <button role="tab" data-tab="dir" id="t-dir" aria-controls="p-dir">Diretoria</button>
+    <button role="tab" data-tab="coord" id="t-coord" aria-controls="p-coord">Coordenação</button>
+    <button role="tab" data-tab="cli" id="t-cli" aria-controls="p-cli">Clientes</button>
+    <button role="tab" data-tab="mkt" id="t-mkt" aria-controls="p-mkt">Mercado</button>
+  </nav>
 
-  <section class="panel" aria-labelledby="s-agenda" id="agenda-sec" hidden>
-    <div class="sec-head"><h2 id="s-agenda"><span class="idx">AG</span>Sua agenda</h2><span class="label" id="agenda-label"></span></div>
-    <ul class="list" id="agenda-events"></ul>
-  </section>
-
-  <section aria-label="Telemetria">
-    <div class="kpis" id="kpis"></div>
-  </section>
-
-  <section class="panel" aria-labelledby="s-dir" id="dir-sec" hidden>
-    <div class="sec-head"><h2 id="s-dir"><span class="idx">DR</span>Visão da diretoria · receita</h2><span class="label" id="dir-cov"></span></div>
-    <div class="kpis" id="dir-kpis"></div>
-    <div class="grid2" style="margin-top:14px">
-      <div><div class="label" style="margin-bottom:8px">MRR por squad</div><div class="bars" id="dir-squads"></div></div>
-      <div><div class="label" style="margin-bottom:8px">10 maiores contas</div><ul class="list" id="dir-top"></ul></div>
-    </div>
-  </section>
-
-  <section class="panel" aria-labelledby="s-aud" id="aud-sec" hidden>
-    <div class="sec-head"><h2 id="s-aud"><span class="idx">CO</span>Coordenação · conferência por CS</h2><span class="label">campo "CS responsável"</span></div>
-    <p class="note">Rituais = Checkpoints e Relatórios 1–4 marcados SIM sobre os preenchidos (NÃO e NÃO APARECEU contam como pendência; Treinamentos ficam de fora). Sem reunião = última reunião há 15+ dias ou vazia. Auditoria = campo "Última auditoria coord" nos últimos 30 dias.</p>
-    <div class="tbl-wrap">
-      <table id="aud-table">
-        <thead><tr><th>CS</th><th>Ativos</th><th>MRR</th><th>MRR em churn</th><th>Sem reunião 15d+</th><th>Rituais OK</th><th>Rituais marcados NÃO</th><th>Remarcados</th><th>Contrato pendente</th><th>Sem auditoria</th><th>Cadastro incompleto</th></tr></thead>
-        <tbody></tbody>
-      </table>
-    </div>
-    <div class="sec-head" style="margin-top:18px"><h2 style="font-size:15px"><span class="idx">✓</span>Conferir hoje</h2><span class="label" id="conf-count"></span></div>
-    <div class="filters" id="conf-filters" role="group" aria-label="Filtrar por CS"></div>
-    <ul class="list" id="conf-list"></ul>
-    <p class="note" id="hig-note" style="margin-top:12px"></p>
-  </section>
-
-  <section class="panel" aria-labelledby="s-news">
-    <div class="sec-head"><h2 id="s-news"><span class="idx">02</span>Radar de mercado</h2><span class="label" id="news-count"></span></div>
-    <div class="filters" id="news-filters" role="group" aria-label="Filtrar notícias"></div>
-    <div class="news" id="news"></div>
-  </section>
-
-  <section class="panel" aria-labelledby="s-skalo" id="skalo-sec" hidden>
-    <div class="sec-head"><h2 id="s-skalo"><span class="idx">SK</span>Skalo.IA · resultados dos clientes</h2><span class="label" id="skalo-period"></span></div>
-    <div class="kpis" id="skalo-kpis"></div>
-    <div class="grid2" style="margin-top:14px">
-      <div><div class="label" style="margin-bottom:8px">Clientes em alerta</div><ul class="list" id="skalo-alerts"></ul></div>
-      <div><div class="label" style="margin-bottom:8px">Destaques</div><ul class="list" id="skalo-top"></ul></div>
-    </div>
-  </section>
-
-  <section class="panel" aria-labelledby="s-world">
-    <div class="sec-head"><h2 id="s-world"><span class="idx">03</span>Brasil e mundo</h2><span class="label" id="world-count"></span></div>
-    <div class="news" id="world"></div>
-  </section>
-
-  <section class="grid2">
+  <section role="tabpanel" id="p-dir" aria-labelledby="t-dir" class="tabpanel">
     <div class="panel">
-      <div class="sec-head"><h2><span class="idx">04</span>Jornada da carteira</h2><span class="label" id="j-total"></span></div>
-      <div class="stack" id="stack" role="img"></div>
-      <div class="legend" id="legend"></div>
-      <div class="bars" id="statuses" style="margin-top:16px"></div>
+      <div class="sec-head"><h2>Receita e risco</h2><span class="label" id="dir-cov"></span></div>
+      <div class="kpis" id="dir-kpis"></div>
+    </div>
+    <div class="panel" id="skalo-sec" hidden>
+      <div class="sec-head"><h2>Resultado dos clientes · Skalo.IA</h2><span class="label" id="skalo-period"></span></div>
+      <p class="note" id="skalo-head"></p>
+      <div class="kpis" id="skalo-kpis"></div>
+      <div class="grid2" style="margin-top:14px">
+        <div><div class="label" style="margin-bottom:8px">Clientes em alerta</div><ul class="list" id="skalo-alerts"></ul></div>
+        <div><div class="label" style="margin-bottom:8px">Destaques</div><ul class="list" id="skalo-top"></ul></div>
+      </div>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <div class="sec-head"><h2>Carteira</h2><span class="label" id="j-total"></span></div>
+        <div class="stack" id="stack" role="img"></div>
+        <div class="legend" id="legend"></div>
+        <div class="label" style="margin:16px 0 8px">MRR por squad</div>
+        <div class="bars" id="dir-squads"></div>
+      </div>
+      <div class="panel">
+        <div class="sec-head"><h2>10 maiores contas</h2><span class="label">fee oficial</span></div>
+        <ul class="list" id="dir-top"></ul>
+      </div>
+    </div>
+  </section>
+
+  <section role="tabpanel" id="p-coord" aria-labelledby="t-coord" class="tabpanel" hidden>
+    <div class="panel">
+      <div class="sec-head"><h2>Conferência por CS</h2><span class="label">campo "CS responsável"</span></div>
+      <div class="kpis kpis-6" id="op-kpis"></div>
+      <div class="tbl-wrap" style="margin-top:14px">
+        <table id="aud-table">
+          <thead><tr><th>CS</th><th>Ativos</th><th>MRR</th><th>MRR em churn</th><th>Sem reunião 15d+</th><th>Rituais OK</th><th>Rituais NÃO</th><th>Remarcados</th><th>Contrato pendente</th><th>Sem auditoria</th><th>Cadastro incompleto</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="note" style="margin-top:10px">Rituais = Checkpoints e Relatórios 1–4 marcados SIM sobre os preenchidos (NÃO e NÃO APARECEU contam como pendência). Auditoria = campo "Última auditoria coord" nos últimos 30 dias.</p>
     </div>
     <div class="panel">
-      <div class="sec-head"><h2><span class="idx">05</span>Tarefas atrasadas</h2><span class="label" id="od-total"></span></div>
-      <div class="bars" id="overdue"></div>
+      <div class="sec-head"><h2>Conferir hoje</h2><span class="label" id="conf-count"></span></div>
+      <div class="filters" id="conf-filters" role="group" aria-label="Filtrar por CS"></div>
+      <ul class="list" id="conf-list"></ul>
+    </div>
+    <div class="grid2">
+      <div class="panel">
+        <div class="sec-head"><h2>Time da operação</h2><span class="label">responsável da tarefa no ClickUp</span></div>
+        <div class="tbl-wrap">
+          <table id="cs-table">
+            <thead><tr><th>Responsável</th><th>Ativos</th><th>Em churn</th><th>Sem reunião</th><th>Atrasadas</th><th>Urgentes</th><th>Mais antiga</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="sec-head"><h2>Listas</h2></div>
+        <div class="filters" role="tablist" id="tabs"></div>
+        <div id="tab-body"></div>
+        <div class="label" style="margin:16px 0 8px">CRM Retenção · cards abertos</div>
+        <div class="bars" id="retention"></div>
+        <p class="note" id="ret-note" style="margin-top:8px"></p>
+      </div>
     </div>
   </section>
 
-  <section class="panel" aria-labelledby="s-cs">
-    <div class="sec-head"><h2 id="s-cs"><span class="idx">06</span>Carteira por responsável da tarefa</h2><span class="label">responsável no ClickUp (não é o campo CS)</span></div>
-    <div class="tbl-wrap">
-      <table id="cs-table">
-        <thead><tr><th>Responsável</th><th>Ativos</th><th>Onboarding</th><th>Mês 2–6</th><th>Ongoing</th><th>Renovação</th><th>Em churn</th><th>Sem reunião 15d+</th><th>Atrasadas</th></tr></thead>
-        <tbody></tbody>
-      </table>
+  <section role="tabpanel" id="p-cli" aria-labelledby="t-cli" class="tabpanel" hidden>
+    <div class="panel">
+      <div class="sec-head"><h2>Clientes</h2><span class="label" id="cli-count"></span></div>
+      <div class="cli-tools">
+        <input type="search" id="cli-q" placeholder="Buscar cliente, CS ou responsável…" aria-label="Buscar cliente">
+        <div class="filters" id="cli-filters" role="group" aria-label="Filtrar clientes" style="margin:0"></div>
+      </div>
+      <div class="fichas" id="fichas"></div>
+      <div style="text-align:center;margin-top:12px"><button class="chip" id="cli-more" hidden>Mostrar mais</button></div>
     </div>
   </section>
 
-  <section class="grid2">
+  <section role="tabpanel" id="p-mkt" aria-labelledby="t-mkt" class="tabpanel" hidden>
     <div class="panel">
-      <div class="sec-head"><h2><span class="idx">07</span>Onde agir</h2></div>
-      <div class="filters" role="tablist" id="tabs"></div>
-      <div id="tab-body"></div>
+      <div class="sec-head"><h2>Radar de mercado</h2><span class="label" id="news-count"></span></div>
+      <div class="filters" id="news-filters" role="group" aria-label="Filtrar notícias"></div>
+      <div class="news" id="news"></div>
     </div>
     <div class="panel">
-      <div class="sec-head"><h2><span class="idx">08</span>CRM Retenção</h2><span class="label">cards abertos</span></div>
-      <div class="bars" id="retention"></div>
-      <p class="note" id="ret-note" style="margin-top:12px"></p>
+      <div class="sec-head"><h2>Brasil e mundo</h2><span class="label" id="world-count"></span></div>
+      <div class="news" id="world"></div>
     </div>
   </section>
 
   <footer>
     <div id="f-src"></div>
-    <div>Atualização automática de segunda a sexta às 6h49 · Fonte: ClickUp "Operacional AEG" + notícias públicas do setor</div>
+    <div id="hig-note"></div>
+    <details><summary>Notas técnicas desta leitura</summary><ul id="f-notes"></ul></details>
+    <div>Atualização automática todos os dias às 6h49 · Fontes: ClickUp "Operacional AEG", Skalo.IA, Google Agenda e notícias públicas</div>
   </footer>
 </div>
 
@@ -451,68 +506,187 @@ function tick() {
 function render() {
   if (!D) return;
   const k = D.kpis, dk = (D.delta && D.delta.kpis) || {};
-  const news = D.news || [];
-  $("#sb-sync").textContent = `SYNC ${D.generated_at} · ${D.delta && D.delta.vs ? "Δ VS " + fmtDate(D.delta.vs) : "1ª LEITURA"}`;
-  tick(); setInterval(tick, 1000);
-  $("#h-date").textContent = D.date_long;
-  $("#h-greet").textContent = `${k.ativos} clientes ativos, ${k.em_churn} no status churn e ${k.sem_reuniao} sem reunião há mais de 15 dias. ${news.length} notícias do setor no radar.`;
-
-  const pct = D.cobertura, r = 70, C = 2 * Math.PI * r;
-  const ringColor = pct >= 85 ? "var(--good)" : pct >= 70 ? "var(--cyan)" : "var(--serious)";
-  $("#ring").setAttribute("aria-label", `Cobertura de reuniões: ${pct}% dos clientes ativos tiveram reunião nos últimos 15 dias`);
-  $("#ring").innerHTML = `<svg viewBox="0 0 168 168" aria-hidden="true">
-    <circle cx="84" cy="84" r="80" fill="none" stroke="rgba(110,220,255,.25)" stroke-width="1" stroke-dasharray="2 6" class="spin"/>
-    <circle cx="84" cy="84" r="${r}" fill="none" stroke="rgba(110,220,255,.1)" stroke-width="10"/>
-    <circle cx="84" cy="84" r="${r}" fill="none" stroke="${ringColor}" stroke-width="10"
-      stroke-dasharray="${(pct / 100) * C} ${C}" transform="rotate(-90 84 84)"/>
-  </svg><div class="c"><b>${pct}%</b><small>cobertura de<br>reuniões 15d</small></div>`;
-
-  $("#alerts").innerHTML = D.priorities.map((p) => `<li class="sev-${p.sev}"><span class="bar"></span><span class="tag">${SEV[p.sev]}</span><span class="t">${esc(p.title)}</span>${p.detail ? `<span class="d">${esc(p.detail)}</span>` : ""}</li>`).join("");
-
+  const news = D.news || [], DR = D.dir, SK = D.skalo || {};
+  const R$ = (v) => "R$ " + Math.round(v || 0).toLocaleString("pt-BR");
+  const cell = (v, hotAt) => `<td class="${v === 0 ? "zero" : hotAt && v >= hotAt ? "hot" : ""}">${v}</td>`;
+  const tile = (t) => `<div class="kpi ${t.cls || ""}"><div class="l">${esc(t.l)}</div><div class="v">${esc(t.v)}</div><div class="s">${t.s}</div></div>`;
   const delta = (key, badWhenUp) => {
     const v = dk[key];
     if (v === undefined || v === 0) return "";
     const cls = badWhenUp === null ? "up" : (v > 0) === badWhenUp ? "bad" : "ok";
     return ` <span class="delta ${cls}">${v > 0 ? "▲" : "▼"}${Math.abs(v)}</span>`;
   };
-  const od = k.atrasadas_truncado ? `${k.atrasadas}+` : k.atrasadas;
-  const vIA = Math.round((k.venda_ia / Math.max(k.ativos, 1)) * 100);
-  const tiles = [
-    { v: k.ativos, l: "Clientes ativos", s: `${k.mrr} MRR · ${k.arr} ARR` + delta("ativos", false), cls: "cy" },
-    { v: k.novos_mes, l: `Entradas em ${D.month}`, s: `${k.novos_mes_anterior} em ${D.prev_month}` + delta("novos_mes", false) },
-    { v: k.onboarding, l: "Em onboarding", s: "S1 → S4" + delta("onboarding", null) },
-    { v: k.renovacao, l: "Renovações abertas", s: "oportunidade → proposta" },
-    { v: k.em_churn, l: "Status churn", s: `${k.churn_mes} previstos p/ ${D.month}` + delta("em_churn", true), cls: k.em_churn ? "alert" : "" },
-    { v: k.sem_reuniao, l: "Sem reunião 15d+", s: "clientes ativos" + delta("sem_reuniao", true), cls: k.sem_reuniao ? "warn" : "" },
-    { v: od, l: "Tarefas atrasadas", s: "squads e obrigações" + delta("atrasadas", true), cls: k.atrasadas > 50 ? "warn" : "" },
-    { v: `${vIA}%`, l: "Adoção Venda.IA", s: `${k.crm_ia} clientes com CRM.IA` },
-  ];
-  $("#kpis").innerHTML = tiles.map((t) => `<div class="kpi ${t.cls || ""}"><div class="l">${esc(t.l)}</div><div class="v">${esc(t.v)}</div><div class="s">${t.s}</div></div>`).join("");
+  $("#sb-sync").textContent = `SYNC ${D.generated_at} · ${D.delta && D.delta.vs ? "Δ VS " + fmtDate(D.delta.vs) : "1ª LEITURA"}`;
+  tick(); setInterval(tick, 1000);
 
+  /* ---------- Hoje ---------- */
+  $("#h-date").textContent = D.date_long;
+  $("#h-greet").textContent = DR
+    ? `MRR de ${R$(DR.mrr)} em ${k.ativos} clientes ativos. ${R$(DR.mrr_risco)} em risco e ${k.sem_reuniao} clientes sem reunião há mais de 15 dias.`
+    : `${k.ativos} clientes ativos, ${k.em_churn} no status churn e ${k.sem_reuniao} sem reunião há mais de 15 dias.`;
+  const prio = D.priorities || [];
+  $("#decide").innerHTML = prio.slice(0, 3).map((p) => `<li class="sev-${p.sev}"><b>${esc(p.title)}</b>${p.detail ? `<span>${esc(p.detail)}</span>` : ""}</li>`).join("") || `<li class="sev-good"><b>Nada crítico hoje.</b></li>`;
+  const rest = prio.slice(3);
+  $("#more-alerts").hidden = !rest.length;
+  $("#more-alerts summary").textContent = `Ver os outros ${rest.length} alertas`;
+  $("#alerts").innerHTML = rest.map((p) => `<li class="sev-${p.sev}"><span class="bar"></span><span class="tag">${SEV[p.sev]}</span><span class="t">${esc(p.title)}</span>${p.detail ? `<span class="d">${esc(p.detail)}</span>` : ""}</li>`).join("");
+  const AG = D.agenda || {}, ev = Array.isArray(AG.events) ? AG.events : null;
+  $("#agenda-label").textContent = ev ? `· ${fmtDate(AG.date)}` : "";
+  const clash = (e) => ev.some((o) => o !== e && !e.all_day && !o.all_day && e.start < o.end && o.start < e.end);
+  $("#agenda-events").innerHTML = !ev ? `<li><span class="h">—</span><span class="meta">Google Agenda não lido hoje.</span></li>`
+    : ev.length ? ev.map((e) => `<li class="${clash(e) ? "clash" : ""}"><span class="h">${esc(e.all_day ? "dia todo" : e.start + "–" + (e.end || ""))}</span><span>${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a>` : esc(e.title)}${clash(e) ? ' <span class="meta">· conflito</span>' : ""}</span></li>`).join("")
+    : `<li><span class="h">—</span><span>Agenda livre</span></li>`;
   const W = (D.weather && D.weather.cities) || [];
-  $("#wx").innerHTML = W.map((c) => `<a href="${esc(c.url)}" target="_blank" rel="noopener" title="Fonte: ${esc(c.source)}"><span class="c">${esc(c.city)} · ${fmtDate(D.weather.date)}</span><span class="t">${c.max}°</span><span class="m">mín ${c.min}° · chuva ${c.rain_prob}%<br>${esc(c.condition || "")}</span></a>`).join("");
-  const AG = D.agenda || {};
-  if (AG.date && Array.isArray(AG.events)) {
-    $("#agenda-sec").hidden = false;
-    $("#agenda-label").textContent = fmtDate(AG.date);
-    $("#agenda-events").innerHTML = AG.events.length ? AG.events.map((e) => `<li><span><b class="num">${esc(e.all_day ? "dia todo" : e.start + (e.end ? "–" + e.end : ""))}</b> ${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a>` : esc(e.title)}</span><span class="meta">${esc(e.location || "")}</span></li>`).join("")
-      : `<li><span class="meta">Nenhum compromisso registrado hoje.</span></li>`;
+  $("#wx").innerHTML = W.map((c) => `<a href="${esc(c.url)}" target="_blank" rel="noopener" title="Fonte: ${esc(c.source)}"><span class="c">${esc(c.city)}</span><span class="t">${c.max}°</span><span class="m">mín ${c.min}° · chuva ${c.rain_prob}%</span></a>`).join("");
+
+  /* ---------- Abas ---------- */
+  const TABS = ["dir", "coord", "cli", "mkt"];
+  let tab = "dir";
+  try { tab = localStorage.getItem("jarvis-main-tab") || tab; } catch (e) {}
+  if (!TABS.includes(tab)) tab = "dir";
+  const showTab = (t) => {
+    tab = t;
+    TABS.forEach((x) => { $("#t-" + x).setAttribute("aria-selected", x === t); $("#t-" + x).tabIndex = x === t ? 0 : -1; $("#p-" + x).hidden = x !== t; });
+    try { localStorage.setItem("jarvis-main-tab", t); } catch (e) {}
+  };
+  $("#main-tabs").addEventListener("click", (e) => { const b = e.target.closest("[data-tab]"); if (b) showTab(b.dataset.tab); });
+  $("#main-tabs").addEventListener("keydown", (e) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    const i = (TABS.indexOf(tab) + (e.key === "ArrowRight" ? 1 : TABS.length - 1)) % TABS.length;
+    showTab(TABS[i]); $("#t-" + TABS[i]).focus();
+  });
+  showTab(tab);
+
+  /* ---------- Diretoria ---------- */
+  if (DR) {
+    $("#dir-cov").textContent = `campos de ${DR.cobertos} de ${DR.ativos_total} ativos · leitura ${fmtDate(DR.details_day)}`;
+    $("#dir-kpis").innerHTML = [
+      { l: "MRR da carteira", v: R$(DR.mrr), s: `ticket médio ${R$(DR.ticket)}`, cls: "cy" },
+      { l: "MRR em risco", v: R$(DR.mrr_risco), s: `${DR.n_risco} clientes: churn ou 30+ dias sem reunião`, cls: "alert" },
+      { l: `Churn previsto ${D.month}`, v: R$(DR.mrr_churn_mes), s: `${String(DR.churn_mes_pct).replace(".", ",")}% do MRR · ${k.churn_mes} clientes` + delta("churn_mes", true), cls: DR.mrr_churn_mes ? "warn" : "" },
+      { l: "MRR no status churn", v: R$(DR.mrr_em_churn), s: `${k.em_churn} clientes aguardando tratativa` + delta("em_churn", true), cls: "warn" },
+      { l: "Renovações em aberto", v: R$(DR.mrr_renov), s: `${DR.n_renov} clientes em renovação` },
+      { l: "MRR sem reunião 15d+", v: R$(DR.mrr_sem_reuniao), s: `${DR.n_sem_reuniao} clientes`, cls: DR.n_sem_reuniao ? "warn" : "" },
+      { l: `Entradas em ${D.month}`, v: k.novos_mes, s: `${k.novos_mes_anterior} em ${D.prev_month}` + delta("novos_mes", false) },
+      { l: "Clientes ativos", v: k.ativos, s: `${k.venda_ia} com Venda.IA · ${k.crm_ia} com CRM.IA` + delta("ativos", false) },
+    ].map((t) => tile({ ...t, v: t.v })).join("");
+    const maxSq = Math.max(...DR.squads.map((q) => q.mrr), 1);
+    $("#dir-squads").innerHTML = DR.squads.map((q) => `<div class="bar" title="${esc(q.squad)}: ${q.n} clientes, ${R$(q.mrr)}"><span class="lbl">${esc(q.squad)} · ${q.n}</span><span class="track"><span class="fill" style="width:${(q.mrr / maxSq) * 100}%;--c:var(--st3)"></span></span><span class="n num" style="min-width:84px">${(q.mrr / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} mil</span></div>`).join("");
+    $("#dir-top").innerHTML = DR.maiores.map((c) => `<li><span><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a> <span class="meta">${esc(c.cs)}</span></span><span class="meta">${R$(c.fee)}${c.issues.length ? " · ⚠ " + esc(c.issues[0]) : ""}</span></li>`).join("");
   }
-  const SK = D.skalo || {};
   if ((SK.kpis || []).length) {
     $("#skalo-sec").hidden = false;
     $("#skalo-period").textContent = SK.period || "";
-    $("#skalo-kpis").innerHTML = SK.kpis.map((x) => `<div class="kpi ${x.tone === "bad" ? "alert" : x.tone === "warn" ? "warn" : x.tone === "good" ? "cy" : ""}"><div class="l">${esc(x.label)}</div><div class="v">${esc(x.value)}</div><div class="s">${esc(x.detail || "")}</div></div>`).join("");
+    $("#skalo-head").textContent = SK.headline || "";
+    $("#skalo-kpis").innerHTML = SK.kpis.map((x) => tile({ l: x.label, v: x.value, s: esc(x.detail || ""), cls: x.tone === "bad" ? "alert" : x.tone === "warn" ? "warn" : x.tone === "good" ? "cy" : "" })).join("");
     const li = (c) => `<li><span>${c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a>` : esc(c.name)}</span><span class="meta">${esc(c.info || "")}</span></li>`;
     $("#skalo-alerts").innerHTML = (SK.alerts || []).map(li).join("") || `<li><span class="meta">Nenhum cliente em alerta.</span></li>`;
     $("#skalo-top").innerHTML = (SK.top || []).map(li).join("") || `<li><span class="meta">Sem destaques.</span></li>`;
   }
+  const tot = D.groups.reduce((a, g) => a + g.n, 0) || 1;
+  $("#j-total").textContent = `${tot} clientes ativos por fase`;
+  $("#stack").setAttribute("aria-label", D.groups.map((g) => `${g.label}: ${g.n}`).join(", "));
+  $("#stack").innerHTML = D.groups.filter((g) => g.n).map((g) => `<div style="flex:${g.n};background:${GROUP_COLOR[g.key]};color:${GROUP_INK[g.key]}" title="${esc(g.label)}: ${g.n}">${g.n}</div>`).join("");
+  $("#legend").innerHTML = D.groups.map((g) => `<span style="--c:${GROUP_COLOR[g.key]}">${esc(g.label)} ${g.n}</span>`).join("");
+
+  /* ---------- Coordenação ---------- */
+  const od = k.atrasadas_truncado ? `${k.atrasadas}+` : k.atrasadas;
+  $("#op-kpis").innerHTML = [
+    { l: "Cobertura de reuniões", v: D.cobertura + "%", s: "ativos com reunião em 15 dias", cls: D.cobertura >= 85 ? "cy" : "warn" },
+    { l: "Sem reunião 15d+", v: k.sem_reuniao, s: "clientes ativos" + delta("sem_reuniao", true), cls: k.sem_reuniao ? "warn" : "" },
+    { l: "Em onboarding", v: k.onboarding, s: "S1 → S4" + delta("onboarding", null) },
+    { l: "Contrato pendente", v: DR ? DR.contrato_pend.length : "–", s: "ativos sem contrato assinado", cls: DR && DR.contrato_pend.length ? "alert" : "" },
+    { l: "Tarefas atrasadas", v: od, s: "squads e obrigações", cls: k.atrasadas > 50 ? "warn" : "" },
+    { l: "Auditoria 30 dias", v: DR ? DR.higiene.auditoria_30d : "–", s: `de ${DR ? DR.cobertos : "–"} clientes conferidos`, cls: DR && !DR.higiene.auditoria_30d ? "alert" : "" },
+  ].map(tile).join("");
+  if (DR) {
+    const pc = (v, bad) => `<td class="${v === null ? "zero" : v < bad ? "hot" : ""}">${v === null ? "–" : v + "%"}</td>`;
+    $("#aud-table tbody").innerHTML = DR.audit.map((a) => `<tr><td>${esc(a.cs)}</td>${cell(a.ativos)}<td>${R$(a.mrr)}</td><td class="${a.mrr_churn ? "hot" : "zero"}">${R$(a.mrr_churn)}</td>${cell(a.sem_reuniao, 4)}${pc(a.rituais_pct, 70)}${cell(a.rituais_gap, 20)}${cell(a.remarcados, 5)}${cell(a.contrato_pend, 1)}${cell(a.sem_auditoria, 1)}${cell(a.dados, 1)}</tr>`).join("");
+    let csF = "Todos";
+    try { csF = localStorage.getItem("jarvis-conf") || csF; } catch (e) {}
+    const csList = ["Todos", ...DR.audit.map((a) => a.cs)];
+    if (!csList.includes(csF)) csF = "Todos";
+    const drawConf = () => {
+      const rows = DR.conferir.filter((c) => csF === "Todos" || c.cs === csF);
+      $("#conf-filters").innerHTML = csList.map((c) => `<button class="chip" aria-pressed="${c === csF}" data-cs="${esc(c)}">${esc(c)}</button>`).join("");
+      $("#conf-count").textContent = `${rows.length} clientes com pendência`;
+      $("#conf-list").innerHTML = rows.slice(0, 60).map((c) => `<li><span><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a> <span class="meta">${esc(c.cs)} · ${R$(c.fee)}</span></span><span class="meta">${esc(c.issues.join(" · "))}</span></li>`).join("") || `<li><span class="meta">Nada para conferir.</span></li>`;
+    };
+    $("#conf-filters").addEventListener("click", (e) => { const b = e.target.closest("[data-cs]"); if (!b) return; csF = b.dataset.cs; try { localStorage.setItem("jarvis-conf", csF); } catch (er) {} drawConf(); });
+    drawConf();
+  }
+  const odBy = Object.fromEntries(D.overdue_rows.map((o) => [o.who, o]));
+  const people = [...new Set([...D.cs_rows.map((r) => r.cs), ...D.overdue_rows.map((o) => o.who)])];
+  const prow = people.map((p) => ({ p, r: D.cs_rows.find((x) => x.cs === p) || {}, o: odBy[p] || {} }))
+    .sort((a, b) => (b.o.n || 0) - (a.o.n || 0) || (b.r.ativos || 0) - (a.r.ativos || 0));
+  $("#cs-table tbody").innerHTML = prow.map(({ p, r, o }) => `<tr><td>${esc(p)}</td>${cell(r.ativos || 0)}${cell(r.churn || 0, 3)}${cell(r.sem_reuniao || 0, 4)}${cell(o.n || 0, 15)}${cell(o.urgent || 0, 1)}<td class="${o.days > 30 ? "hot" : o.days ? "" : "zero"}">${o.oldest ? fmtDate(o.oldest) + " · " + o.days + "d" : "–"}</td></tr>`).join("");
+  const item = (c, extra) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a><span class="meta">${esc(c.cs)} · ${esc(extra ?? c.status)}</span></li>`;
+  const churnIds = new Set(D.churn_month_ids);
+  const tabs = [
+    { id: "churn", label: `Churn ${D.in_churn.length}`, html: () => `<p class="note">Primeiro os previstos para ${esc(D.month)}.</p><ul class="list">${D.in_churn.map((c) => item(c, churnIds.has(c.id) ? `churn ${D.month}` : "status churn")).join("")}</ul>` },
+    { id: "renov", label: `Renovações ${D.renewals.length}`, html: () => `<ul class="list">${D.renewals.map((c) => item(c, c.tags.find((t) => t.startsWith("renovação/")) || c.status)).join("")}</ul>` },
+    { id: "novos", label: `Entradas ${D.new_month.length}`, html: () => D.new_month.length ? `<ul class="list">${D.new_month.map((c) => item(c)).join("")}</ul>` : `<p class="empty">Nenhum cliente com a tag "onboarding ${esc(D.month)}" ainda.</p>` },
+  ];
+  let current = "churn";
+  try { current = localStorage.getItem("jarvis-tab") || current; } catch (e) {}
+  if (!tabs.some((t) => t.id === current)) current = "churn";
+  const drawTabs = () => {
+    $("#tabs").innerHTML = tabs.map((t) => `<button class="chip" role="tab" aria-selected="${t.id === current}" data-id="${t.id}">${esc(t.label)}</button>`).join("");
+    $("#tab-body").innerHTML = tabs.find((t) => t.id === current).html();
+  };
+  $("#tabs").addEventListener("click", (e) => { const b = e.target.closest("[data-id]"); if (!b) return; current = b.dataset.id; try { localStorage.setItem("jarvis-tab", current); } catch (err) {} drawTabs(); });
+  drawTabs();
+  const ret = D.retention || {}, open = ret.open || {};
+  const maxR = Math.max(...Object.values(open), 1);
+  $("#retention").innerHTML = Object.entries(open).map(([s, n]) => `<div class="bar"><span class="lbl">${esc(s)}</span><span class="track"><span class="fill" style="width:${(n / maxR) * 100}%;--c:var(--st2)"></span></span><span class="n num">${n}${ret.open_truncated && s === "requisitou cancelamento" ? "+" : ""}</span></div>`).join("");
+  const cl = ret.closed_total || {};
+  $("#ret-note").textContent = `Fechados no total: ${cl.retido || 0} retidos · ${cl.perdido || 0} perdidos`;
+
+  /* ---------- Clientes ---------- */
+  const CL = DR ? DR.clientes : [];
+  const FIL = [
+    { id: "pend", label: "Com pendência", f: (c) => c.group !== "churn" && c.issues.length },
+    { id: "risco", label: "Em risco", f: (c) => c.group === "churn" || c.churn_mes || (c.dias_reuniao ?? 99) >= 30 },
+    { id: "ativos", label: "Ativos", f: (c) => c.group !== "churn" },
+    { id: "churn", label: "Churn", f: (c) => c.group === "churn" },
+    { id: "todos", label: "Todos", f: () => true },
+  ];
+  let cf = "pend", q = "", lim = 24;
+  const norm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const sevOf = (c) => c.group === "churn" ? "critical" : c.score >= 5 ? "serious" : c.issues.length ? "warning" : "good";
+  const ficha = (c) => {
+    const s = c.skalo;
+    const sk = s ? `<div class="sk">Skalo · 28/09–04/10: ${s.gasto != null ? `${R$(s.gasto)} investidos · ${s.resultados} resultados${s.cpr ? " · " + R$(s.cpr).replace("R$ ", "R$ ") + " por resultado" : ""}` : "sem dados de investimento no top 50"}${s.erro_conta ? ' · <span style="color:var(--critical)">conta Meta com erro de permissão</span>' : ""}</div>` : "";
+    return `<article class="ficha sev-${sevOf(c)}">
+      <div class="top"><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a><span class="fee">${c.fee ? R$(c.fee) : "sem fee"}</span></div>
+      <div class="meta">${esc(c.status)} · CS ${esc(c.cs)} · ${esc(c.gestor)} · ${esc(c.squad)}${c.plano ? " · " + esc(c.plano) : ""}</div>
+      <div class="row2"><div><b>${c.dias_reuniao ?? "–"}</b>dias sem reunião</div><div><b>${c.rit_ok}/${c.rit_ok + c.rit_gap.length}</b>rituais SIM</div><div><b>${c.lt ?? "–"}</b>meses de casa</div></div>
+      ${c.issues.length ? `<ul class="iss">${c.issues.map((i) => `<li>${esc(i)}</li>`).join("")}</ul>` : ""}
+      ${sk}
+    </article>`;
+  };
+  const drawCli = () => {
+    $("#cli-filters").innerHTML = FIL.map((f) => `<button class="chip" aria-pressed="${f.id === cf}" data-f="${f.id}">${esc(f.label)} ${CL.filter(f.f).length}</button>`).join("");
+    const nq = norm(q);
+    const rows = CL.filter(FIL.find((f) => f.id === cf).f).filter((c) => !nq || norm(`${c.name} ${c.cs} ${c.gestor} ${c.squad}`).includes(nq))
+      .sort((a, b) => (b.score - a.score) || (b.fee - a.fee));
+    $("#cli-count").textContent = `${rows.length} de ${CL.length} clientes`;
+    $("#fichas").innerHTML = rows.slice(0, lim).map(ficha).join("") || `<p class="empty">Nenhum cliente encontrado.</p>`;
+    $("#cli-more").hidden = rows.length <= lim;
+    $("#cli-more").textContent = `Mostrar mais (${rows.length - lim} restantes)`;
+  };
+  $("#cli-filters").addEventListener("click", (e) => { const b = e.target.closest("[data-f]"); if (!b) return; cf = b.dataset.f; lim = 24; drawCli(); });
+  $("#cli-more").addEventListener("click", () => { lim += 48; drawCli(); });
+  $("#cli-q").addEventListener("input", (e) => { q = e.target.value; lim = 24; if (q && cf === "pend") cf = "todos"; drawCli(); });
+  drawCli();
+
+  /* ---------- Mercado ---------- */
   const world = D.world || [];
   $("#world-count").textContent = `${world.length} manchetes`;
   $("#world").innerHTML = world.length ? world.map((n) => `<article class="card"><div class="meta"><span class="cat">${esc(n.cat)}</span><span>${esc(n.source)}</span><span>${fmtDate(n.date)}</span></div><h3><a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a></h3><p>${esc(n.summary)}</p></article>`).join("") : `<p class="empty">Sem manchetes gerais nesta leitura.</p>`;
   const cats = ["Todas", ...new Set(news.map((n) => n.cat))];
   let cat = "Todas";
-  $("#news-count").textContent = `${news.length} sinais captados`;
+  $("#news-count").textContent = `${news.length} notícias`;
   const drawNews = () => {
     $("#news-filters").innerHTML = cats.map((c) => `<button class="chip" aria-pressed="${c === cat}" data-cat="${esc(c)}">${esc(c)}</button>`).join("");
     const list = news.filter((n) => cat === "Todas" || n.cat === cat);
@@ -526,88 +700,14 @@ function render() {
   $("#news-filters").addEventListener("click", (e) => { const b = e.target.closest("[data-cat]"); if (!b) return; cat = b.dataset.cat; drawNews(); });
   drawNews();
 
-  const tot = D.groups.reduce((a, g) => a + g.n, 0) || 1;
-  $("#j-total").textContent = `${tot} clientes`;
-  $("#stack").setAttribute("aria-label", D.groups.map((g) => `${g.label}: ${g.n}`).join(", "));
-  $("#stack").innerHTML = D.groups.filter((g) => g.n).map((g) => `<div style="flex:${g.n};background:${GROUP_COLOR[g.key]};color:${GROUP_INK[g.key]}" title="${esc(g.label)}: ${g.n}">${g.n}</div>`).join("");
-  $("#legend").innerHTML = D.groups.map((g) => `<span style="--c:${GROUP_COLOR[g.key]}">${esc(g.label)} ${Math.round((g.n / tot) * 100)}%</span>`).join("");
-  const maxS = Math.max(...D.status_rows.map((r) => r.n), 1);
-  $("#statuses").innerHTML = D.status_rows.map((r) => `<div class="bar" title="${esc(r.status)}: ${r.n}"><span class="lbl">${esc(r.status)}</span><span class="track"><span class="fill" style="width:${(r.n / maxS) * 100}%;--c:${GROUP_COLOR[r.group] || "var(--st3)"}"></span></span><span class="n num">${r.n}</span></div>`).join("");
-
-  $("#od-total").textContent = `${od} no total`;
-  const maxO = Math.max(...D.overdue_rows.map((r) => r.n), 1);
-  $("#overdue").innerHTML = D.overdue_rows.map((r) => `<div class="bar" title="${esc(r.who)}: ${r.n} atrasadas, ${r.urgent} urgentes, mais antiga de ${fmtDate(r.oldest)} (${r.days} dias)"><span class="lbl">${esc(r.who)}</span><span class="track"><span class="fill" style="width:${(r.n / maxO) * 100}%;--c:${r.n >= 15 ? "var(--serious)" : "var(--st3)"}"></span></span><span class="n num">${r.n}</span></div>`).join("");
-
-  const cell = (v, hotAt) => `<td class="${v === 0 ? "zero" : hotAt && v >= hotAt ? "hot" : ""}">${v}</td>`;
-  $("#cs-table tbody").innerHTML = D.cs_rows.map((r) => `<tr><td>${esc(r.cs)}</td>${cell(r.ativos)}${cell(r.onboarding)}${cell(r.maturacao)}${cell(r.ongoing)}${cell(r.renovacao)}${cell(r.churn, 3)}${cell(r.sem_reuniao, 4)}${cell(r.atrasadas, 15)}</tr>`).join("");
-
-  const DR = D.dir;
-  const R$ = (v) => "R$ " + Math.round(v).toLocaleString("pt-BR");
+  /* ---------- Rodapé ---------- */
+  $("#f-src").textContent = `Leitura ${fmtDate(D.date)} · ${D.source}`;
   if (DR) {
-    $("#dir-sec").hidden = false; $("#aud-sec").hidden = false;
-    $("#dir-cov").textContent = `campos de ${DR.cobertos} de ${DR.ativos_total} ativos · leitura ${fmtDate(DR.details_day)}`;
-    const dt = [
-      { l: "MRR da carteira", v: R$(DR.mrr), s: `ticket médio ${R$(DR.ticket)}`, cls: "cy" },
-      { l: "MRR em risco", v: R$(DR.mrr_risco), s: `${DR.n_risco} clientes: churn ou 30+ dias sem reunião`, cls: "alert" },
-      { l: `Churn previsto ${D.month}`, v: R$(DR.mrr_churn_mes), s: `${String(DR.churn_mes_pct).replace(".", ",")}% do MRR`, cls: DR.mrr_churn_mes ? "warn" : "" },
-      { l: "MRR no status churn", v: R$(DR.mrr_em_churn), s: `${k.em_churn} clientes aguardando tratativa`, cls: "warn" },
-      { l: "Renovações em aberto", v: R$(DR.mrr_renov), s: `${DR.n_renov} clientes em renovação` },
-      { l: "MRR sem reunião 15d+", v: R$(DR.mrr_sem_reuniao), s: `${DR.n_sem_reuniao} clientes`, cls: DR.n_sem_reuniao ? "warn" : "" },
-    ];
-    $("#dir-kpis").innerHTML = dt.map((t) => `<div class="kpi ${t.cls || ""}"><div class="l">${esc(t.l)}</div><div class="v" style="font-size:26px">${esc(t.v)}</div><div class="s">${esc(t.s)}</div></div>`).join("");
-    const maxSq = Math.max(...DR.squads.map((q) => q.mrr), 1);
-    $("#dir-squads").innerHTML = DR.squads.map((q) => `<div class="bar" title="${esc(q.squad)}: ${q.n} clientes"><span class="lbl">${esc(q.squad)} · ${q.n}</span><span class="track"><span class="fill" style="width:${(q.mrr / maxSq) * 100}%;--c:var(--st3)"></span></span><span class="n num" style="min-width:84px">${(q.mrr / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} mil</span></div>`).join("");
-    $("#dir-top").innerHTML = DR.maiores.map((c) => `<li><span><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a> <span class="meta">${esc(c.cs)}</span></span><span class="meta">${R$(c.fee)}${c.issues.length ? " · ⚠ " + esc(c.issues[0]) : ""}</span></li>`).join("");
-    const pc = (v, bad) => `<td class="${v === null ? "zero" : v < bad ? "hot" : ""}">${v === null ? "–" : v + "%"}</td>`;
-    $("#aud-table tbody").innerHTML = DR.audit.map((a) => `<tr><td>${esc(a.cs)}</td>${cell(a.ativos)}<td>${R$(a.mrr)}</td><td class="${a.mrr_churn ? "hot" : "zero"}">${R$(a.mrr_churn)}</td>${cell(a.sem_reuniao, 4)}${pc(a.rituais_pct, 70)}${cell(a.rituais_gap, 20)}${cell(a.remarcados, 5)}${cell(a.contrato_pend, 1)}${cell(a.sem_auditoria, 1)}${cell(a.dados, 1)}</tr>`).join("");
-    let csF = "Todos";
-    try { csF = localStorage.getItem("jarvis-conf") || csF; } catch (e) {}
-    const csList = ["Todos", ...DR.audit.map((a) => a.cs)];
-    if (!csList.includes(csF)) csF = "Todos";
-    const drawConf = () => {
-      const rows = DR.conferir.filter((c) => csF === "Todos" || c.cs === csF);
-      $("#conf-filters").innerHTML = csList.map((c) => `<button class="chip" aria-pressed="${c === csF}" data-cs="${esc(c)}">${esc(c)}</button>`).join("");
-      $("#conf-count").textContent = `${rows.length} clientes com pendência`;
-      $("#conf-list").innerHTML = rows.slice(0, 40).map((c) => `<li><span><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a> <span class="meta">${esc(c.cs)} · ${R$(c.fee)}</span></span><span class="meta">${esc(c.issues.join(" · "))}</span></li>`).join("") || `<li><span class="meta">Nada para conferir.</span></li>`;
-    };
-    $("#conf-filters").addEventListener("click", (e) => { const b = e.target.closest("[data-cs]"); if (!b) return; csF = b.dataset.cs; try { localStorage.setItem("jarvis-conf", csF); } catch (er) {} drawConf(); });
-    drawConf();
     const H = DR.higiene, miss = Object.entries(H.faltando).map(([f, n]) => `${n} sem ${f}`);
-    $("#hig-note").textContent = `Higiene do cadastro: ${H.auditoria_30d} de ${DR.cobertos} clientes com auditoria da coordenação nos últimos 30 dias` +
-      (miss.length ? ` · ${miss.join(" · ")}` : "") + (DR.fee_suspeito.length ? ` · fee fora do padrão (fora do MRR): ${DR.fee_suspeito.map((c) => c.name + " " + R$(c.fee)).join(", ")}` : "") +
-      `. As fórmulas LT, "Dias SEM reunião" e SITUAÇÃO do ClickUp usam o campo DATA ATUAL, que está travado em 2023; o Jarvis calcula esses prazos pela data de hoje.`;
+    $("#hig-note").textContent = `Cadastro: ${miss.join(" · ") || "completo"}` + (DR.fee_suspeito.length ? ` · fee fora do padrão (fora do MRR): ${DR.fee_suspeito.map((c) => c.name).join(", ")}` : "") +
+      `. Prazos (dias sem reunião, meses de casa) calculados pela data de hoje, porque o campo DATA ATUAL do ClickUp está travado em 2023.`;
   }
-
-  const item = (c, extra) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.name)}</a><span class="meta">${esc(c.cs)} · ${esc(extra ?? c.status)}</span></li>`;
-  const churnIds = new Set(D.churn_month_ids);
-  const tabs = [
-    { id: "churn", label: `Churn ${D.in_churn.length}`, html: () => `<p class="note">Primeiro os previstos para ${esc(D.month)}.</p><ul class="list">${D.in_churn.map((c) => item(c, churnIds.has(c.id) ? `churn ${D.month}` : "status churn")).join("")}</ul>` },
-    { id: "reuniao", label: `Sem reunião ${D.no_meeting.length}`, html: () => `<ul class="list">${D.no_meeting.map((c) => item(c)).join("")}</ul>` },
-    { id: "renov", label: `Renovações ${D.renewals.length}`, html: () => `<ul class="list">${D.renewals.map((c) => item(c, c.tags.find((t) => t.startsWith("renovação/")) || c.status)).join("")}</ul>` },
-    { id: "novos", label: `Entradas ${D.new_month.length}`, html: () => D.new_month.length ? `<ul class="list">${D.new_month.map((c) => item(c)).join("")}</ul>` : `<p class="empty">Nenhum cliente com a tag "onboarding ${esc(D.month)}" ainda.</p>` },
-  ];
-  let current = "churn";
-  try { current = localStorage.getItem("jarvis-tab") || current; } catch (e) {}
-  if (!tabs.some((t) => t.id === current)) current = "churn";
-  const drawTabs = () => {
-    $("#tabs").innerHTML = tabs.map((t) => `<button class="chip" role="tab" id="tab-${t.id}" aria-selected="${t.id === current}" data-id="${t.id}">${esc(t.label)}</button>`).join("");
-    $("#tab-body").innerHTML = tabs.find((t) => t.id === current).html();
-  };
-  $("#tabs").addEventListener("click", (e) => {
-    const b = e.target.closest("[data-id]"); if (!b) return;
-    current = b.dataset.id;
-    try { localStorage.setItem("jarvis-tab", current); } catch (err) {}
-    drawTabs();
-  });
-  drawTabs();
-
-  const ret = D.retention || {}, open = ret.open || {};
-  const maxR = Math.max(...Object.values(open), 1);
-  $("#retention").innerHTML = Object.entries(open).map(([s, n]) => `<div class="bar"><span class="lbl">${esc(s)}</span><span class="track"><span class="fill" style="width:${(n / maxR) * 100}%;--c:var(--st2)"></span></span><span class="n num">${n}${ret.open_truncated && s === "requisitou cancelamento" ? "+" : ""}</span></div>`).join("");
-  const cl = ret.closed_total || {};
-  $("#ret-note").textContent = `Fechados no total: ${cl.retido || 0} retidos · ${cl.perdido || 0} perdidos`;
-
-  $("#f-src").textContent = `Leitura ${D.date} · ${D.source}`;
+  $("#f-notes").innerHTML = (D.notes || []).map((n) => `<li>${esc(n)}</li>`).join("") || "<li>Sem observações.</li>";
 }
 render();
 
@@ -824,12 +924,12 @@ render();
   el.deck.addEventListener("click", (e) => { const b = e.target.closest(".dcard"); if (b && cards[b.dataset.id]) { el.focus.innerHTML = `<div class="enter">${cards[b.dataset.id].html}</div>`; } });
 
   const sevColor = (s) => `var(--${s})`;
-  const STEPS = [
+  const ALL_STEPS = [
     { label: "Abertura", beats: [
       { say: `Bom dia, Wayslanne. Todos os sistemas da operação AEG estão sincronizados. Aqui está o seu briefing de ${D.date_long}.`,
         card: { id: "pan", kick: "Panorama · Operação AEG", mini: `${k.ativos} ativos · ${k.em_churn} em churn`, html: card("Panorama · Operação AEG", "Carteira hoje", "◎",
           `<div class="row"><div class="inner trio">${num(k.ativos, "clientes ativos")}${num(k.em_churn, "status churn", "red")}${num(k.sem_reuniao, "sem reunião 15d+", "amb")}</div><div class="inner" style="display:grid;gap:8px">${num(D.cobertura + "%", "cobertura de reuniões")}<div class="mini-l">${k.mrr} MRR · ${k.arr} ARR</div></div></div>`, "ao vivo") } },
-      { say: `São ${k.ativos} clientes ativos. ${k.em_churn} estão no status churn, ${k.churn_mes} deles previstos para ${D.month}, e ${k.sem_reuniao} estão sem reunião há mais de quinze dias.` },
+      { say: `São ${k.ativos} clientes ativos, ${k.em_churn} no status churn e ${k.sem_reuniao} sem reunião há mais de quinze dias.${((D.weather || {}).cities || [])[0] ? ` Em ${D.weather.cities[0].city}, máxima de ${D.weather.cities[0].max} graus${D.weather.cities[0].rain_prob >= 30 ? " e chance de chuva" : ""}.` : ""}` },
     ] },
     ...(D.dir ? [{ label: "Diretoria", beats: (() => {
       const R = D.dir, rs = (v) => "R$ " + Math.round(v).toLocaleString("pt-BR");
@@ -839,6 +939,7 @@ render();
           card: { id: "dir", kick: "Diretoria · Receita", mini: `MRR ${rs(R.mrr)} · risco ${rs(R.mrr_risco)}`, html: card("Diretoria · Receita", "Receita recorrente", "$",
             `<div class="inner trio">${num(rs(R.mrr), "MRR da carteira")}${num(rs(R.mrr_risco), "MRR em risco", "red")}${num(rs(R.mrr_churn_mes), "churn previsto " + D.month, "amb")}</div><div class="inner trio">${num(rs(R.mrr_renov), "em renovação")}${num(rs(R.mrr_sem_reuniao), "sem reunião 15d+", "amb")}${num(String(R.churn_mes_pct).replace(".", ",") + "%", "churn do mês")}</div>`, `${R.cobertos}/${R.ativos_total} clientes`) } },
         { say: `O churn previsto para ${D.month} é de ${fala(R.mrr_churn_mes)}, ${String(R.churn_mes_pct).replace(".", ",")} por cento do MRR. As renovações em aberto somam ${fala(R.mrr_renov)}.${R.fee_suspeito.length ? ` Atenção: ${R.fee_suspeito.map((c) => c.name).join(" e ")} tem fee fora do padrão no ClickUp e ficou fora do cálculo.` : ""}` },
+        ...(((D.skalo || {}).headline) ? [{ say: `Nos anúncios, pela Skalo: ${D.skalo.headline}${(D.skalo.alerts || [])[0] ? " O alerta principal: " + D.skalo.alerts[0].name + ", " + D.skalo.alerts[0].info + "." : ""}` }] : []),
       ];
     })() }] : []),
     ...(((D.weather && D.weather.cities) || []).length ? [{ label: "Clima", beats: [
@@ -853,13 +954,16 @@ render();
       return [
         { say: ev.length ? `Sua agenda de hoje tem ${ev.length === 1 ? "um compromisso" : ev.length + " compromissos"}.` : "A agenda de hoje está livre, Wayslanne.",
           card: { id: "ag", kick: "Agenda · Hoje", mini: ev.length ? `${ev.length} compromisso${ev.length > 1 ? "s" : ""}` : "Agenda livre", html: card("Agenda · Hoje", ev.length ? `${ev.length} compromisso${ev.length > 1 ? "s" : ""}` : "Agenda livre", "▦", evHtml, fmtDate(A.date)) } },
-        ...ev.slice(0, 6).map((e) => ({ say: `${e.all_day ? "O dia todo" : "Às " + e.start}: ${e.title}${e.location ? ", em " + e.location : ""}.` })),
+        ...(ev.length ? [{ say: (() => {
+          const cl = []; ev.forEach((a, i) => ev.slice(i + 1).forEach((b) => { if (!a.all_day && !b.all_day && a.start < b.end && b.start < a.end) cl.push(`às ${a.start}, ${a.title.trim()} com ${b.title.trim()}`); }));
+          return `O primeiro é ${ev[0].title.trim()}, às ${ev[0].start}.` + (cl.length ? ` Atenção a ${cl.length === 1 ? "um conflito" : cl.length + " conflitos"} de horário: ${cl.join("; ")}.` : "");
+        })() }] : []),
       ];
     })() }] : []),
     { label: "Atenção", beats: [
-      { say: prio.length ? `${plural(prio.length, "ponto pede", "pontos pedem")} sua atenção hoje.` : "Nada exige interromper sua manhã antes do briefing.",
-        card: { id: "att", kick: "Prioridades · Hoje", mini: `${prio.length} pontos de atenção`, html: card("Prioridades · Hoje", "Pedem sua atenção", "!", `<ul class="blist" id="b-att"></ul>`, `${prio.length} alertas`) } },
-      ...prio.map((p) => ({ say: p.detail && p.detail.length <= 140 ? `${p.title}. ${p.detail}` : `${p.title}.`, item: () => {
+      { say: prio.length ? `As ${Math.min(3, prio.length)} decisões de hoje.` : "Nada exige interromper sua manhã.",
+        card: { id: "att", kick: "Decisões · Hoje", mini: `${Math.min(3, prio.length)} decisões`, html: card("Decisões · Hoje", "As 3 decisões de hoje", "!", `<ul class="blist" id="b-att"></ul>`, `${prio.length} alertas no painel`) } },
+      ...prio.slice(0, 3).map((p) => ({ say: p.detail && p.detail.length <= 140 ? `${p.title}. ${p.detail}` : `${p.title}.`, item: () => {
         const ul = el.focus.querySelector("#b-att"); if (!ul) return;
         ul.insertAdjacentHTML("beforeend", `<li class="enter" style="--c:${sevColor(p.sev)}"><span class="sv">${SEV[p.sev]}</span><b>${esc(p.title)}</b>${p.detail ? `<span class="d">${esc(p.detail)}</span>` : ""}</li>`);
         cards.att.html = el.focus.firstElementChild.innerHTML; sfx.item(); } })),
@@ -897,10 +1001,10 @@ render();
       ];
     })() }] : []),
     { label: "Notícias", beats: [
-      { say: news.length ? `Atualizei o radar de notícias. Separei ${plural(news.length, "destaque", "destaques")} do mercado de seminovos e do setor automotivo.` : "Não consegui atualizar o radar de notícias hoje.",
+      { say: news.length ? `No mercado, os ${Math.min(2, news.length)} destaques de hoje. As outras notícias estão na aba Mercado.` : "Não consegui atualizar o radar de notícias hoje.",
         card: { id: "rad", kick: "Briefing matinal", mini: `Radar · ${news.length} notícias`, html: card("Briefing matinal", "Atualizando o radar de notícias…", "⌁",
           `<div class="inner" style="display:flex;flex-wrap:wrap;gap:6px">${[...new Set(news.map((n) => n.cat))].map((c) => `<span class="badge" style="margin:0">${esc(c)}</span>`).join("")}</div>`) } },
-      ...news.map((n, i) => ({ say: `${i === 0 ? "Começando por " : ""}${n.cat}. ${n.title}. ${n.impact ? "Para a AEG: " + n.impact : n.summary}`,
+      ...news.slice(0, 2).map((n, i) => ({ say: `${n.cat}. ${n.title}. ${n.impact ? "Para a AEG: " + n.impact : n.summary}`,
         card: { id: "n" + i, kick: `${n.cat} · ${n.source}`, mini: n.title, html: card(`Radar · ${n.cat}`, n.source, "◈",
           `<div class="bnews-band"><b>${fmtDate(n.date)}</b><span>${esc(n.cat)}</span></div><div class="nt">${esc(n.title)}</div><p class="ns">${esc(n.summary)}</p>${n.impact ? `<div class="imp2"><b>Impacto para a AEG</b>${esc(n.impact)}</div>` : ""}<div class="ft"><span>${esc(n.source)}</span><a href="${esc(n.url)}" target="_blank" rel="noopener">Abrir matéria ↗</a></div>`, "nova") } })),
     ] },
@@ -912,12 +1016,14 @@ render();
           `<div class="bnews-band"><b>${fmtDate(n.date)}</b><span>${esc(n.cat)}</span></div><div class="nt">${esc(n.title)}</div><p class="ns">${esc(n.summary)}</p><div class="ft"><span>${esc(n.source)}</span><a href="${esc(n.url)}" target="_blank" rel="noopener">Abrir matéria ↗</a></div>`) } })),
     ] }] : []),
     { label: "Fim", beats: [
-      { say: `Esse foi o briefing de hoje. ${prio[0] ? "Sugiro começar por: " + prio[0].title.toLowerCase() + "." : ""} Se quiser, toque em falar com o Jarvis e me pergunte o que precisar.`,
+      { say: `Esse foi o briefing de hoje. Quer detalhar algum cliente, um CS ou as notícias? É só tocar em falar com o Jarvis e perguntar.`,
         card: { id: "end", kick: "Observações disponíveis", mini: "Briefing concluído", html: card("Observações disponíveis", "Briefing concluído", "✓",
-          `<p class="ns">O painel completo tem a carteira por CS, as listas de churn, renovações e reuniões, e todas as notícias com filtro.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bb primary" data-act="open">Abrir painel completo ▶</button><button class="bb" data-act="replay">Ouvir de novo</button><button class="bb" data-act="talk">🎙 Fazer uma pergunta</button></div>`) },
+          `<p class="ns">O painel está em quatro abas: Diretoria, Coordenação, Clientes (ficha de cada cliente) e Mercado.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bb primary" data-act="open">Abrir painel completo ▶</button><button class="bb" data-act="replay">Ouvir de novo</button><button class="bb" data-act="talk">🎙 Fazer uma pergunta</button></div>`) },
         after: () => { sfx.done(); el.state.textContent = "Concluído"; } },
     ] },
   ];
+  const ORDER = ["Abertura", "Agenda", "Atenção", "Diretoria", "Conferência", "Notícias", "Fim"];
+  const STEPS = ORDER.map((l) => ALL_STEPS.find((s) => s.label === l)).filter(Boolean);
   el.steps.innerHTML = STEPS.map((s, i) => `<button data-i="${i}" title="${esc(s.label)}" aria-label="Etapa ${i + 1}: ${esc(s.label)}"></button>`).join("");
   const markSteps = (i) => el.steps.querySelectorAll("button").forEach((b, j) => { b.classList.toggle("on", j === i); b.classList.toggle("done", j < i); });
 
@@ -948,7 +1054,7 @@ render();
     el.brief.hidden = false; el.fab.hidden = true; markSteps(-1); sizeCanvas();
     el.mic.textContent = "▶"; el.mic.classList.add("live"); el.mic.setAttribute("aria-label", "Iniciar briefing");
     el.focus.innerHTML = card("J.A.R.V.I.S · Briefing", "Bom dia, Wayslanne", "◎",
-      `<p class="ns">Seu briefing de ${esc(D.date_long)} está pronto: o clima de Sanharó e Belo Jardim, ${k.ativos} clientes ativos, ${prio.length} pontos de atenção, ${news.length} notícias do mercado e ${(D.world || []).length} manchetes do Brasil e do mundo. Leva uns quatro minutos, com trilha sonora.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bb primary" data-act="voice">▶ Iniciar com voz</button><button class="bb" data-act="mute">Iniciar sem voz</button><button class="bb" data-act="pick">Escolher voz</button><button class="bb" data-act="talk">🎙 Só conversar</button></div>`);
+      `<p class="ns">Seu briefing de ${esc(D.date_long)} está pronto: a agenda, as 3 decisões do dia, a receita, o time e os destaques do mercado. Leva uns dois minutos, com trilha sonora. Depois é só perguntar o que quiser.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="bb primary" data-act="voice">▶ Iniciar com voz</button><button class="bb" data-act="mute">Iniciar sem voz</button><button class="bb" data-act="pick">Escolher voz</button><button class="bb" data-act="talk">🎙 Só conversar</button></div>`);
     setCaption(`Bom dia, Wayslanne. Toque em iniciar e eu apresento a operação de hoje.`); setCaption(capWords.join(" "), capWords.length);
   }
   function openDashboard() {
@@ -1009,8 +1115,8 @@ render();
       L.push("Conferência por CS (campo CS responsável): " + R.audit.map((a) => `${a.cs}: ${a.ativos} ativos, MRR ${R$f(a.mrr)}, MRR em churn ${R$f(a.mrr_churn)}, ${a.em_churn} em churn, ${a.sem_reuniao} sem reunião 15d+, rituais OK ${a.rituais_pct ?? "-"}%, ${a.rituais_gap} rituais marcados NÃO, ${a.remarcados} remarcados, ${a.contrato_pend} contrato pendente, ${a.sem_auditoria} sem auditoria`).join(" | ") + ".");
       if (R.fee_suspeito.length) L.push("Fee fora do padrão (fora do MRR): " + R.fee_suspeito.map((c) => `${c.name} ${R$f(c.fee)}`).join(", ") + ".");
       L.push(`Auditoria da coordenação nos últimos 30 dias: ${R.higiene.auditoria_30d} clientes. Campos faltando: ${JSON.stringify(R.higiene.faltando)}.`);
-      L.push("Clientes (nome | CS | responsável da tarefa | fee | status | dias desde a última reunião | rituais SIM | rituais NÃO | contrato | squad | plano):");
-      R.carteira.forEach((c) => L.push(c.map((v, i) => i === 3 ? R$f(v) : v ?? "-").join(" | ")));
+      L.push("Clientes (nome | status | CS | responsável da tarefa | fee | dias desde a última reunião | rituais SIM | rituais NÃO | contrato | squad | plano | pendências | Skalo 28/09–04/10: investimento, resultados, custo por resultado, erro de conta):");
+      R.clientes.forEach((c) => { const s = c.skalo || {}; L.push([c.name, c.status, c.cs, c.gestor, R$f(c.fee), c.dias_reuniao ?? "-", c.rit_ok, c.rit_gap.length, c.contrato || "-", c.squad, c.plano || "-", c.issues.join("; ") || "-", s.gasto != null ? `${R$f(s.gasto)}, ${s.resultados} res., ${s.cpr ?? "-"}` : "-", s.erro_conta ? "erro de permissão" : "-"].join(" | ")); });
       L.push("Pendências a conferir: " + R.conferir.slice(0, 40).map((c) => `${c.name} (${c.cs}): ${c.issues.join(", ")}`).join("; "));
     }
     const SKc = D.skalo || {};
