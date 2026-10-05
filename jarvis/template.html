@@ -246,6 +246,7 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
 .b-talk form { display: flex; gap: 6px; flex: 0 1 420px; min-width: 0; }
 .b-talk input { flex: 1; min-width: 0; font: 400 14px var(--f-body); padding: 8px 10px; border-radius: 6px; border: 1px solid rgba(127, 214, 255, .4); background: rgba(4, 20, 60, .7); color: #fff; }
 .b-talk input::placeholder { color: rgba(207, 232, 255, .55); }
+.b-diag { flex-basis: 100%; text-align: center; font: 500 11px var(--f-mono); letter-spacing: .06em; color: rgba(207, 232, 255, .7); }
 .bb.listening { background: #ff5468; border-color: #ff5468; color: #fff; animation: ring 1.4s ease-out infinite; }
 .qa .q { font: 600 13px var(--f-mono); color: #7fd6ff; letter-spacing: .04em; margin-bottom: 8px; }
 .qa .a { font: 400 16px/1.5 var(--f-body); color: #fff; white-space: pre-wrap; }
@@ -292,9 +293,10 @@ footer { color: var(--ink-3); font: 400 12px/1.6 var(--f-mono); display: grid; g
     <div class="b-stage"><div class="b-focus" id="b-focus"></div></div>
     <div class="deck" id="deck" aria-label="Cartões já apresentados"></div>
     <div class="caption" id="caption" aria-live="polite"></div>
-    <div class="b-talk" id="b-talk-bar" hidden>
+    <div class="b-talk" id="b-talk-bar">
       <button class="bb primary" id="b-talk" aria-label="Falar com o Jarvis">🎙 Falar com o Jarvis</button>
       <form id="b-ask" autocomplete="off"><input id="b-q" aria-label="Pergunta para o Jarvis" placeholder="ou digite: quanto de MRR a Geovanna tem em risco?"><button class="bb" type="submit">Enviar</button></form>
+      <div class="b-diag" id="b-diag" aria-live="polite"></div>
     </div>
     <div class="b-bot">
       <div class="b-steps" id="b-steps"></div>
@@ -1028,7 +1030,7 @@ render();
   }
   async function ask(q) {
     q = (q || "").trim(); if (!q) return;
-    if (!sampleFn) { setCaption("A conversa não está disponível neste visualizador."); setCaption(capWords.join(" "), capWords.length); return; }
+    if (!sampleFn) { setCaption(`Ouvi: "${q}". Mas as respostas do Claude estão ${diag.ia} aqui.`); setCaption(capWords.join(" "), capWords.length); return; }
     if (/^(obrigad[oa]|tchau|encerrar|pode parar|só isso)\b/i.test(q)) { handsFree = false; const my = ++run; await speak("Por nada, Wayslanne. Estou aqui quando precisar.", my); return; }
     if (asking) asking.abort();
     const my = ++run; paused = false; try { synth && synth.cancel(); } catch (e) {}
@@ -1054,6 +1056,7 @@ render();
       if (my === run) { el.state.textContent = handsFree ? "Ouvindo" : "Pronto"; if (handsFree) listen(); }
     } catch (e) {
       if (e && e.code === "cancelled") return;
+      diag.ia = "erro (" + (e && e.code || "desconhecido") + ")"; showDiag();
       const msg = e && e.code === "not_granted" ? "Preciso da sua permissão para responder. Toque em falar de novo e permita." :
         e && e.code === "rate_limited" ? "Muitas perguntas seguidas. Espere alguns segundos e tente de novo." : "Não consegui responder agora. Tente de novo em instantes.";
       handsFree = false; const n = el.focus.querySelector("#qa-a"); if (n) n.textContent = msg;
@@ -1065,7 +1068,13 @@ render();
     talkBtn.textContent = on ? "■ Parar de ouvir" : "🎙 Falar com o Jarvis";
     if (on) { el.state.textContent = "Ouvindo"; target = 0.45; duck(true); }
   }
-  function listen() {
+  async function listen() {
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia && diag.mic !== "ok") {
+      try { const st = await navigator.mediaDevices.getUserMedia({ audio: true }); st.getTracks().forEach((tr) => tr.stop()); diag.mic = "ok"; }
+      catch (er) { diag.mic = "bloqueado (" + (er && er.name || "erro") + ")"; showDiag(); setListening(false); handsFree = false;
+        const m = "O microfone foi bloqueado aqui. Digite a pergunta no campo abaixo que eu respondo em voz."; setCaption(m); setCaption(m, capWords.length); askIn.focus(); return; }
+      showDiag();
+    }
     if (!SR) { askIn.focus(); setCaption("Este navegador não reconhece voz. Digite a pergunta ou abra no Chrome ou Edge."); setCaption(capWords.join(" "), capWords.length); return; }
     try { synth && synth.cancel(); } catch (e) {}
     run++; talking = false;
@@ -1076,7 +1085,7 @@ render();
       const shown = (finalText + " " + interim).trim(); setCaption(shown); setCaption(shown, capWords.length);
     };
     rec.onerror = (ev) => {
-      setListening(false); handsFree = false;
+      setListening(false); handsFree = false; diag.mic = ev.error === "no-speech" || ev.error === "aborted" ? diag.mic : "erro do reconhecimento (" + ev.error + ")"; showDiag();
       const m = ev.error === "not-allowed" || ev.error === "service-not-allowed" ? "O microfone está bloqueado aqui. Libere o microfone no navegador ou digite a pergunta abaixo." :
         ev.error === "no-speech" ? "Não ouvi nada. Toque em falar quando quiser." : ev.error === "aborted" ? "" : "Não consegui ouvir. Digite a pergunta abaixo.";
       if (m) { setCaption(m); setCaption(m, capWords.length); el.state.textContent = "Pronto"; }
@@ -1091,7 +1100,10 @@ render();
     listen();
   });
   askForm.addEventListener("submit", (e) => { e.preventDefault(); const q = askIn.value; askIn.value = ""; handsFree = false; if (!started) { started = true; voiceOn = !!synth && !!voice && store.get("jarvis-voice") !== "__off__"; } ask(q); });
-  if (window.claude && claude.use) claude.use("sample").then((s) => { sampleFn = s; talkBar.hidden = !s; }).catch(() => {});
+  const diag = { mic: SR ? "não testado" : "este navegador não reconhece voz (use Chrome ou Edge)", ia: window.claude && claude.use ? "conectando…" : "indisponível fora do claude.ai" };
+  const showDiag = () => { $$("b-diag").textContent = `Microfone: ${diag.mic} · Respostas do Claude: ${diag.ia}`; };
+  showDiag();
+  if (window.claude && claude.use) claude.use("sample").then((s) => { sampleFn = s; diag.ia = s ? "disponível" : "indisponível neste visualizador"; showDiag(); }).catch(() => { diag.ia = "erro ao conectar"; showDiag(); });
   intro();
 })();
 </script>
