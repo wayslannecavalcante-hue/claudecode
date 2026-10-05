@@ -368,6 +368,12 @@ def priorities(r, cfg):
     if ret and opn and sum(closed.values()) == 0:
         items.append({"sev": "info", "title": "CRM Retenção sem nenhum card fechado",
                       "detail": f"{opn}{'+' if ret.get('open_truncated') else ''} cards abertos e nenhum marcado como retido ou perdido."})
+    ev = [e for e in (r.get("agenda") or {}).get("events") or [] if not e.get("all_day") and e.get("start") and e.get("end")]
+    clashes = [f"{a['start']} {a['title'].strip()} × {c['title'].strip()}" for i, a in enumerate(ev) for c in ev[i + 1:]
+               if a["start"] < c["end"] and c["start"] < a["end"]]
+    if clashes:
+        items.append({"sev": "info", "title": f"{len(clashes)} conflitos de horário na sua agenda de hoje",
+                      "detail": "; ".join(clashes)})
     for n in r.get("notes", []):
         items.append({"sev": "info", "title": n, "detail": ""})
     return items

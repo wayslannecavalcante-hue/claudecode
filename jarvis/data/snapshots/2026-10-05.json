@@ -3338,6 +3338,513 @@
   "Manchetes internacionais além da Ucrânia (Irã/Ormuz, Paquistão) vieram sem fonte e link confiáveis e ficaram de fora.",
   "Tarefas atrasadas: hoje a leitura pegou todas as páginas (398); a de 04/10 estava incompleta (233), então a alta não é real.",
   "CRM Retenção agora mostra cards fechados (9 retidos, 13 perdidos); a leitura anterior não trazia os fechados.",
-  "Google Agenda e Skalo.IA não disponíveis nesta leitura (conectores não ligados à sessão)."
- ]
+  "Skalo.IA: o saldo das contas não respondeu a tempo (consulta ao vivo na Meta) e a lista de integrações veio cortada; números de erro são parciais."
+ ],
+ "skalo": {
+  "period": "28/09 a 04/10 (últimos 7 dias fechados)",
+  "headline": "Os 50 clientes que mais investiram somaram R$ 79.858,03 em anúncios e 9.425 resultados na Meta. Auto Salon lidera com R$ 9.063,64 e 1.193 resultados.",
+  "kpis": [
+   {
+    "label": "Investimento · top 50",
+    "value": "R$ 79.858,03",
+    "detail": "Meta Ads, 28/09 a 04/10",
+    "tone": null
+   },
+   {
+    "label": "Resultados · top 50",
+    "value": "9.425",
+    "detail": "custo médio R$ 8,47 por resultado",
+    "tone": "good"
+   },
+   {
+    "label": "Clientes com dados",
+    "value": "167",
+    "detail": "cadastrados na Skalo.IA",
+    "tone": null
+   },
+   {
+    "label": "Sem gasto na semana",
+    "value": "25+",
+    "detail": "a lista da Skalo para em 25; vários com conta em erro",
+    "tone": "warn"
+   },
+   {
+    "label": "Contas Meta com erro",
+    "value": "46+",
+    "detail": "erro de permissão em contas com cliente (leitura parcial)",
+    "tone": "bad"
+   },
+   {
+    "label": "Melhor custo/resultado",
+    "value": "R$ 3,12",
+    "detail": "Avelloz Cabo e Prazeres, 302 resultados",
+    "tone": "good"
+   }
+  ],
+  "alerts": [
+   {
+    "name": "APRONOVA, ABV e LEANDRO MULTIMARCAS",
+    "info": "ativos no ClickUp, sem gasto registrado na semana e conta Meta com erro de permissão na sincronização",
+    "url": null
+   },
+   {
+    "name": "Dacar Veículos",
+    "info": "investimento caiu de R$ 6.408,68 para R$ 1.430,83 na semana; contrato ainda não assinado no ClickUp",
+    "url": null
+   },
+   {
+    "name": "Impact Veículos",
+    "info": "investimento caiu de R$ 8.191,37 para R$ 1.541,15; está no status churn no ClickUp",
+    "url": null
+   },
+   {
+    "name": "Puma Proteção veicular",
+    "info": "custo por resultado de R$ 21,84 (64 resultados) e conta Meta com erro de permissão",
+    "url": null
+   },
+   {
+    "name": "Pinguim 01",
+    "info": "custo por resultado de R$ 20,86 (100 resultados com R$ 2.086,49)",
+    "url": null
+   }
+  ],
+  "top": [
+   {
+    "name": "AUTO SALON MULTIMARCAS",
+    "info": "R$ 9.063,64 → 1.193 resultados a R$ 7,60 (semana anterior: 1.067)",
+    "url": null
+   },
+   {
+    "name": "R3 Multimarcas",
+    "info": "684 resultados a R$ 3,87 (semana anterior: 415 a R$ 4,23)",
+    "url": null
+   },
+   {
+    "name": "Concept Motors Chapecó",
+    "info": "custo por resultado caiu de R$ 25,14 para R$ 8,12",
+    "url": null
+   },
+   {
+    "name": "Avelloz Cabo e Prazeres",
+    "info": "302 resultados a R$ 3,12, o menor custo do top 50",
+    "url": null
+   },
+   {
+    "name": "COOPER MULTIMARCAS",
+    "info": "182 resultados a R$ 4,47",
+    "url": null
+   }
+  ],
+  "ranking": [
+   [
+    "AUTO SALON MULTIMARCAS",
+    9063.64,
+    1193,
+    7.6
+   ],
+   [
+    "AUTO SHOW",
+    4498.11,
+    446,
+    10.09
+   ],
+   [
+    "Hangar Multimarcas",
+    3890.2,
+    586,
+    6.64
+   ],
+   [
+    "Cooper Proteção",
+    3768.32,
+    457,
+    8.25
+   ],
+   [
+    "R3 Multimarcas",
+    2648.81,
+    684,
+    3.87
+   ],
+   [
+    "Bellos Car",
+    2453.35,
+    221,
+    11.1
+   ],
+   [
+    "LMOTORS",
+    2275.76,
+    270,
+    8.43
+   ],
+   [
+    "Citycar Veículos",
+    2214.65,
+    180,
+    12.3
+   ],
+   [
+    "PERON VEÍCULOS",
+    2091.78,
+    269,
+    7.78
+   ],
+   [
+    "Pinguim 01",
+    2086.49,
+    100,
+    20.86
+   ],
+   [
+    "NextCar",
+    2031.6,
+    270,
+    7.52
+   ],
+   [
+    "Gamallo Veículos",
+    1865.27,
+    208,
+    8.97
+   ],
+   [
+    "LM Automóveis - 2023",
+    1819.1,
+    306,
+    5.94
+   ],
+   [
+    "Garage V12",
+    1674.79,
+    106,
+    15.8
+   ],
+   [
+    "Lv multimarcas",
+    1555.9,
+    108,
+    14.41
+   ],
+   [
+    "Impact Veículos",
+    1541.15,
+    193,
+    7.99
+   ],
+   [
+    "American Veiculos",
+    1490.2,
+    128,
+    11.64
+   ],
+   [
+    "tipo veiculos",
+    1456.95,
+    109,
+    13.37
+   ],
+   [
+    "Dacar Veículos Negócios",
+    1430.83,
+    196,
+    7.3
+   ],
+   [
+    "Puma Proteção veicular",
+    1397.71,
+    64,
+    21.84
+   ],
+   [
+    "VIP MOTORS",
+    1365.78,
+    147,
+    9.29
+   ],
+   [
+    "bms veiculos",
+    1303.6,
+    95,
+    13.72
+   ],
+   [
+    "Deu Negócio",
+    1157.52,
+    95,
+    12.18
+   ],
+   [
+    "Auto Norte",
+    1061.24,
+    56,
+    18.95
+   ],
+   [
+    "Alexandra Veiculos",
+    1060.42,
+    87,
+    12.19
+   ],
+   [
+    "JCar",
+    1040.53,
+    69,
+    15.08
+   ],
+   [
+    "Unimais Proteção",
+    1029.55,
+    122,
+    8.44
+   ],
+   [
+    "Diamond motors",
+    1027.76,
+    70,
+    14.68
+   ],
+   [
+    "Concept Motors Chapeco",
+    1007.17,
+    124,
+    8.12
+   ],
+   [
+    "RS VEICULOS",
+    982.48,
+    143,
+    6.87
+   ],
+   [
+    "MM Veículos RP",
+    979.67,
+    79,
+    12.4
+   ],
+   [
+    "GSAuto Seminovos | Sorocaba SP",
+    962.91,
+    190,
+    5.07
+   ],
+   [
+    "Barão Veiculosvenda",
+    962.04,
+    207,
+    4.65
+   ],
+   [
+    "R8 Automoveis",
+    959.19,
+    87,
+    11.03
+   ],
+   [
+    "P3 Automóveis",
+    943.84,
+    58,
+    16.27
+   ],
+   [
+    "Avelloz Cabo e Prazeres",
+    941.89,
+    302,
+    3.12
+   ],
+   [
+    "FinanAuto",
+    923.69,
+    106,
+    8.71
+   ],
+   [
+    "Vimara Automoveis",
+    905.27,
+    162,
+    5.59
+   ],
+   [
+    "Santa Maria Veiculos",
+    885.4,
+    69,
+    12.83
+   ],
+   [
+    "Acesso Carro",
+    883.5,
+    84,
+    10.52
+   ],
+   [
+    "NM Multimarcas",
+    876.81,
+    69,
+    12.71
+   ],
+   [
+    "VS Auto Select - Veículos Selecionados",
+    872.54,
+    91,
+    9.59
+   ],
+   [
+    "EVVO CAR",
+    836.8,
+    58,
+    14.43
+   ],
+   [
+    "Bravo Motors",
+    835.43,
+    61,
+    13.7
+   ],
+   [
+    "Davi Veiculos",
+    832.61,
+    186,
+    4.48
+   ],
+   [
+    "COOPER MULTIMARCAS",
+    813.94,
+    182,
+    4.47
+   ],
+   [
+    "Pepê Veículos",
+    811.64,
+    113,
+    7.18
+   ],
+   [
+    "Mavi Veículos",
+    803.44,
+    62,
+    12.96
+   ],
+   [
+    "RHS Veiculos",
+    772.23,
+    110,
+    7.02
+   ],
+   [
+    "Zona Sat Rastreamento",
+    764.53,
+    47,
+    16.27
+   ]
+  ]
+ },
+ "agenda": {
+  "date": "2026-10-05",
+  "events": [
+   {
+    "start": "08:00",
+    "end": "08:30",
+    "title": "Plano de Guerra NRR",
+    "location": null,
+    "url": null,
+    "all_day": false
+   },
+   {
+    "start": "08:30",
+    "end": "09:00",
+    "title": "Daily - Supervisão",
+    "location": null,
+    "url": "https://meet.google.com/saj-bmvx-umq",
+    "all_day": false
+   },
+   {
+    "start": "09:00",
+    "end": "09:30",
+    "title": "RENOVAÇÃO",
+    "location": null,
+    "url": null,
+    "all_day": false
+   },
+   {
+    "start": "09:30",
+    "end": "10:00",
+    "title": "RETENÇÃO",
+    "location": null,
+    "url": null,
+    "all_day": false
+   },
+   {
+    "start": "10:00",
+    "end": "10:30",
+    "title": "ONBOARDING",
+    "location": null,
+    "url": null,
+    "all_day": false
+   },
+   {
+    "start": "11:30",
+    "end": "12:00",
+    "title": "SKALO.IA",
+    "location": null,
+    "url": null,
+    "all_day": false
+   },
+   {
+    "start": "13:00",
+    "end": "13:15",
+    "title": "FNE - Delegar",
+    "location": null,
+    "url": null,
+    "all_day": false
+   },
+   {
+    "start": "14:00",
+    "end": "14:30",
+    "title": "Weekly Cronos",
+    "location": null,
+    "url": null,
+    "all_day": false
+   },
+   {
+    "start": "14:00",
+    "end": "15:00",
+    "title": "Revisão do mês - Operação",
+    "location": null,
+    "url": "https://meet.google.com/awb-xkbe-faa",
+    "all_day": false
+   },
+   {
+    "start": "14:30",
+    "end": "15:00",
+    "title": "Weekly Athena",
+    "location": null,
+    "url": null,
+    "all_day": false
+   },
+   {
+    "start": "16:00",
+    "end": "17:00",
+    "title": "Planning Operacional",
+    "location": null,
+    "url": "https://meet.google.com/ags-awki-dvp",
+    "all_day": false
+   },
+   {
+    "start": "17:00",
+    "end": "18:00",
+    "title": "Indicadores Operação",
+    "location": null,
+    "url": null,
+    "all_day": false
+   },
+   {
+    "start": "17:00",
+    "end": "18:00",
+    "title": "Reunião - Jurídico",
+    "location": null,
+    "url": "https://meet.google.com/onk-mzvs-nwb",
+    "all_day": false
+   }
+  ]
+ }
 }

@@ -116,6 +116,15 @@ sem uso ou com queda forte. Grave em `skalo`:
  "top": [{"name": "Cliente", "info": "o destaque, com número", "url": null}]}
 ```
 
+Roteiro que funcionou (05/10): `ranking_clientes` (gasto, desc, limite 50) para os últimos
+7 dias fechados e para a semana anterior (compare quedas fortes de investimento e custo por
+resultado); `ranking_clientes` (gasto, asc) para quem não gastou; `status_integracoes`
+(só problemas; a resposta vem cortada em 100 mil caracteres, trate como parcial) para contas
+com erro de permissão. `saldo_contas` sem cliente costuma estourar o tempo: tente uma vez e,
+se falhar, registre em `notes`. Cruze nomes com a carteira do ClickUp (ativos x churn) antes
+de alertar. Grave também `ranking`: lista `[cliente, gasto, resultados, custo por resultado]`
+do top 50, que alimenta as respostas do Jarvis na conversa.
+
 No máximo 8 `kpis`, 8 `alerts` e 5 `top`. Use só números que vieram do conector.
 Ao cruzar com o ClickUp, prefira citar clientes ativos da carteira.
 

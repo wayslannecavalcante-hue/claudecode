@@ -1013,6 +1013,12 @@ render();
       R.carteira.forEach((c) => L.push(c.map((v, i) => i === 3 ? R$f(v) : v ?? "-").join(" | ")));
       L.push("Pendências a conferir: " + R.conferir.slice(0, 40).map((c) => `${c.name} (${c.cs}): ${c.issues.join(", ")}`).join("; "));
     }
+    const SKc = D.skalo || {};
+    if ((SKc.kpis || []).length) {
+      L.push(`Skalo.IA (Meta Ads, ${SKc.period}): ${SKc.headline} ` + SKc.kpis.map((x) => `${x.label}: ${x.value} (${x.detail})`).join("; "));
+      L.push("Skalo alertas: " + (SKc.alerts || []).map((c) => `${c.name}: ${c.info}`).join("; ") + ". Destaques: " + (SKc.top || []).map((c) => `${c.name}: ${c.info}`).join("; "));
+      if (SKc.ranking) L.push("Skalo ranking por investimento (cliente | gasto R$ | resultados | custo por resultado R$): " + SKc.ranking.map((x) => x.join(" | ")).join("; "));
+    }
     L.push("Prioridades do dia: " + prio.map((p) => p.title + (p.detail ? " — " + p.detail : "")).join(" | "));
     L.push("Churn: " + D.in_churn.map((c) => `${c.name} (${c.cs}${D.churn_month_ids.includes(c.id) ? ", previsto " + D.month : ""})`).join(", "));
     L.push("Renovações: " + D.renewals.map((c) => `${c.name} (${c.status})`).join(", "));
