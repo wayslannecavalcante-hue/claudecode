@@ -537,7 +537,7 @@ function render() {
     : ev.length ? ev.map((e) => `<li class="${clash(e) ? "clash" : ""}"><span class="h">${esc(e.all_day ? "dia todo" : e.start + "–" + (e.end || ""))}</span><span>${e.url ? `<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.title)}</a>` : esc(e.title)}${clash(e) ? ' <span class="meta">· conflito</span>' : ""}</span></li>`).join("")
     : `<li><span class="h">—</span><span>Agenda livre</span></li>`;
   const W = (D.weather && D.weather.cities) || [];
-  $("#wx").innerHTML = W.map((c) => `<a href="${esc(c.url)}" target="_blank" rel="noopener" title="Fonte: ${esc(c.source)}"><span class="c">${esc(c.city)}</span><span class="t">${c.max}°</span><span class="m">mín ${c.min}° · chuva ${c.rain_prob}%</span></a>`).join("");
+  $("#wx").innerHTML = W.map((c) => `<a href="${esc(c.url)}" target="_blank" rel="noopener" title="Fonte: ${esc(c.source)}"><span class="c">${esc(c.city)}</span><span class="t">${c.max}°</span><span class="m">mín ${c.min}°${c.rain_prob != null ? ` · chuva ${c.rain_prob}%` : ""}</span></a>`).join("");
 
   /* ---------- Abas ---------- */
   const TABS = ["dir", "coord", "cli", "mkt"];
@@ -1130,7 +1130,7 @@ render();
     L.push("Renovações: " + D.renewals.map((c) => `${c.name} (${c.status})`).join(", "));
     L.push("Tarefas atrasadas por pessoa: " + D.overdue_rows.map((o) => `${o.who} ${o.n} (${o.urgent} urgentes, mais antiga ${o.oldest})`).join(", "));
     const ret = D.retention || {}; if (ret.open) L.push(`CRM Retenção: abertos ${JSON.stringify(ret.open)}, fechados ${JSON.stringify(ret.closed_total || {})}.`);
-    ((D.weather || {}).cities || []).forEach((c) => L.push(`Clima ${c.city}: mín ${c.min}°, máx ${c.max}°, chuva ${c.rain_prob}%, ${c.condition || ""}.`));
+    ((D.weather || {}).cities || []).forEach((c) => L.push(`Clima ${c.city}: mín ${c.min}°, máx ${c.max}°, chuva ${c.rain_prob != null ? c.rain_prob + "%" : "sem dado"}, ${c.condition || ""}.`));
     const A = D.agenda || {}; if (Array.isArray(A.events)) L.push("Agenda de hoje: " + (A.events.map((e) => `${e.all_day ? "dia todo" : e.start} ${e.title}`).join("; ") || "livre"));
     L.push("Notícias do mercado: " + news.map((n) => `[${n.cat}] ${n.title} (${n.source}, ${n.date || "s/d"}): ${n.summary}`).join(" || "));
     L.push("Brasil e mundo: " + (D.world || []).map((n) => `${n.title}: ${n.summary}`).join(" || "));
