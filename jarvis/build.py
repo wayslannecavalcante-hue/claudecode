@@ -97,7 +97,8 @@ def metrics(snap, cfg):
     status_rows = [{"status": s, "n": statuses.get(s, 0), "group": stage_group(s, cfg)}
                    for s in cfg["status_order"] if statuses.get(s, 0)]
 
-    renewals = [c for c in active if c["group"] == "renovacao"]
+    renewals = [c for c in active if c["group"] == "renovacao" and c["status"] != "renovação fechada"]
+    renewed = [c for c in active if c["status"] == "renovação fechada"]
 
     # Overdue tasks
     overdue = snap.get("overdue", [])
@@ -143,7 +144,8 @@ def metrics(snap, cfg):
             "onboarding": groups.get("onboarding", 0),
             "maturacao": groups.get("maturacao", 0),
             "ongoing": groups.get("ongoing", 0),
-            "renovacao": groups.get("renovacao", 0),
+            "renovacao": len(renewals),
+            "renovadas": len(renewed),
             "em_churn": len(in_churn),
             "churn_mes": len(churn_month),
             "churn_mes_anterior": len(churn_prev_month),
@@ -289,7 +291,8 @@ def diretoria(r, snap, details, details_day, cfg):
     em_churn = [x for x in rows if x["group"] == "churn"]
     churn_mes = [x for x in rows if x["churn_mes"]]
     sem_reu = [x for x in active if x["dias_reuniao"] is None or x["dias_reuniao"] >= 15]
-    renov = [x for x in active if x["group"] == "renovacao"]
+    renov = [x for x in active if x["group"] == "renovacao" and x["status"] != "renovação fechada"]
+    renovadas = [x for x in active if x["status"] == "renovação fechada"]
     risco_ids = {x["id"] for x in em_churn + churn_mes} | {x["id"] for x in sem_reu if (x["dias_reuniao"] or 99) >= 30}
     risco = [x for x in rows if x["id"] in risco_ids]
     base_mes = mrr + sum(x["fee"] for x in churn_mes if x["group"] == "churn")
@@ -332,6 +335,7 @@ def diretoria(r, snap, details, details_day, cfg):
         "mrr_risco": sum(x["fee"] for x in risco), "n_risco": len(risco),
         "mrr_sem_reuniao": sum(x["fee"] for x in sem_reu), "n_sem_reuniao": len(sem_reu),
         "mrr_renov": sum(x["fee"] for x in renov), "n_renov": len(renov),
+        "mrr_renovadas": sum(x["fee"] for x in renovadas), "renovadas": [x["name"] for x in renovadas],
         "squads": sorted(({"squad": k, "n": v[0], "mrr": v[1]} for k, v in by_squad.items()), key=lambda s: -s["mrr"]),
         "audit": audit,
         "conferir": [{k: x[k] for k in ("id", "name", "url", "cs", "gestor", "fee", "status", "issues", "score")} for x in conferir],

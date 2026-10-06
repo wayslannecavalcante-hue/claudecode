@@ -565,7 +565,7 @@ function render() {
       { l: "MRR em risco", v: R$(DR.mrr_risco), s: `${DR.n_risco} clientes: churn ou 30+ dias sem reunião`, cls: "alert" },
       { l: `Churn previsto ${D.month}`, v: R$(DR.mrr_churn_mes), s: `${String(DR.churn_mes_pct).replace(".", ",")}% do MRR · ${k.churn_mes} clientes` + delta("churn_mes", true), cls: DR.mrr_churn_mes ? "warn" : "" },
       { l: "MRR no status churn", v: R$(DR.mrr_em_churn), s: `${k.em_churn} clientes aguardando tratativa` + delta("em_churn", true), cls: "warn" },
-      { l: "Renovações em aberto", v: R$(DR.mrr_renov), s: `${DR.n_renov} clientes em renovação` },
+      { l: "Renovações em aberto", v: R$(DR.mrr_renov), s: `${DR.n_renov} em aberto` + (DR.renovadas.length ? ` · ${DR.renovadas.length} fechadas (${R$(DR.mrr_renovadas)})` : ""), cls: DR.renovadas.length ? "cy" : "" },
       { l: "MRR sem reunião 15d+", v: R$(DR.mrr_sem_reuniao), s: `${DR.n_sem_reuniao} clientes`, cls: DR.n_sem_reuniao ? "warn" : "" },
       { l: `Entradas em ${D.month}`, v: k.novos_mes, s: `${k.novos_mes_anterior} em ${D.prev_month}` + delta("novos_mes", false) },
       { l: "Clientes ativos", v: k.ativos, s: `${k.venda_ia} com Venda.IA · ${k.crm_ia} com CRM.IA` + delta("ativos", false) },
