@@ -24,7 +24,7 @@ WANTED = {
     "ÚLTIMA AUDITORIA COORD": "ultima_auditoria", "CONTRATO ASSINADO ": "contrato",
     "ACOMPANHAMENTO": "acompanhamento", "TRÁFEGO PAGO": "trafego", "NICHO": "nicho",
     "CALL 3° MÊS": "call_3m", "LANDING PAGE": "landing", "SKALO.IA": "skalo",
-    "FORMA DE PAGAMENTO": "pagamento", "TOMADOR DE DECISÃO": "decisor",
+    "FORMA DE PAGAMENTO": "pagamento",
 }
 
 
